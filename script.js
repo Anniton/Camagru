@@ -57,18 +57,44 @@
       }
     }, false);
 
+// function  searchid(){
+//   if (document.getElementsById('stickersbutton1')){
+//     return('stickersbutton1');}
+//   else if (document.getElementsById('stickersbutton2')){
+//     return('stickersbutton2');}
+//   else if (document.getElementsById('stickersbutton3')){
+//     return('stickersbutton3');}
+//   else if (document.getElementsById('stickersbutton4')){
+//     return('stickersbutton4');}
+ //}
 
 if (canvas2){
- stickersbutton.addEventListener('click', function(ev){
-      draw();
+  var id = null;
+  //console.log(id);
+  var num = null;
+  if (id == document.getElementById('stickersbutton1')){
+    num = 1;}  
+  else if (id == document.getElementById('stickersbutton2')){
+    num = 2;}
+  else if (id == document.getElementById('stickersbutton3')){
+    num = 3;}
+  else if (id == document.getElementById('stickersbutton4')){
+    num = 4;}
+  else if (id == null){
+      id = document.getElementById('stickersbutton1');
+      num = 1;}
+  console.log(id);
+ id.addEventListener('click', function(ev){
+      draw(num);
       ev.preventDefault();
     }, false);
 }
 function draw(num) {
-var a = document.getElementById('canvas');
+var a = document.getElementById('canvas')
 var ctx = a.getContext("2d");
 var image = new Image();
-image.src = 'stickers/1.png';
+
+image.src = 'stickers/'+ num +'.png';
 image.onload = function() {
   ctx.drawImage(this,0,0,50,50);
 };

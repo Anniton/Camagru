@@ -48,11 +48,11 @@ if (isset($_SESSION['pseudo']) && !empty($_SESSION['pseudo'])) {
 
 
     <div class="img_stickers">
-      <div><button class="stickers" id="stickersbutton"><img src="stickers/1.png" class="stickers" id="source" alt="dubitatif"></div></button>
-      <div><button class="stickers" id="stickersbutto"><img src="stickers/2.png" class="stickers" id="can_sticker" alt="blase">
+      <div><button class="stickers" id="stickersbutton1"><img src="stickers/1.png" class="stickers" id="source" alt="dubitatif"></div></button>
+      <div><button class="stickers" id="stickersbutton2"><img src="stickers/2.png" class="stickers" id="can_sticker" alt="blase">
       </div></button>
-      <div><button class="stickers" id="stickersbutto"><img src="stickers/3.png" class="stickers" id="can_sticker" alt="intello"></div></button>
-      <div><button class="stickers" id="stickersbutto"><img src="stickers/4.png" class="stickers" id="can_sticker" alt="wesh"></div></button>
+      <div><button class="stickers" id="stickersbutton3"><img src="stickers/3.png" class="stickers" id="can_sticker" alt="intello"></div></button>
+      <div><button class="stickers" id="stickersbutton4"><img src="stickers/4.png" class="stickers" id="can_sticker" alt="wesh"></div></button>
     </div>
 
 
