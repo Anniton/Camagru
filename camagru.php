@@ -23,10 +23,10 @@ if (isset($_SESSION['pseudo']) && !empty($_SESSION['pseudo'])) {
     <div class="menu">
  
       <canvas id="canvas2"></canvas>
-       <div class="output">
+       <!-- <div class="output">
              <img id="photo" alt="The screen capture will appear in this box.">
               
-            </div>
+            </div> -->
     </div>
     <div class="content">
           
@@ -34,21 +34,25 @@ if (isset($_SESSION['pseudo']) && !empty($_SESSION['pseudo'])) {
           <video id="video">Video stream not available.</video>
         
           <button class="button" id="startbutton">Take Photo</button>
+          <button class="button" id="toggle">pause</button>
 
         
         </div>
           <canvas id="canvas"></canvas>
+          <div class="test">
           <button class="button" id="deletebutton">Delete Photo</button>
-           
+          <input class ="" type="file" id="input" accept="image/*">
+          <!-- <button class="button" id="importbutton">import Photo</button> -->
+          </div>
     </div>
 
 
     <div class="img_stickers">
-      <div><button class="button" id="stickersbutton"><img src="stickers/dubitatif.png" class="stickers" id="source" alt="dubitatif"></div></button>
-      <div><img src="stickers/blase.png" class="stickers" id="can_sticker" alt="blase">
-      </div>
-      <div><img src="stickers/intello.png" class="stickers" id="can_sticker" alt="intello"></div>
-      <div><img src="stickers/wesh.png" class="stickers" id="can_sticker" alt="wesh"></div>
+      <div><button class="stickers" id="stickersbutton"><img src="stickers/1.png" class="stickers" id="source" alt="dubitatif"></div></button>
+      <div><button class="stickers" id="stickersbutto"><img src="stickers/2.png" class="stickers" id="can_sticker" alt="blase">
+      </div></button>
+      <div><button class="stickers" id="stickersbutto"><img src="stickers/3.png" class="stickers" id="can_sticker" alt="intello"></div></button>
+      <div><button class="stickers" id="stickersbutto"><img src="stickers/4.png" class="stickers" id="can_sticker" alt="wesh"></div></button>
     </div>
 
 
@@ -56,10 +60,32 @@ if (isset($_SESSION['pseudo']) && !empty($_SESSION['pseudo'])) {
     </div>
 </div>
   
+<!-- 
 
+ <div style='display:inline-block'>
+
+     <video id="sourcevid" width='400' autoplay="true"></video>
+
+     <div id="message" style='height:20px;width:350px;margin:5px;'>message:</div>
+    </div>
+
+    <canvas id="cvs" style='display:inline-block'></canvas>
+
+    <div>
+     <button onclick='ouvrir_camera()' >ouvrir camera</button>
+     <button onclick='fermer()' >fermer camera</button>
+     <br>
+     <button onclick='photo()' >prise de photo</button>
+     <button onclick='sauver()' >sauvegarder</button>
+     <button onclick='prepare_envoi()' >envoyer</button>
+    </div>
+
+    <div id="jaxa" style='width:80%;margin:5px;'>message:</div>
+ -->
 
 </body>
 <script src="script.js"></script>
+<script src="importation.js"></script>
 </html>
 
 <!-- 
@@ -86,4 +112,6 @@ formul.appendChild(champCache);
 
 // envois du formulaire
 document.body.appendChild(formul);
-formul.submit(); -->
+formul.submit();
+
+https://developer.mozilla.org/fr/docs/Apprendre/JavaScript/Client-side_web_APIs/Client-side_storage
