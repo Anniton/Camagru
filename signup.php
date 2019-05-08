@@ -5,6 +5,7 @@ require("navigation.php");
 
 //  $bdd = new PDO('mysql:host=127.0.0.1:3306;dbname=espace_membre', 'root', 'camagru');
 $bdd = new PDO('mysql:host=localhost;dbname=espace_membre;charset=utf8', 'root', 'camagru');
+print_r($_POST);
 if (isset($_POST['forminscription']))
 {
 	$fullname = htmlspecialchars($_POST['fullname']);
@@ -14,25 +15,23 @@ if (isset($_POST['forminscription']))
 	$passwd = sha1($_POST['passwd']);
 	$passwd2 = sha1($_POST['passwd2']);
 
- 	if(!empty($_POST['fullname']) AND !empty($_POST['username']) AND !empty($_POST['passwd']) AND !empty($_POST['passwd2']) AND !empty($_POST['mail']) AND !empty($_POST['mail2']))
+	if(!empty($_POST['fullname']) AND !empty($_POST['username']) AND !empty($_POST['passwd']) AND !empty($_POST['passwd2']) AND !empty($_POST['mail']) AND !empty($_POST['mail2']))
 	{
 		$usernamelength = strlen($username);
- 			if ($usernamelength <= 255)
+ 			if ($usernamelength <= 12)
  			{
  				if ($mail == $mail2){
 					if(filter_var($mail, FILTER_VALIDATE_EMAIL)) {
- 							$reqmail = $bdd->prepare("SELECT * FROM membres WHERE mail = ?");
- 							$reqmail->execute(array($mail));
- 							$mailexist = $reqmail->rowCount();
+ 							$reqmail = $bdd->prepare("SELECT * FROM membres WHERE mail = ? OR pseudo = ?");
+							$reqmail->execute(array($mail, $username));
+							$mailexist = $reqmail->rowCount();
  							 if($mailexist == 0) {
 									if ($passwd == $passwd2)
 									{
 										$insertmbr = $bdd->prepare("INSERT INTO membres(pseudo, mail, motdepasse) VALUES(?, ?, ?)");
-										var_dump($mail);
-										var_dump($passwd);
-										var_dump($username);
+							
 										$insertmbr->execute(array($username, $mail, $passwd));
-										$erreur = "votre compte a bien ete cree !";
+										$erreur = "Votre compte a bien été crée !";
 									}
 									else
 									{
@@ -41,7 +40,7 @@ if (isset($_POST['forminscription']))
 								}
 							else
  							{
- 								$erreur = "Email already used.";
+ 								$erreur = "Email or Username already used.";
 							 }
 							} 
  							 else 
@@ -59,7 +58,6 @@ if (isset($_POST['forminscription']))
 	}
 }
 ?>
-
 
 <!---doctype html--->
 <html lang="fr">
@@ -84,11 +82,11 @@ if (isset($_POST['forminscription']))
 
     		<form action="signup.php" method="post">
     			 <div>
-				    	 <input type="text" id="fullname" name="fullname"  placeholder="Full Name" value="<?php if(isset($fullname)) { echo $fullname;} ?>">
+				    	 <input type="text" id="fullname" name="fullname" maxlength="12" placeholder="Full Name" value="<?php if(isset($fullname)) { echo $fullname;} ?>">
 				 </div>
 				    <div>
 				       <!--  <label for="name">Nom :</label> -->
-				        <input type="text" id="username" name="username"  placeholder="Username" value="<?php if(isset($username)) { echo $username;} ?>">
+				        <input type="text" id="username" name="username" maxlength="12"  placeholder="Username" value="<?php if(isset($username)) { echo $username;} ?>">
 				    </div>
 				    <div>
 				      <!--   <label for="mail">Mail :</label> -->
