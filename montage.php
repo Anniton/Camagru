@@ -14,12 +14,17 @@ if (isset($_SESSION['pseudo']) && !empty($_SESSION['pseudo'])) {
 <head>
   <meta charset="utf-8">
   <title>Camagru</title>
-  <link rel="stylesheet" href="camagru.css" type="text/css" media="all">	
+  <link rel="stylesheet" href="montage.css" type="text/css" media="all">	
+  <!-- <link rel="stylesheet" href="navigation.css" type="text/css" media="all"> -->
 </head>
 
 <body>
+
 <div class="container">
-    <div class="header"></div>
+    <div class="navigation"> 
+    <?php include('navigation.php'); ?>
+
+    </div>
     <div class="menu">
  
       <canvas id="canvas2"></canvas>
@@ -48,7 +53,7 @@ if (isset($_SESSION['pseudo']) && !empty($_SESSION['pseudo'])) {
 
 
     <div class="img_stickers">
-      <div><button class="stickers" id="stickersbutton1"><img src="stickers/1.png" class="stickers" id="source" alt="dubitatif"></div></button>
+      <div><img src="stickers/1.png" onclick="setStickers('stickers/1.png')" class="stickers" id="source" alt="dubitatif"></div>
       <div><button class="stickers" id="stickersbutton2"><img src="stickers/2.png" class="stickers" id="can_sticker" alt="blase">
       </div></button>
       <div><button class="stickers" id="stickersbutton3"><img src="stickers/3.png" class="stickers" id="can_sticker" alt="intello"></div></button>

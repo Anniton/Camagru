@@ -32,12 +32,36 @@ a, a:hover, a:visited, a:active
 
 .h1 {text-align:center;}
 
-.header {grid-area: h;
+/* .header {grid-area: h;
     background-color: #96ceb4;
     color:white;
-    font-size:7.9em; 
-    font-weight: 900; 
+    /* font-size:7.9em; 
+    font-weight: 900;}  */
+ 
+
+/* 
+.navigation {
+  grid-area: h;
+  overflow: hidden;
+  background-color: #96ceb4;
 }
+
+.navigation a {
+  float: left;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.navigation a:hover {
+  background-color: #ddd;
+  color: black;
+} */
+
+
 .menu {grid-area: m;
   min-width: 100px;
   flex-direction: column ;

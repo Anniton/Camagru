@@ -16,7 +16,7 @@
 			<div class="title">Trouble Logging In?</div><br>
     		<div class="text">Enter your email and we'll send you a link to get back into your account.</div>
 				   
-    		<form action="index.html" method="post">
+    		<form action="signup.php" method="post">
 				    <div>
 				        <input type="email" id="mail" name="usermail" placeholder="Email">
 				    </div>
@@ -26,9 +26,9 @@
 		</form>	
 		<br>
 		<br>
-		<div class="txt"><a href ="index.html">Create New Account</a></div>
+		<div class="txt"><a href ="signup.php">Create New Account</a></div>
 </div>
-<div class="article" class="text"><b><a href="login.html">Back To Login</a></b></div>
+<div class="article" class="text"><b><a href="login.php">Back To Login</a></b></div>
 
             <div class="footer">ABOUT US . SUPPORT . PRESS . API . JOBS . PRIVACY . TERMS . DIRECTORY . PROFILES . HASHTAGS . LANGUAGE</div>
         </div>

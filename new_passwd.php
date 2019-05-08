@@ -15,7 +15,7 @@
             <div class="content">
 			<div class="title">CAMAGRU</div><br>
 
-    		<form action="index.html" method="post">
+    		<form action="new_passwd.php" method="post">
 			<div>
 				<input type="password" id="pass" name="password"
 		           minlength="8" required placeholder="New password">
@@ -29,7 +29,7 @@
 			</div>
 		</form>	
 	</div>
-<div class="article" class="text">Don't have an account?<b>  <a href="login.html">&nbsp;Sign up</a></b></div>
+<div class="article" class="text">Don't have an account?<b>  <a href="signup.php">&nbsp;Sign up</a></b></div>
 
             <div class="footer">ABOUT US . SUPPORT . PRESS . API . JOBS . PRIVACY . TERMS . DIRECTORY . PROFILES . HASHTAGS . LANGUAGE</div>
         </div>

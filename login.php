@@ -15,7 +15,7 @@
             <div class="content">
 			<div class="title">CAMAGRU</div><br>
 
-    		<form action="index.html" method="post">
+    		<form action="login.php" method="post">
 				    <div>
 				       <!--  <label for="name">Nom :</label> -->
 				        <input type="text" id="username" name="username" placeholder="Username">
@@ -30,9 +30,9 @@
 		</form>	
 		<br>
 		<br>
-		<div class="txt"><a href="forgot_passwd.html">Forgot password?</a></div>
+		<div class="txt"><a href="forgot_passwd.php">Forgot password?</a></div>
 </div>
-<div class="article" class="text">Don't have an account?<b>  <a href="login.html">&nbsp;Sign up</a></b></div>
+<div class="article" class="text">Don't have an account?<b>  <a href="signup.php">&nbsp;Sign up</a></b></div>
 
             <div class="footer">ABOUT US . SUPPORT . PRESS . API . JOBS . PRIVACY . TERMS . DIRECTORY . PROFILES . HASHTAGS . LANGUAGE</div>
         </div>
