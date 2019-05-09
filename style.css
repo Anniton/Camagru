@@ -122,3 +122,8 @@ a, a:hover, a:visited, a:active
   font-family: Avantgarde, TeX Gyre Adventor, URW Gothic L, sans-serif;
   color: grey;
   font-size: 1,5em;}
+.error{
+    width: 400px;
+    font-family: Avantgarde, TeX Gyre Adventor, URW Gothic L, sans-serif;
+    color:red;
+    font-size: 1em;}

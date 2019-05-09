@@ -4,7 +4,7 @@ $bdd = new PDO('mysql:host=localhost;dbname=espace_membre;charset=utf8', 'root',
 if(isset($_GET['id']) AND $_GET['id'] > 0)
 {
 	$getid= intval($_GET['id']);
-	$requser = $bdd->prepare('SELECT * FROM membres WHERE id');
+	$requser = $bdd->prepare('SELECT * FROM membres WHERE id = ?');
 	$requser->execute(array($getid));
 	$userinfo = $requser->fetch();
 ?>
@@ -28,12 +28,18 @@ if(isset($_GET['id']) AND $_GET['id'] > 0)
     		<form action="login.php" method="post">
 				    <div>
 				      
-				        usernameconnect
+				        Bonjour <?php echo $userinfo['pseudo']; ?>
 				    </div>
 				    <div>
-				        password
+						Mail : <?php echo $userinfo['mail']; ?>
 				    </div>
-
+		<?php 
+		if (isset($_SESSION['id']) && $userinfo['id'] == $_SESSION['id']){
+			?>
+		<a href="#"> Editer non profil</a>
+		<?
+		}
+		?>
 		</form>
 		<br>
 		<br>
