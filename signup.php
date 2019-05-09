@@ -1,16 +1,16 @@
 <?php
 session_start();
-require("navigation.php");
-include("user_functions.php");
-require_once 'db.php';
+include_once("navigation.php");
+include_once("user_functions.php");
+include_once 'db.php';
 
 if(!empty($_POST)){
 
 	$errors = array();
 
-	// if (empty($_POST['fullname']) || !preg_match('/^[a-zA-Z]+$/', $_POST['fullname'])){
-	// 	$errors['fullname'] = "Votre nom ne doit pas comporter de chiffres.";
-	// }
+	if (empty($_POST['fullname']) || !preg_match('/^[a-zA-Z]+$/', $_POST['fullname'])){
+		$errors['fullname'] = "Votre nom ne doit pas comporter de chiffres.";
+	}
 
 	if (empty($_POST['username']) || !preg_match('/^[a-zA-Z0-9_]+$/', $_POST['username'])){
 		$errors['username'] = "Votre pseudo n'est pas valide (alphanumerique).";
@@ -39,10 +39,21 @@ if(!empty($_POST)){
 	}
 
 	if(empty($errors)){
-		$req = $bdd->prepare("INSERT INTO membres SET username = ?, password = ?, mail = ?");
+
+
+		$req = $bdd->prepare("INSERT INTO membres SET username = ?, password = ?, mail = ?, confirmation_token = ?");
 		$passwd = password_hash($_POST['passwd'], PASSWORD_BCRYPT);
-		$req->execute([$_POST['username'], $passwd, $_POST['mail']]);
-		$errors['success'] = "Votre compte a bien été crée !";
+		$token = str_random(60);
+		$req->execute([$_POST['username'], $passwd, $_POST['mail'], $token]);
+
+		$user_id = $bdd->lastInsertId();
+		mail($_POST['mail'], 'Confirmation de votre compte', "Afin de valider votre compte merci de cliquer sur ce lien\n\nhttp://localhost:8080/confirm.php?id=$user_id&token=$token");
+		
+		header('Location: login.php');
+		exit();
+
+		// $errors['success'] = "Votre compte a bien été crée !";
+		var_dump($_POST);
 	}
 	// debug($errors);
 }
@@ -90,14 +101,14 @@ if(!empty($_POST)){
 				 	  <input type="submit" id="forminscription" name="forminscription" value="Submit">
 					</div>
 		</form>	
-		<!-- <div class="error"> -->
+		<div class="error">
 				<?php if (!empty($errors)): ?>
-						<!-- <div></div> -->
+				
 						<?php foreach($errors as $error): ?>
 							<?= $error; ?>
 						<?php endforeach; ?>
-<!-- 
-				</div> -->
+
+				</div>
 				<?php endif; ?>		
 			<!-- </div> -->
 			
