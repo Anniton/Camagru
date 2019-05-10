@@ -18,7 +18,7 @@ if(!empty($_POST) && !empty($_POST['mail']))
 	
 		$_SESSION['flash']['success'] = 'Les instruction du rappel de mot de passe vous ont ete envoye par email';
 		echo "aa";
-		mail($_POST['mail'], 'Reinitialisation du mot de passe', "Afin de reinitialise votre mot de passe cliquer sur ce lien\n\nhttp://localhost:8080/reset.php?id={$user->id}&token=$reset_token");
+		mail($_POST['mail'], 'Reinitialisation du mot de passe', "Afin de reinitialiser votre mot de passe cliquer sur ce lien\n\nhttp://localhost:8080/reset.php?id={$user->id}&token=$reset_token");
 		
 		header('Location: login.php');
 		exit();
