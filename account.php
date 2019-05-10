@@ -1,13 +1,25 @@
 <?php
 session_start();
-$bdd = new PDO('mysql:host=localhost;dbname=espace_membre;charset=utf8', 'root', 'camagru');
-if(isset($_GET['id']) AND $_GET['id'] > 0)
-{
-	$getid= intval($_GET['id']);
-	$requser = $bdd->prepare('SELECT * FROM membres WHERE id = ?');
-	$requser->execute(array($getid));
-	$userinfo = $requser->fetch();
+include_once('navigation.php');
+require_once('user_functions.php');
+include_once('db.php');
+
+logged_only();
+
+if(!empty($_POST)){
+	if(!empty($_POST['passwd']) || $_POST['passwd'] != $_POST['passwd_confirm']){
+		$_SESSiON['flash']['warning'] = "Passwords are differents";
+	}
+	else{
+		$user_id = $_SSSION['auth']->id;
+		$password = password_hash($_O+POST['password'], PASSWORD_BCRYPT);
+
+		$bdd->prepare('UPDATE membres SET password = ?')->execute([$password]);
+		$_SESSION['flash']['success'] = "Password update";
+	}
+}
 ?>
+
 <!doctype html>
 <html lang="fr">
 <head>
@@ -23,33 +35,28 @@ if(isset($_GET['id']) AND $_GET['id'] > 0)
             <div class="header">CAMAGRU</div>
             <div class="menu"></div>
             <div class="content">
-			<div class="title">CAMAGRU</div><br>
+						<div>Bonjour <?= $_SESSION['auth']->username; ?></div>
 
-    		<form action="login.php" method="post">
-				    <div>
-				      
-				        Bonjour <?php echo $userinfo['pseudo']; ?>
-				    </div>
-				    <div>
-						Mail : <?php echo $userinfo['mail']; ?>
-				    </div>
-		<?php 
-		if (isset($_SESSION['id']) && $userinfo['id'] == $_SESSION['id']){
-			?>
-		<a href="#"> Editer non profil</a>
-		<?
-		}
-		?>
-		</form>
-		<br>
-		<br>
-		<?php
-		if (isset($erreur))
-		{
-			echo $erreur;
-		}
-		?>
-		<!-- <div class="txt"><a href="forgot_passwd.php">Forgot password?</a></div> -->
+						<form action="" method="post">
+						<div class="form-group">
+										<input class="form-control" type="text" name="username" placeholder="<?= $_SESSION['auth']->username; ?>">
+								</div>
+								<div class="form-group">
+										<input class="form-control" type="text" name="username_confirm" placeholder="Confirm username">
+								</div>
+								<div> <input type="submit" id="cg_username" name="cg_username" value="Submit"></div>
+								<div class="form-group">
+										<input class="form-control" type="password" name="passwd" placeholder="New password">
+								</div>
+								<div class="form-group">
+										<input class="form-control" type="password" name="passwd_confirm" placeholder="Confirm password">
+								</div>
+								<div> <input type="submit" id="cg_passwd" name="cg_passwd" value="Submit"></div>
+						</form>
+
+
+	
+		<div class="txt"><a href="forgot_passwd.php"></a></div>
 </div>
 <!-- <div class="article" class="text">Don't have an account?<b>  <a href="signup.php">&nbsp;Sign up</a></b></div> -->
 
@@ -58,7 +65,3 @@ if(isset($_GET['id']) AND $_GET['id'] > 0)
   
 </body>
 </html>
-
-<?php
-}
-?>

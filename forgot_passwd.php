@@ -1,3 +1,35 @@
+<?php
+session_start();
+include_once("navigation.php");
+include_once("user_functions.php");
+include_once("db.php");
+
+
+if(!empty($_POST) && !empty($_POST['mail']))
+{
+	$req = $bdd->prepare('SELECT * FROM membres WHERE mail = ? AND confirmed_at IS NOT NULL');
+	$req->execute([$_POST['mail']]);
+	$user = $req->fetch();
+
+	if($user){
+		$reset_token = str_random(60);
+
+		$bdd->prepare('UPDATE membres SET reset_token = ?, reset_at = NOW() WHERE id = ?')->execute([$reset_token], $user->id);
+	
+		$_SESSION['flash']['success'] = 'Les instruction du rappel de mot de passe vous ont ete envoye par email';
+		echo "aa";
+		mail($_POST['mail'], 'Reinitialisation du mot de passe', "Afin de reinitialise votre mot de passe cliquer sur ce lien\n\nhttp://localhost:8080/reset.php?id={$user->id}&token=$reset_token");
+		
+		header('Location: login.php');
+		exit();
+	}
+	else{
+		$_SESSION['flash']['warning'] = 'aucun compte ne correspond a cette adresse';
+	}
+}
+
+?>
+
 <!doctype html>
 <html lang="fr">
 <head>
@@ -16,9 +48,9 @@
 			<div class="title">Trouble Logging In?</div><br>
     		<div class="text">Enter your email and we'll send you a link to get back into your account.</div>
 				   
-    		<form action="signup.php" method="post">
+    		<form action="" method="post">
 				    <div>
-				        <input type="email" id="mail" name="usermail" placeholder="Email">
+				        <input type="email" id="mail" name="mail" placeholder="Email">
 				    </div>
 					<div>
 				 	  <input type="submit" value="Send Login Link">

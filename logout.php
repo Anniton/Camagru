@@ -1,6 +1,7 @@
 <?php
 session_start();
-$_SESSION = array();
+unset($_SESSION['auth']);
+$_SESSION['flash']['success'] = "Vous etes maintenant deconnecte";
 session_destroy();
 header('Location: login.php');
 ?>

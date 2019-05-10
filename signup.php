@@ -42,13 +42,19 @@ if(!empty($_POST)){
 
 
 		$req = $bdd->prepare("INSERT INTO membres SET username = ?, password = ?, mail = ?, confirmation_token = ?");
+		
 		$passwd = password_hash($_POST['passwd'], PASSWORD_BCRYPT);
+		
 		$token = str_random(60);
+		
 		$req->execute([$_POST['username'], $passwd, $_POST['mail'], $token]);
 
 		$user_id = $bdd->lastInsertId();
+		
 		mail($_POST['mail'], 'Confirmation de votre compte', "Afin de valider votre compte merci de cliquer sur ce lien\n\nhttp://localhost:8080/confirm.php?id=$user_id&token=$token");
 		
+		$_SESSION['flash']['success'] = 'Un email de confirmation vous a ete envoye.';
+
 		header('Location: login.php');
 		exit();
 
@@ -76,7 +82,7 @@ if(!empty($_POST)){
 			<div class="title">CAMAGRU</div><br>
     		<div class="text">Sign up to see photos and videos from your friends.</div>
 	
-    		<form action="signup.php" method="post">
+    		<form action="" method="post">
     			<div>
 				    	 <input type="text" id="fullname" name="fullname" maxlength="12" placeholder="Full Name" value="<?php if(isset($fullname)) { echo $fullname;} ?>">
 				 </div>

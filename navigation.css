@@ -1,7 +1,7 @@
 .navigation {
     grid-area: h;
     overflow: hidden;
-    background-color: transparent;
+    background-color: #96ceb4;
   }
   
   .navigation a {
@@ -15,6 +15,6 @@
   }
   
   .navigation a:hover {
-    background-color: #ddd;
+    background-color: #96ceb4;
     color: black;
   }
