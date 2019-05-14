@@ -5,8 +5,11 @@ include_once("user_functions.php");
 include_once 'db.php';
 
 if(!empty($_POST)){
-
 	$errors = array();
+	$fullname = htmlspecialchars($_POST['fullname']);
+	$username = htmlspecialchars($_POST['username']);
+	$email = htmlspecialchars($_POST['mail']);
+	
 
 	if (empty($_POST['fullname']) || !preg_match('/^[a-zA-Z]+$/', $_POST['fullname'])){
 		$errors['fullname'] = "Votre nom ne doit pas comporter de chiffres.";
@@ -16,7 +19,8 @@ if(!empty($_POST)){
 		$errors['username'] = "Votre pseudo n'est pas valide (alphanumerique).";
 	} else {
 		$req = $bdd->prepare('SELECT id FROM membres WHERE username = ?');
-		$req->execute([$_POST['username']]);
+		// $req->execute([$_POST['username']]);
+		$req->execute([$username]);
 		$user = $req->fetch();
 	}
 	if ($user){
@@ -25,10 +29,12 @@ if(!empty($_POST)){
 
 	if (empty($_POST['mail']) || !filter_var($_POST['mail'], FILTER_VALIDATE_EMAIL)){
 		$errors['mail'] = "Votre email n'est pas valide.";
-	}  else {
+	} else {
 	$req = $bdd->prepare('SELECT id FROM membres WHERE mail = ?');
-	$req->execute([$_POST['username']]);
-	$mail = $req->fetch();}
+	// $req->execute([$_POST['username']]);
+	$req->execute([$username]);
+	$mail = $req->fetch();
+}
 
 	if ($user){
 			$errors['mail'] = "Ce mail est deja utilise pour un autre compte.";
@@ -39,20 +45,20 @@ if(!empty($_POST)){
 	}
 
 	if(empty($errors)){
-
-
 		$req = $bdd->prepare("INSERT INTO membres SET username = ?, password = ?, mail = ?, confirmation_token = ?");
 		
 		$passwd = password_hash($_POST['passwd'], PASSWORD_BCRYPT);
 		
 		$token = str_random(60);
 		
-		$req->execute([$_POST['username'], $passwd, $_POST['mail'], $token]);
+		// $req->execute([$_POST['username'], $passwd, $_POST['mail'], $token]);
+		$req->execute([$username, $passwd, $email, $token]);
 
 		$user_id = $bdd->lastInsertId();
 		
-		mail($_POST['mail'], 'Confirmation de votre compte', "Afin de valider votre compte merci de cliquer sur ce lien\n\nhttp://localhost:8080/confirm.php?id=$user_id&token=$token");
-		
+		// mail($_POST['mail'], 'Confirmation de votre compte', "Afin de valider votre compte merci de cliquer sur ce lien\n\nhttp://localhost:8080/confirm.php?id=$user_id&token=$token");
+		mail($email, 'Confirmation de votre compte', "Afin de valider votre compte merci de cliquer sur ce lien\n\nhttp://localhost:8080/confirm.php?id=$user_id&token=$token");
+
 		$_SESSION['flash']['success'] = 'Un email de confirmation vous a ete envoye.';
 
 		header('Location: login.php');
@@ -84,15 +90,15 @@ if(!empty($_POST)){
 	
     		<form action="" method="post">
     			<div>
-				    	 <input type="text" id="fullname" name="fullname" maxlength="12" placeholder="Full Name" value="<?php if(isset($fullname)) { echo $fullname;} ?>">
+				    	 <input type="text" id="fullname" name="fullname" maxlength="12" placeholder="<?php if(isset($_SESSION['auth']->fullname)) { echo $fullname;}  else {echo "Fullname";}?>">
 				 </div>
 				    <div>
 				       <!--  <label for="name">Nom :</label> -->
-				        <input type="text" id="username" name="username" maxlength="12"  placeholder="Username" value="<?php if(isset($username)) { echo $username;} ?>">
+				        <input type="text" id="username" name="username" maxlength="12"  placeholder="<?php if(isset($_SESSION['auth']->username)) { echo $username;}  else {echo "Username";}?>">
 				    </div>
 				    <div>
 				      <!--   <label for="mail">Mail :</label> -->
-				        <input type="email" id="mail" name="mail" placeholder="Email" value="<?php if(isset($mail)) { echo $mail;} ?>">
+				        <input type="email" id="mail" name="mail" placeholder="<?php if(isset($_SESSION['auth']->mail)) { echo $mail;} else {echo "Email";} ?>">
 				    </div>
 			
 				    <div>
@@ -107,6 +113,7 @@ if(!empty($_POST)){
 				 	  <input type="submit" id="forminscription" name="forminscription" value="Submit">
 					</div>
 		</form>	
+
 		<div class="error">
 				<?php if (!empty($errors)): ?>
 				
@@ -116,7 +123,7 @@ if(!empty($_POST)){
 
 				</div>
 				<?php endif; ?>		
-			<!-- </div> -->
+			</div>
 			
 
 <div class="txt">By signing up, you agree to our Terms . Learn how we collect, use and share your data in our Data Policy and how we use cookies and similar technology in our Cookies Policy .</div>

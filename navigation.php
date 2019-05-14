@@ -7,7 +7,7 @@ if(session_status() == PHP_SESSION_NONE){
 <div class="navigation">
         <a href="signup.php">Home</a>
         <?php if (!$_SESSION['auth']) { ?>
-        <a href="login.php">Sign In</a><?php } ?>
+        <a href="login.php">Login</a><?php } ?>
         <?php if (!$_SESSION['auth']) { ?>
         <a href="signup.php">Sign Up</a><?php } ?>
         <?php if ($_SESSION['auth']) { ?>

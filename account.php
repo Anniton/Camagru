@@ -4,20 +4,78 @@ include_once('navigation.php');
 require_once('user_functions.php');
 include_once('db.php');
 
+
 logged_only();
 
+
 if(!empty($_POST)){
-	if(!empty($_POST['passwd']) || $_POST['passwd'] != $_POST['passwd_confirm']){
-		$_SESSiON['flash']['warning'] = "Passwords are differents";
+	// var_dump($_POST);
+
+	if(!empty($_POST['new_username'])){
+
+		$user_id = $_SESSION['auth']->id;
+		var_dump($_SESSION);
+		$newusername = htmlspecialchars($_POST['new_username']);
+
+		$bdd->prepare('UPDATE membres SET username = ? WHERE id = ?')->execute([$newusername, $user_id]);
+
+		$_SESSION['flash']['success'] = "Username update";
+		
+		//actualisation si changement)
+		$req = $bdd->prepare('SELECT * FROM membres WHERE id = ?');
+		$req->execute([$user_id]);
+		$user = $req->fetch();
+		$_SESSION['auth'] = $user;
+
+		// header('Location: profil.php?id='.$_SESSION['auth']);
 	}
 	else{
-		$user_id = $_SSSION['auth']->id;
-		$password = password_hash($_O+POST['password'], PASSWORD_BCRYPT);
+		header('Location: account.php');
+	}
+}
 
-		$bdd->prepare('UPDATE membres SET password = ?')->execute([$password]);
+if(!empty($_POST)){
+	// var_dump($_POST);
+	if(empty($_POST['passwd']) || ($_POST['passwd'] != $_POST['passwd_confirm'])){
+
+		$_SESSION['flash']['warning'] = "Passwords are differents";
+		// echo "Passwords are differents";
+	}
+	else {
+
+		$user_id = $_SESSION['auth']->id;
+
+		$password = password_hash($_POST['passwd'], PASSWORD_BCRYPT);
+
+		$bdd->prepare('UPDATE membres SET password = ? WHERE id = ?')->execute([$password, $user_id]);
+
 		$_SESSION['flash']['success'] = "Password update";
 	}
 }
+
+
+if(!empty($_POST)){
+	//  var_dump($_POST);
+	if(empty($_POST['mail']) || ($_POST['mail'] != $_POST['mail_confirm'])){
+	
+		echo "Mail are differents";
+	}
+	else {
+		$user_id = $_SESSION['auth']->id;
+
+		$mail = htmlspecialchars($_POST['mail']);
+
+		$bdd->prepare('UPDATE membres SET mail = ? WHERE id = ?')->execute([$mail, $user_id]);
+
+		$_SESSION['flash']['success'] = "Mail update";
+	}
+		//actualisation si changement)
+		$req = $bdd->prepare('SELECT * FROM membres WHERE id = ?');
+		$req->execute([$user_id]);
+		$mail = $req->fetch();
+		$_SESSION['auth'] = $mail;
+}
+
 ?>
 
 <!doctype html>
@@ -35,24 +93,44 @@ if(!empty($_POST)){
             <div class="header">CAMAGRU</div>
             <div class="menu"></div>
             <div class="content">
-						<div>Bonjour <?= $_SESSION['auth']->username; ?></div>
+			<div>Bonjour <?= $_SESSION['auth']->username; ?></div>
+				<br/>
 
-						<form action="" method="post">
-						<div class="form-group">
-										<input class="form-control" type="text" name="username" placeholder="<?= $_SESSION['auth']->username; ?>">
-								</div>
-								<div class="form-group">
-										<input class="form-control" type="text" name="username_confirm" placeholder="Confirm username">
-								</div>
-								<div> <input type="submit" id="cg_username" name="cg_username" value="Submit"></div>
-								<div class="form-group">
-										<input class="form-control" type="password" name="passwd" placeholder="New password">
-								</div>
-								<div class="form-group">
-										<input class="form-control" type="password" name="passwd_confirm" placeholder="Confirm password">
-								</div>
-								<div> <input type="submit" id="cg_passwd" name="cg_passwd" value="Submit"></div>
-						</form>
+
+			<form id="cg_username" action="" method="post">
+				<br/>
+				<div> CHANGE USERNAME </div>
+				<div>
+				<input  type="text" name="new_username" placeholder="<?= $_SESSION['auth']->username; ?>">
+				</div>
+				<div> <input type="submit" name="cg_username" value="Change username"></div>
+			</form>
+
+
+			<form id="cg_mdp" action="" method="post">
+					<br/>
+					<div> CHANGE PASSWORD</div>
+					<div>
+					<input type="password" name="passwd" placeholder="New password">
+					</div>
+					<div>
+					<input type="password" name="passwd_confirm" placeholder="Confirm new password">
+					</div>
+					<div> <input type="submit" name="cg_mdp" value="Change my password"></div>
+			</form>
+
+
+			<form id="cg_mail"  action="" method="post">
+					<br/>
+					<div> CHANGE MAIL</div>
+					<div class="form-group">
+					<input class="form-control" type="email" name="mail" placeholder="<?= $_SESSION['auth']->mail; ?>">
+					</div>
+					<div class="form-group">
+					<input class="form-control" type="email" name="mail_confirm" placeholder="<?= $_SESSION['auth']->mail; ?>">
+					</div>
+					<div> <input name="cg_mail" type="submit" value="Submit"></div>
+			</form> 
 
 
 	

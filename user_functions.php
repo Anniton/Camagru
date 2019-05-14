@@ -8,7 +8,6 @@ function str_random($length){
     return substr(str_shuffle(str_repeat($alphabet, $length)), 0, $length);
 }
 
-
 function logged_only(){
 
     if(session_status() == PHP_SESSION_NONE){

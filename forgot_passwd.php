@@ -7,18 +7,21 @@ include_once("db.php");
 
 if(!empty($_POST) && !empty($_POST['mail']))
 {
+
+	$email = htmlspecialchars($_POST['mail']);
 	$req = $bdd->prepare('SELECT * FROM membres WHERE mail = ? AND confirmed_at IS NOT NULL');
-	$req->execute([$_POST['mail']]);
+	// $req->execute([$_POST['mail']]);
+	$req->execute([$email]);
 	$user = $req->fetch();
 
 	if($user){
 		$reset_token = str_random(60);
 
-		$bdd->prepare('UPDATE membres SET reset_token = ?, reset_at = NOW() WHERE id = ?')->execute([$reset_token], $user->id);
+		$bdd->prepare('UPDATE membres SET reset_token = ?, reset_at = NOW() WHERE id = ?')->execute([$reset_token, $user->id]);
 	
 		$_SESSION['flash']['success'] = 'Les instruction du rappel de mot de passe vous ont ete envoye par email';
-		echo "aa";
-		mail($_POST['mail'], 'Reinitialisation du mot de passe', "Afin de reinitialiser votre mot de passe cliquer sur ce lien\n\nhttp://localhost:8080/reset.php?id={$user->id}&token=$reset_token");
+		// mail($_POST['mail'], 'Reinitialisation du mot de passe', "Afin de reinitialiser votre mot de passe cliquer sur ce lien\n\nhttp://localhost:8080/reset.php?id={$user->id}&token=$reset_token");
+		mail($email, 'Reinitialisation du mot de passe', "Afin de reinitialiser votre mot de passe cliquer sur ce lien\n\nhttp://localhost:8080/reset.php?id={$user->id}&token=$reset_token");
 		
 		header('Location: login.php');
 		exit();
