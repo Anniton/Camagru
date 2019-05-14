@@ -7,7 +7,7 @@ include_once('db.php');
 
 logged_only();
 
-
+if ($_SESSION['auth']){
 if(!empty($_POST)){
 	// var_dump($_POST);
 
@@ -22,12 +22,12 @@ if(!empty($_POST)){
 		$_SESSION['flash']['success'] = "Username update";
 		
 		//actualisation si changement)
-		$req = $bdd->prepare('SELECT * FROM membres WHERE id = ?');
-		$req->execute([$user_id]);
-		$user = $req->fetch();
-		$_SESSION['auth'] = $user;
+		// $req = $bdd->prepare('SELECT * FROM membres WHERE id = ?');
+		// $req->execute([$user_id]);
+		// $user = $req->fetch();
+		// $_SESSION['auth'] = $user;
 
-		// header('Location: profil.php?id='.$_SESSION['auth']);
+		// header('Location: account.php?id='.$_SESSION['auth']);
 	}
 	else{
 		header('Location: account.php');
@@ -51,7 +51,7 @@ if(!empty($_POST)){
 
 		$_SESSION['flash']['success'] = "Password update";
 	}
-}
+
 
 
 if(!empty($_POST)){
@@ -69,13 +69,13 @@ if(!empty($_POST)){
 
 		$_SESSION['flash']['success'] = "Mail update";
 	}
-		//actualisation si changement)
-		$req = $bdd->prepare('SELECT * FROM membres WHERE id = ?');
-		$req->execute([$user_id]);
-		$mail = $req->fetch();
-		$_SESSION['auth'] = $mail;
+		// //actualisation si changement)
+		// $req = $bdd->prepare('SELECT * FROM membres WHERE id = ?');
+		// $req->execute([$user_id]);
+		// $mail = $req->fetch();
+		// $_SESSION['auth'] = $mail;
 }
-
+}
 ?>
 
 <!doctype html>
@@ -143,3 +143,9 @@ if(!empty($_POST)){
   
 </body>
 </html>
+<?php 
+}
+else {
+	header("Location: login.php");
+}
+?>
