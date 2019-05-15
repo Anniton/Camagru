@@ -93,7 +93,7 @@ if(!empty($_POST)){
             <div class="header">CAMAGRU</div>
             <div class="menu"></div>
             <div class="content">
-			<div>Bonjour <?= $_SESSION['auth']->username; ?></div>
+			<div>Bonjour <?= $_SESSION['auth']->username; ?>,</div>
 				<br/>
 
 
@@ -129,7 +129,7 @@ if(!empty($_POST)){
 					<div class="form-group">
 					<input class="form-control" type="email" name="mail_confirm" placeholder="<?= $_SESSION['auth']->mail; ?>">
 					</div>
-					<div> <input name="cg_mail" type="submit" value="Submit"></div>
+					<div> <input name="cg_mail" type="submit" value="Change my mail"></div>
 			</form> 
 
 
