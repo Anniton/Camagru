@@ -35,7 +35,7 @@
           <button onclick='prepare_envoi()' >envoyer</button>
           </div>
 
-          <div id="jaxa" style='width:80%;margin:5px;'>message:</div>
+          <!-- <div id="jaxa" style='width:80%;margin:5px;'>message:</div> -->
 
      
     </div>
