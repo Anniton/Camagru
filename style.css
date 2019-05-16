@@ -9,6 +9,7 @@
         ". . c c c c c c c m m m m "
         ". . a a a a a a a m m m m"
         "f f f f f f f f f f f f f";
+       
 }
 html, body {
   box-sizing: border-box;
@@ -16,6 +17,8 @@ html, body {
   height: 100%;
   padding: 10px;
   margin: 0px;
+
+
 }
 
 a, a:hover, a:visited, a:active
@@ -27,7 +30,7 @@ a, a:hover, a:visited, a:active
   display: flex;
   justify-content: center;
   align-items: center;
-
+  font-family: Avantgarde, TeX Gyre Adventor, URW Gothic L, sans-serif;
 }
 
 .h1 {text-align:center;}
@@ -49,7 +52,9 @@ a, a:hover, a:visited, a:active
   border: 1px solid lightgrey;
   text-align: center;
   color:black;
-  font-size: 1,5em;}
+  font-size: 1,5em;
+  font-family: Avantgarde, TeX Gyre Adventor, URW Gothic L, sans-serif;
+}
 
 .content input[type=text]{
   width: 400px;

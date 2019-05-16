@@ -1,16 +1,20 @@
+<?php
+include_once('navigation.php');
+?>
 <!doctype html>
 <html lang="fr">
 <head>
   <meta charset="utf-8">
-  <title>Camagru</title>
+  <title>MONTAGE</title>
   <link rel="stylesheet" href="montage.css" type="text/css" media="all">	
   <!-- <link rel="stylesheet" href="navigation.css" type="text/css" media="all"> -->
+  <!-- <script src="script.js"></script> -->
 </head>
 
 <body>
 
 <div class="container">
-    <div class="navigation"><?php include('navigation.php'); ?></div>
+  
     <div class="menu">
     
     
@@ -42,23 +46,26 @@
 
 
     <div class="img_stickers">
-
-
-    <?php foreach ($stickers as $stick) {
-                        if ($stick == "." || $stick == "..")
-                            continue;
-                        else {
-                        ?> <img name="stick"class="stick", src="stickers/<?php echo $stick;?>">
-                        <?php }
-                        } ?>
-
-      <div><button class="stickers" id="stickersbutton1"><img src="stickers/1.png" class="stickers" id="can_sticker" alt="blase">
+    <?php $tableau=array("stickers/1.png","stickers/2.png","stickers/3.png","stickers/4.png");
+		for($i=0;$i<count($tableau);$i++)
+		{
+    ?>
+            <div id="bouton<?php echo $i; ?>"  
+			onclick="javascript:setImage('bouton<?php echo $i; ?>','image<?php echo $i; ?>','<?php echo $tableau[$i]; ?>','<?php echo $tableau[$i]; ?>');"> 
+            Afficher <?php echo $tableau[$i]; ?></div>
+            <div id="image<?php echo $i; ?>"></div>
+    <?php
+		}
+	?>
+    </div>
+<!--     
+      <div><button class="stickers" id="stickersbutton1"><img src='<?php echo $tableau[$i]; ?>' width='50' height='50' class="stickers" id="can_sticker" alt="blase">
       </div></button>
       <div><button class="stickers" id="stickersbutton2"><img src="stickers/2.png" class="stickers" id="can_sticker" alt="blase">
       </div></button>
       <div><button class="stickers" id="stickersbutton3"><img src="stickers/3.png" class="stickers" id="can_sticker" alt="intello"></div></button>
       <div><button class="stickers" id="stickersbutton4"><img src="stickers/4.png" class="stickers" id="can_sticker" alt="wesh"></div></button>
-    </div>
+    </div>  -->
 
 
     <div class="footer">ABOUT US . SUPPORT . PRESS . API . JOBS . PRIVACY . TERMS . DIRECTORY . PROFILES . HASHTAGS . LANGUAGE
@@ -170,41 +177,52 @@ document.getElementById("message").innerHTML="message: "+tracks[0].label+" déco
 video.srcObject = null;
 }
 
-let stick = document.getElementsByClassName('stick');
-for (let i=0; i < stick.length; i++)
-{
-    stick[i].addEventListener('click', function() {
-        let sticker = document.querySelector('.sticked');
-        let button = document.getElementsByClassName("test");
-        if (button[0]) {
-            button[0].disabled = false;
-        }
-        sticker.setAttribute('src', this.src);
-        dragElement(sticker);
-    });
-}
 
-if (canvas){
-  var id = document.getElementById('stickersbutton1');
+//bouton est l'id du bouton, id l'id de l'emplacement de l'image, titre le titre de l'image,image le lien
+function setImage(bouton,id,titre,srcimage) { 
+
+   var id = document.getElementById(bouton);
   var sticker;
   id.addEventListener('click', function(ev){
       draw();
       ev.preventDefault();
     }, false);
-}
-function draw(nm) {
+
+function draw() {
+    console.log(this)
 var a = document.getElementById('canvas')
 var ctx = a.getContext("2d");
 var image = new Image();
 
-image.src = 'stickers/1.png';
+// for(let i = 0 ;i<tableau.length;i++);
+image.src = srcimage;
 image.onload = function(){
    sticker = ctx.drawImage(this,0,0,50,50);
-};
+   console.log(this)
+       };
+    }
 
 }
-
 </script>
+ 
+  <!-- var id = document.getElementById('stickersbutton' + i);
+  var sticker;
+  id.addEventListener('click', function(ev){
+      draw();
+      ev.preventDefault();
+    }, false);
 
+function draw() {
+var a = document.getElementById('canvas')
+var ctx = a.getContext("2d");
+var image = new Image();
+
+// for(let i = 0 ;i<tableau.length;i++);
+image.src = 'stickers/4.png';
+image.onload = function(){
+   sticker = ctx.drawImage(this,0,0,50,50);
+       };
+    } -->
 
 </html>
+
