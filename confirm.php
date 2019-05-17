@@ -10,18 +10,18 @@ $req->execute([$user_id]);
 $user = $req->fetch();
 
 if($user && $user->confirmation_token == $token){
- 
-    $_req = $bdd->prepare('UPDATE membres SET confirmation_token = NULL, confirmed_at = NOW() WHERE id = ?')->execute([$user_id]);
-    
-    $_SESSION['flash']['success'] = "Votre compte a bien ete valide.";
 
-    $_SESSION['auth'] = $user;
+	$_req = $bdd->prepare('UPDATE membres SET confirmation_token = NULL, confirmed_at = NOW() WHERE id = ?')->execute([$user_id]);
 
-    header('Location: account.php');
-    
+	$_SESSION['flash']['success'] = "Votre compte a bien ete valide.";
+
+	$_SESSION['auth'] = $user;
+
+	header('Location: account.php');
+
 } else {
-    $_SESSION['flash']['warning'] = "Ce token n'est plus valide";
-    header('Location: login.php');
+	$_SESSION['flash']['warning'] = "Ce token n'est plus valide";
+	header('Location: login.php');
 }
 
 ?>

@@ -36,7 +36,7 @@ a, a:hover, a:visited, a:active
 .h1 {text-align:center;}
 
 .header {grid-area: h;
-    background-color: #96ceb4;
+    background-color:#333;
     color:white;
     font-size:7.9em; 
     font-weight: 900; 
@@ -45,12 +45,13 @@ a, a:hover, a:visited, a:active
 }
 */
 .content {grid-area: c;
-  display: flex;
+  /* display: flex; */
   min-width: 600px;
   flex-direction: column ;
   background-color: rgba(255,255,255,0.7);
   border: 1px solid lightgrey;
   text-align: center;
+  justify-content: center;
   color:black;
   font-size: 1,5em;
   font-family: Avantgarde, TeX Gyre Adventor, URW Gothic L, sans-serif;

@@ -8,74 +8,74 @@ include_once('db.php');
 logged_only();
 
 if ($_SESSION['auth']){
-if(!empty($_POST)){
-	// var_dump($_POST);
+	if(!empty($_POST)){
+		// var_dump($_POST);
 
-	if(!empty($_POST['new_username'])){
+		if(!empty($_POST['new_username'])){
 
-		$user_id = $_SESSION['auth']->id;
-		var_dump($_SESSION);
-		$newusername = htmlspecialchars($_POST['new_username']);
+			$user_id = $_SESSION['auth']->id;
+			var_dump($_SESSION);
+			$newusername = htmlspecialchars($_POST['new_username']);
 
-		$bdd->prepare('UPDATE membres SET username = ? WHERE id = ?')->execute([$newusername, $user_id]);
+			$bdd->prepare('UPDATE membres SET username = ? WHERE id = ?')->execute([$newusername, $user_id]);
 
-		$_SESSION['flash']['success'] = "Username update";
-		
-		//actualisation si changement)
-		// $req = $bdd->prepare('SELECT * FROM membres WHERE id = ?');
-		// $req->execute([$user_id]);
-		// $user = $req->fetch();
-		// $_SESSION['auth'] = $user;
+			$_SESSION['flash']['success'] = "Username update";
 
-		// header('Location: account.php?id='.$_SESSION['auth']);
-	}
-	else{
-		header('Location: account.php');
-	}
-}
+			//actualisation si changement)
+			// $req = $bdd->prepare('SELECT * FROM membres WHERE id = ?');
+			// $req->execute([$user_id]);
+			// $user = $req->fetch();
+			// $_SESSION['auth'] = $user;
 
-if(!empty($_POST)){
-	// var_dump($_POST);
-	if(empty($_POST['passwd']) || ($_POST['passwd'] != $_POST['passwd_confirm'])){
-
-		$_SESSION['flash']['warning'] = "Passwords are differents";
-		// echo "Passwords are differents";
-	}
-	else {
-
-		$user_id = $_SESSION['auth']->id;
-
-		$password = password_hash($_POST['passwd'], PASSWORD_BCRYPT);
-
-		$bdd->prepare('UPDATE membres SET password = ? WHERE id = ?')->execute([$password, $user_id]);
-
-		$_SESSION['flash']['success'] = "Password update";
+			// header('Location: account.php?id='.$_SESSION['auth']);
+		}
+		else{
+			header('Location: account.php');
+		}
 	}
 
+	if(!empty($_POST)){
+		// var_dump($_POST);
+		if(empty($_POST['passwd']) || ($_POST['passwd'] != $_POST['passwd_confirm'])){
+
+			$_SESSION['flash']['warning'] = "Passwords are differents";
+			// echo "Passwords are differents";
+		}
+		else {
+
+			$user_id = $_SESSION['auth']->id;
+
+			$password = password_hash($_POST['passwd'], PASSWORD_BCRYPT);
+
+			$bdd->prepare('UPDATE membres SET password = ? WHERE id = ?')->execute([$password, $user_id]);
+
+			$_SESSION['flash']['success'] = "Password update";
+		}
 
 
-if(!empty($_POST)){
-	//  var_dump($_POST);
-	if(empty($_POST['mail']) || ($_POST['mail'] != $_POST['mail_confirm'])){
-	
-		echo "Mail are differents";
+
+		if(!empty($_POST)){
+			//  var_dump($_POST);
+			if(empty($_POST['mail']) || ($_POST['mail'] != $_POST['mail_confirm'])){
+
+				echo "Mail are differents";
+			}
+			else {
+				$user_id = $_SESSION['auth']->id;
+
+				$mail = htmlspecialchars($_POST['mail']);
+
+				$bdd->prepare('UPDATE membres SET mail = ? WHERE id = ?')->execute([$mail, $user_id]);
+
+				$_SESSION['flash']['success'] = "Mail update";
+			}
+			// //actualisation si changement)
+			// $req = $bdd->prepare('SELECT * FROM membres WHERE id = ?');
+			// $req->execute([$user_id]);
+			// $mail = $req->fetch();
+			// $_SESSION['auth'] = $mail;
+		}
 	}
-	else {
-		$user_id = $_SESSION['auth']->id;
-
-		$mail = htmlspecialchars($_POST['mail']);
-
-		$bdd->prepare('UPDATE membres SET mail = ? WHERE id = ?')->execute([$mail, $user_id]);
-
-		$_SESSION['flash']['success'] = "Mail update";
-	}
-		// //actualisation si changement)
-		// $req = $bdd->prepare('SELECT * FROM membres WHERE id = ?');
-		// $req->execute([$user_id]);
-		// $mail = $req->fetch();
-		// $_SESSION['auth'] = $mail;
-}
-}
 ?>
 
 <!doctype html>
@@ -90,9 +90,9 @@ if(!empty($_POST)){
 
 <body>
  <div class="container">
-            <div class="header">CAMAGRU</div>
-            <div class="menu"></div>
-            <div class="content">
+			<div class="header">CAMAGRU</div>
+			<div class="menu"></div>
+			<div class="content">
 			<div>Bonjour <?= $_SESSION['auth']->username; ?>,</div>
 				<br/>
 
@@ -133,14 +133,14 @@ if(!empty($_POST)){
 			</form> 
 
 
-	
+
 		<div class="txt"><a href="forgot_passwd.php"></a></div>
 </div>
 <!-- <div class="article" class="text">Don't have an account?<b>  <a href="signup.php">&nbsp;Sign up</a></b></div> -->
 
-            <div class="footer">ABOUT US . SUPPORT . PRESS . API . JOBS . PRIVACY . TERMS . DIRECTORY . PROFILES . HASHTAGS . LANGUAGE</div>
-        </div>
-  
+			<div class="footer">ABOUT US . SUPPORT . PRESS . API . JOBS . PRIVACY . TERMS . DIRECTORY . PROFILES . HASHTAGS . LANGUAGE</div>
+		</div>
+
 </body>
 </html>
 <?php 

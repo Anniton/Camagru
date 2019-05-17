@@ -19,7 +19,7 @@ if(session_status() == PHP_SESSION_NONE){
 
         <div style="position:absolute; top:25; left:170;"><a href="account.php"><img src="logo_hdr/login.png" alt="Sign In" max-width=100% height=35;><?php } ?>
         <?php if ($_SESSION['auth']) { ?></div>
-            <div style="position:absolute; right:20;"><a href="logout.php"><img src="logo_hdr/logout.png" alt="Log Out" max-width=100% height=45;></a><?php } ?></div>
+        <div style="position:absolute; right:20;"><a href="logout.php"><img src="logo_hdr/logout.png" alt="Log Out" max-width=100% height=45;></a><?php } ?></div>
     </div>
 <?php if(isset($_SESSION['flash'])): ?>
 <?php foreach($_SESSION['flash'] as $type => $message): ?>
