@@ -21,7 +21,7 @@ include_once("db.php");
             <div class="header"></div>
             <div class="menu"></div>
             <div class="content">
-                <div><img src="logo_hdr/chat1.jpg"/></div>
+                <div class="gallery"><img src="logo_hdr/chat1.jpg"/></div>
                 <div><img src="logo_hdr/chat4.jpg"/></div>
                 <div><img src="logo_hdr/chatRobinet.jpg"/></div>
                 <div><img src="logo_hdr/chat-siamois.jpg"/></div>
