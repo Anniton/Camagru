@@ -2,7 +2,7 @@
     height: 100%;
     display: grid;
     grid-gap: 50px;
-    grid-template-columns: repeat(13, 1fr);
+    grid-template-columns: repeat(13wv 1fr);
     grid-template-rows: 80px auto 150px 200px;
      grid-template-areas: 
         "h h h h h h h h h h h h h"
@@ -20,7 +20,6 @@ html, body {
 
 
 }
-
 a, a:hover, a:visited, a:active
 {
   color: #696969;
