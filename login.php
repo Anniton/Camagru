@@ -53,7 +53,7 @@ if(!empty($_POST) && !empty($_POST['username']) && !empty($_POST['passwd']))
 	}
 }
 	else{
-		$_SESSION['flash']['warning'] = 'Identifiant ou mdp incorrect';
+		// $_SESSION['flash']['warning'] = 'Identifiant ou mdp incorrect';
 	}
 
 

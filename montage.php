@@ -21,25 +21,28 @@ include_once('navigation.php');
     
     </div>
     <div class="content">
-    <div style='display:inline-block'>
+            <div class="orga">
 
-          <video id="sourcevid" width='400' height='300' autoplay="true"></video>
+                <video class="vidpic" id="sourcevid" width='400' height='300' autoplay="true"></video>
+                <p class="message">message:</p>
 
-          <div id="message" style='height:20px;width:350px;margin:5px;'>message:</div>
-    </div>
-        <canvas id="canvas" width='400'  height='300' style='display:inline-block'></canvas>
-    <div>
-          <button onclick="ouvrir_camera()">ouvrir camera</button>
-          <button onclick="fermer()">fermer camera</button>
-          <br>
-          <button onclick="photo()">prise de photo</button>
-          <button onclick="sauver()">sauvegarder</button>
-          <button onclick="effacer()">effacer photo</button>
-          <button onclick="prepare_envoi()">envoyer</button>
-          </div>
+                <div><canvas class="vidpic" id="canvas" width='400'  height='300' 
+                style='display:inline-block'></canvas></div>
+            </div>
+        
+            <div>
+                <button onclick="ouvrir_camera()">ouvrir camera</button>
+                <button onclick="fermer()">fermer camera</button>
+                <br>
+                <button onclick="photo()">prise de photo</button>
+                <button onclick="sauver()">sauvegarder</button>
+                <button onclick="effacer()">effacer photo</button>
+                <button onclick="prepare_envoi()">envoyer</button>
+               
+            </div>
 
           <!-- <div id="jaxa" style='width:80%;margin:5px;'>message:</div> -->
-
+         
      
     </div>
 
