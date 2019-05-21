@@ -6,20 +6,21 @@ include_once("db.php");
 
 // logged_only();
 if ($_SESSION['auth']){
-
+  // var_dump($_POST['comment']);
   if(!empty($_POST['comment'])){
 
     $user_id = $_SESSION['auth']->id;
     $comments = htmlspecialchars($_POST['comment']);
 
     $bdd->prepare('INSERT INTO comment SET comments = ?, uid = ?')->execute([$comments, $user_id]);
-
-    $_SESSION['flash']['success'] = "comments add";
-  }
-  else{
-    // header('Location: gallery.php');
+    header('Location: gallery.php');
+    // $_SESSION['flash']['success'] = "comments add";
   }
 }
+// else{
+//   header('Location: gallery.php');
+//   // exit();
+// }
 
 ?>
 
@@ -41,24 +42,30 @@ if ($_SESSION['auth']){
             <form action="" method="post">
             <div class="gallery">
            
-                <div class="comments"><input name="comment" type="text" placeholder= "Add a comment..."><input type=submit Value="Done">
-                <p class="text">
+                <div class="comments">
+                <?php if (!($_SESSION['auth'])){ ?>
+                  <div class="nop"> <a href="login.php"><?php echo "Log in to like or comment"; ?></a> </div>
+               <?php }
                 
-                <?php
-                // $user_id = $_SESSION['auth']->id;
-                $reponse = $bdd->prepare('SELECT * FROM comment')->execute();
-              
-                
-                ;
-                while($row = mysql_fetch_object($reponse))
-                {
-                  echo $row['comments'];
-                }
-                ?>
-                
-                
-                </p></div>
-                        <img src="logo_hdr/chat-siamois.jpg"/>
+                 else { ?>
+                      <input name="comment" type="text" placeholder= "Add a comment..."><input type=submit Value="Done">
+                    <?php  }?>
+                   <div class="text">
+                      <?php
+                      $reponse = $bdd->query('SELECT comments FROM comment');
+                      $donnees = $reponse->fetchAll(PDO::FETCH_COLUMN, 'comments');
+                      foreach($donnees as $commentaire)
+                      {
+                      ?>
+                      <p class="comment"> <?php echo $commentaire ?> </p>
+                        <?php 
+                      }
+                     ?>
+                      
+          
+                   </div>
+                </div>
+                <img src="logo_hdr/chat-siamois.jpg"/>
           
             </div>
             </form>
