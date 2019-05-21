@@ -117,8 +117,9 @@ a, a:hover, a:visited, a:active
 
   .comments p{
     padding: 10px 10px;
+    font-size:1em;
     font-weight: bold;
-    color: grey;
+    /* color: grey; */
     /* border-bottom: solid 1px lightgrey; */
     font-family: Avantgarde, TeX Gyre Adventor, URW Gothic L, sans-serif;
   }
@@ -128,6 +129,7 @@ a, a:hover, a:visited, a:active
     height:400px;
     font-weight: bold;
     border: none;
+    font-size:1em;
     font-family: Avantgarde, TeX Gyre Adventor, URW Gothic L, sans-serif;
     display: block;
   }
@@ -136,7 +138,8 @@ a, a:hover, a:visited, a:active
     height:50px;
     padding: 10px;
     border: none;
-    font-size:0.8em;
+    color:lightblue;
+    font-size:1em;
     border-bottom: solid 1px lightgrey;
   }
   .comments input[type=text]{ 
