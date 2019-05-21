@@ -4,7 +4,7 @@ include_once("navigation.php");
 include_once("user_functions.php");
 include_once("db.php");
 
-logged_only();
+// logged_only();
 if ($_SESSION['auth']){
 
   if(!empty($_POST['comment'])){
@@ -12,12 +12,12 @@ if ($_SESSION['auth']){
     $user_id = $_SESSION['auth']->id;
     $comments = htmlspecialchars($_POST['comment']);
 
-    $bdd->prepare('UPDATE membres SET comments = ? WHERE id = ?')->execute([$comments, $user_id]);
+    $bdd->prepare('INSERT INTO comment SET comments = ?, uid = ?')->execute([$comments, $user_id]);
 
     $_SESSION['flash']['success'] = "comments add";
   }
   else{
-    header('Location: gallery.php');
+    // header('Location: gallery.php');
   }
 }
 
@@ -27,7 +27,7 @@ if ($_SESSION['auth']){
 <html lang="fr">
 <head>
   <meta charset="utf-8">
-  <title>CAMAGRU</title>
+  <title>Gallery</title>
   <link rel="stylesheet" href="gallery.css">	
   <script src="script.js"></script>
 </head>
@@ -42,7 +42,22 @@ if ($_SESSION['auth']){
             <div class="gallery">
            
                 <div class="comments"><input name="comment" type="text" placeholder= "Add a comment..."><input type=submit Value="Done">
-                <p class="text"><?php echo  $_SESSION['auth']->id; ?></p></div>
+                <p class="text">
+                
+                <?php
+                // $user_id = $_SESSION['auth']->id;
+                $reponse = $bdd->prepare('SELECT * FROM comment')->execute();
+              
+                
+                ;
+                while($row = mysql_fetch_object($reponse))
+                {
+                  echo $row['comments'];
+                }
+                ?>
+                
+                
+                </p></div>
                         <img src="logo_hdr/chat-siamois.jpg"/>
           
             </div>

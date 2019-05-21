@@ -5,7 +5,7 @@ if(session_status() == PHP_SESSION_NONE){
 ?>
 <link rel="stylesheet" href="navigation.css">
 <div class="navigation">
-        <div><a href="signup.php"><img src="logo_hdr/logo_camagru_color.png" alt="Home" max-width=100% height=45;></a>
+        <div><a href="gallery.php"><img src="logo_hdr/logo_camagru_color.png" alt="Home" max-width=100% height=45;></a>
         <?php if (!$_SESSION['auth']) { ?></div>
 
         <div style="position:absolute; right:20"><a href="login.php"><img src="logo_hdr/login.png" alt="Sign In" max-width=100% height=30;></a><?php } ?>
