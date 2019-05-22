@@ -57,17 +57,14 @@ if ($_SESSION['auth']){
 
 				echo "<div class='comments'>";
                 if (!($_SESSION['auth'])) {
-                	echo "<div class='nop'><a href='login.php'>Log in to like or comment</a></div>";
-				} else {
-					echo "<input name='pic_id' value='$data->id' type='hidden'>";
-                    echo "<input name='comment' type='text' placeholder= 'Add a comment...'><input type=submit Value='Done'>";
-				}
-				if (!($_SESSION['auth'])) {
+					echo "<div class='nop'><a href='login.php'>Log in to like or comment</a></div>";
 					echo "<div class='like'>";
 					echo "<a href='login.php'><img src='logo_hdr/heart.png'  alt='Heart' width=20 height=20/></a>";
 					echo "<a href='login.php'><img src='logo_hdr/bulle_comment.png'  alt='Comment' width=25 height=25/></a>";
 					echo "</div>";
 				} else {
+					echo "<input name='pic_id' value='$data->id' type='hidden'>";
+					echo "<input name='comment' type='text' placeholder= 'Add a comment...'><input type=submit Value='Done'>";
 					echo "<div class='like'>";
 					echo "<button name='like' type='hidden' onclick='addLike($data->id);'><img src='logo_hdr/heart.png'  alt='Heart' width=20 height=20/></button>";
 					echo "</div>";
