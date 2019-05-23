@@ -86,21 +86,22 @@ function fermer() {
 
 function setImage(bouton,id,titre,srcimage) {
 	var id = document.getElementById(bouton);
+	var canvas, context, data;
+	var isDraggable = false;
+	var image = new Image();
+	var currentX = 0;
+	var currentY = 0;
+
 	id.addEventListener('click', function(ev) {
 		// window.onload =
 		draw();
 		ev.preventDefault();
 	}, false);
 
-	var canvas, context;
-	var isDraggable = false;
-	var image = new Image();
-	var currentX = 0;
-	var currentY = 0;
-
 	function draw() {
 		canvas = document.getElementById('canvas')
 		context = canvas.getContext("2d");
+		data = context.getImageData(0,0,canvas.width, canvas.height);
 		image.onload = function() {
 			_Go();
 		};
@@ -117,8 +118,11 @@ function setImage(bouton,id,titre,srcimage) {
 	};
 
 	function _ResetCanvas(canvas1) {
-		context.fillStyle = 'transparent';
-		context.fillRect(0,0, canvas.width, canvas.height);
+		// context.fillStyle = 'transparent';
+		// context.fillRect(0,0, canvas.width, canvas.height);
+		context.clearRect(0, 0, canvas.width, canvas.height);
+		context.putImageData(data, 0, 0);
+		// context.restore();
 	};
 
 	function _MouseEvents() {
@@ -155,6 +159,7 @@ function setImage(bouton,id,titre,srcimage) {
 }
 
 function effacer() {
+	canvas = document.getElementById('canvas');
 	ctx = canvas.getContext('2d');
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
 };
