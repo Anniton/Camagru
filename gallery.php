@@ -16,9 +16,11 @@ if ($_SESSION['auth']){
 		$res_uid = $bdd->prepare('SELECT author_id FROM photos WHERE id=?');
 		$res_uid->execute([$id]);
 		$uid = $res_uid->fetchAll(PDO::FETCH_COLUMN, 'author_id')[0];
+
 		$res_mail = $bdd->prepare('SELECT mail FROM membres WHERE id=?');
 		$res_mail->execute([$uid]);
 		$email = $res_mail->fetchAll(PDO::FETCH_COLUMN, 'mail')[0];
+
 		$res = $bdd->prepare('SELECT nb_like FROM photos WHERE id=?');
 		$res->execute([$id]);
 		$tab = $res->fetchAll(PDO::FETCH_COLUMN, 'nb_like');
@@ -68,8 +70,8 @@ if ($_SESSION['auth']){
                 if (!($_SESSION['auth'])) {
 					echo "<div class='nop'><a href='login.php'>Log in to like or comment</a></div>";
 					echo "<div class='like'>";
-					echo "<a href='login.php'><img src='logo_hdr/heart.png'  alt='Heart' width=20 height=20/></a>";
-					echo "<a href='login.php'><img src='logo_hdr/bulle_comment.png'  alt='Comment' width=25 height=25/></a>";
+					echo "<span class='heartg' alt='Heart''></span>";
+					// echo "<a href='login.php'><img src='logo_hdr/bulle_comment.png'  alt='Comment' width=40 height=40/></a>";
 					echo "</div>";
 				} else {
 					echo "<input name='pic_id' value='$data->id' type='hidden'>";
@@ -77,11 +79,10 @@ if ($_SESSION['auth']){
 					echo "<div class='like'>";
 					// echo "<button name='like' type='hidden' onclick='addLike($data->id);'><img src='logo_hdr/heart.svg' alt='Heart' width=20 height=20/ style='color:red;'></button>";
 					echo "<button name='like' type='hidden' onclick='addLike($data->id);'><span class='heart' alt='Heart' style='fill:red;'></span></button>";
-
-					echo "<p style='color:black;font-weight:bold;'> $data->nb_like Likes</p>";
 					echo "</div>";
 				}
 
+				echo "<p style='color:black;font-weight:bold;'> $data->nb_like Likes</p>";
 				echo "<div class='text'>";
 				foreach($donnees as $commentaire) {
 					echo "<p class='comment'>$commentaire</p>";
