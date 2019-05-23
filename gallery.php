@@ -4,16 +4,13 @@ include_once("navigation.php");
 include_once("user_functions.php");
 include_once("db.php");
 
-// logged_only();
 if ($_SESSION['auth']){
   if(!empty($_POST['comment'])){
 		$user_id = $_SESSION['auth']->id;
 		$pic_id = (int)htmlspecialchars($_POST['pic_id']);
 		$comments = htmlspecialchars($_POST['comment']);
-
 		$bdd->prepare('INSERT INTO comments SET comment = ?, uid = ?, photo_id = ?')->execute([$comments, $user_id, $pic_id]);
 		header('Location: gallery.php');
-	// 	$_SESSION['flash']['success'] = "comments add";
 	}
 	if (!empty($_GET['pic_id'])) {
 		$id = (int)$_GET['pic_id'];
@@ -22,7 +19,7 @@ if ($_SESSION['auth']){
 		$tab = $res->fetchAll(PDO::FETCH_COLUMN, 'nb_like');
 		$nb_like = (int)$tab[0] + 1;
 		$req = $bdd->prepare('UPDATE photos SET nb_like=? WHERE id=?')->execute([$nb_like, $id]);
-		header('Location: gallery.php');
+		header('Location: gallery.php/#'+$id);
 	}
 }
 ?>
@@ -36,13 +33,16 @@ if ($_SESSION['auth']){
   <script src="script.js"></script>
 </head>
 
-
 <body>
 	<div class="container">
 		<div class="header"></div>
 		<div class="menu"></div>
 		<div class="content">
 		<?php
+			/**
+			 *	Foreach photo in the "photos" table in the db,
+			 *	We create a block html for each image and these comments
+			 */
 			$rep = $bdd->query('SELECT photo, id, nb_like FROM photos');
 			$pic = $rep->fetchAll();
 
@@ -54,7 +54,6 @@ if ($_SESSION['auth']){
 				echo "<form action='' method='post'>";
 				echo "<div id='$data->id' class='gallery'>";
 				echo "<img src='data:image/jpg;base64, $data->photo' width=500 height=400;/>";
-
 				echo "<div class='comments'>";
                 if (!($_SESSION['auth'])) {
 					echo "<div class='nop'><a href='login.php'>Log in to like or comment</a></div>";
@@ -66,13 +65,13 @@ if ($_SESSION['auth']){
 					echo "<input name='pic_id' value='$data->id' type='hidden'>";
 					echo "<input name='comment' type='text' placeholder= 'Add a comment...'><input type=submit Value='Done'>";
 					echo "<div class='like'>";
-					echo "<button name='like' type='hidden' onclick='addLike($data->id);'><img src='logo_hdr/heart.png'  alt='Heart' width=20 height=20/></button>";
+					echo "<button name='like' type='hidden' onclick='addLike($data->id);'><img src='logo_hdr/heart.svg' alt='Heart' width=20 height=20/ style='fill: red;'></button>";
 					echo "</div>";
 				}
 				echo "<p> $data->nb_like Likes</p>";
 				echo "<div class='text'>";
 				foreach($donnees as $commentaire) {
-                      echo "<p class='comment'>$commentaire</p>";
+					echo "<p class='comment'>$commentaire</p>";
 				}
 				echo "</div>";
 				echo "</div>";
@@ -82,9 +81,8 @@ if ($_SESSION['auth']){
 			}
 		?>
 		</div>
-
 		<div class="footer">ABOUT US . SUPPORT . PRESS . API . JOBS . PRIVACY . TERMS . DIRECTORY . PROFILES . HASHTAGS . LANGUAGE</div>
-        </div>
+	</div>
 </body>
 </html>
 <script>
