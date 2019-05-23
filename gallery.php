@@ -3,7 +3,6 @@ session_start();
 include_once("navigation.php");
 include_once("user_functions.php");
 include_once("db.php");
-
 if ($_SESSION['auth']){
   if(!empty($_POST['comment'])){
 		$user_id = $_SESSION['auth']->id;
@@ -19,7 +18,9 @@ if ($_SESSION['auth']){
 		$tab = $res->fetchAll(PDO::FETCH_COLUMN, 'nb_like');
 		$nb_like = (int)$tab[0] + 1;
 		$req = $bdd->prepare('UPDATE photos SET nb_like=? WHERE id=?')->execute([$nb_like, $id]);
-		header('Location: gallery.php/#'+$id);
+		// header('Location: gallery.php/#'+$id);
+		header('Location: login.php');
+		exit();
 	}
 }
 ?>
@@ -65,10 +66,13 @@ if ($_SESSION['auth']){
 					echo "<input name='pic_id' value='$data->id' type='hidden'>";
 					echo "<input name='comment' type='text' placeholder= 'Add a comment...'><input type=submit Value='Done'>";
 					echo "<div class='like'>";
-					echo "<button name='like' type='hidden' onclick='addLike($data->id);'><img src='logo_hdr/heart.svg' alt='Heart' width=20 height=20/ style='fill: red;'></button>";
+					// echo "<button name='like' type='hidden' onclick='addLike($data->id);'><img src='logo_hdr/heart.svg' alt='Heart' width=20 height=20/ style='color:red;'></button>";
+					echo "<button name='like' type='hidden' onclick='addLike($data->id);'><span class='heart' alt='Heart' style='fill:red;'></span></button>";
+
+					echo "<p style='color:black;font-weight:bold;'> $data->nb_like Likes</p>";
 					echo "</div>";
 				}
-				echo "<p> $data->nb_like Likes</p>";
+
 				echo "<div class='text'>";
 				foreach($donnees as $commentaire) {
 					echo "<p class='comment'>$commentaire</p>";
