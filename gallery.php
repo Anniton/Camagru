@@ -13,13 +13,22 @@ if ($_SESSION['auth']){
 	}
 	if (!empty($_GET['pic_id'])) {
 		$id = (int)$_GET['pic_id'];
+		$res_uid = $bdd->prepare('SELECT author_id FROM photos WHERE id=?');
+		$res_uid->execute([$id]);
+		$uid = $res_uid->fetchAll(PDO::FETCH_COLUMN, 'author_id')[0];
+		$res_mail = $bdd->prepare('SELECT mail FROM membres WHERE id=?');
+		$res_mail->execute([$uid]);
+		$email = $res_mail->fetchAll(PDO::FETCH_COLUMN, 'mail')[0];
 		$res = $bdd->prepare('SELECT nb_like FROM photos WHERE id=?');
 		$res->execute([$id]);
 		$tab = $res->fetchAll(PDO::FETCH_COLUMN, 'nb_like');
 		$nb_like = (int)$tab[0] + 1;
+		$msg = $_SESSION['auth']->username." vient de liker ta photo. Reviens vite sur notre site !";
+		var_dump($msg);
+		mail($email, "Quelqu'un aime ta photo REVIENS !", $msg);
 		$req = $bdd->prepare('UPDATE photos SET nb_like=? WHERE id=?')->execute([$nb_like, $id]);
 		// header('Location: gallery.php/#'+$id);
-		header('Location: login.php');
+		// header('Location: login.php');
 		exit();
 	}
 }
