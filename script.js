@@ -92,6 +92,10 @@ function setImage(bouton,id,titre,srcimage) {
 
 	id.addEventListener('click', function(ev) {
 		// window.onload =
+		console.log("lol");
+		var buttons = document.getElementById("buttons");
+		console.log(buttons);
+		buttons.setAttribute('style', "display: flex;");
 		draw();
 		ev.preventDefault();
 	}, false);

@@ -27,9 +27,9 @@ Function.prototype.namedParameters = function(type, list, error) {
 
 (function() {
   function selectImage(afterSelectCallback) {
-    var inputFile = document.createElement("input");
-    inputFile.type = "file";
-    inputFile.accept = "image/*";
+	var inputFile = document.getElementById("input");
+    // inputFile.type = "file";
+    // inputFile.accept = "image/*";
 
     inputFile.addEventListener("change", function() {
       if (afterSelectCallback) {
@@ -86,7 +86,7 @@ Function.prototype.namedParameters = function(type, list, error) {
     var imageSource = options.imageSource || document.createElement("img"),
       width = options.width || 0,
       height = options.height || 0,
-      canvas = document.createElement("canvas"),
+      canvas = document.getElementById("canvas"),
       imageResult = document.createElement("img"),
       context;
 
@@ -109,9 +109,9 @@ Function.prototype.namedParameters = function(type, list, error) {
   function reduceImage(imageSource, callback) {
     resizeWithSameRatio({
       height: imageSource.height,
-      maxHeight: 600,
+      maxHeight: 300,
       width: imageSource.width,
-      maxWidth: 800
+      maxWidth: 400
     }, function(height, width) {
       thumbnailWithCanvas({
         imageSource: imageSource,
@@ -166,22 +166,26 @@ Function.prototype.namedParameters = function(type, list, error) {
   /* Exec */
 
   var body = document.getElementsByTagName("body")[0];
-  body.appendChild(
     selectImage(function(inputFile) {
       readImage(inputFile, function(image) {
         reduceImage(image, function(imageResult) {
           uploadImage({
             url: "https://www.mocky.io/v2/5773cc3c0f0000950c597af9",
             image: imageResult
-          }, function(error, response) {
-            var data = document.createElement("div");
-            data.textContent = (error) ? error : response;
+          }, function(/*error, response*/) {
+			// var data = document.createElement("div");
+			var canvas = document.getElementById('canvas');
+			ctx = canvas.getContext("2d");
+            // data.textContent = (error) ? error : response;
 
-            body.appendChild(data);
-            body.appendChild(imageResult);
+            // body.appendChild(data);
+			// body.appendChild(imageResult);
+			console.log(imageResult);
+			// ctx.drawImage(image, canvas.width, canvas.height);
+			canvas.appendChild(imageResult);
+
           });
         });
       });
     })
-  );
 }());
