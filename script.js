@@ -89,15 +89,19 @@ function setImage(bouton,id,titre,srcimage) {
 	var image = new Image();
 	var currentX = 0;
 	var currentY = 0;
+	var isactive = false;
 
 	id.addEventListener('click', function(ev) {
 		// window.onload =
-		console.log("lol");
+		// console.log("lol");
+				if(!isactive){
 		var buttons = document.getElementById("buttons");
-		console.log(buttons);
+		// console.log(buttons);
 		buttons.setAttribute('style', "display: flex;");
+		isactive = true;
+	} else {
 		draw();
-		ev.preventDefault();
+		ev.preventDefault();}
 	}, false);
 
 	function draw() {

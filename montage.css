@@ -177,3 +177,11 @@ a, a:hover, a:visited, a:active
 .input-file {
 	display: none;
 }
+
+.btn{
+	border: none;
+}
+
+.btn img {
+	color: pink;
+}

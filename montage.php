@@ -26,17 +26,16 @@
 			</div>
 
 			<div id="buttons" class='fuckCss'>
-				<label for="input" class="label-file">Choose file</label>
-				<input id="input" class="input-file" type="file" accept="image/*">
 				<!-- <input type="file" id='input'  accept="image/*"> -->
-				<button onclick="ouvrir_camera()">ouvrir camera</button>
-				<button onclick="fermer()">fermer camera</button>
+				<button class="btn" onclick="ouvrir_camera()"><img src="logo_gal/open_cam.svg" alt="open_cam" max-width=100% height=45;></button>
+				<button class="btn" onclick="fermer()"><img src="logo_gal/close_cam.svg" alt="close_cam" max-width=100% height=45;></button>
 				<br>
-				<button onclick="photo()">prise de photo</button>
-				<button onclick="sauver()">sauvegarder</button>
-				<button onclick="effacer()">effacer photo</button>
-				<button onclick="prepare_envoi()">envoyer</button>
-
+				<button class="btn" onclick="photo()"><img src="logo_gal/take_pic.svg" alt="take_pic" max-width=100% height=45;></button>
+				<button class="btn" onclick="effacer()"><img src="logo_gal/trash.svg" alt="delete" max-width=100% height=45;></button>
+				<button class="btn" onclick="sauver()"><img src="logo_gal/save.svg" alt="save" max-width=100% height=45;></button>
+				<button class="btn" onclick="prepare_envoi()"><img src="logo_gal/save_pic.svg" alt="save_pic" max-width=100% height=45;></button>
+				<label for="input" class="label-file"><img src="logo_gal/add_gallery.svg" alt="choose_pic" max-width=100% height=45;></label>
+				<input id="input" class="input-file" type="file" accept="image/*">
 			</div>
 			<!-- <div id="jaxa" style='width:80%;margin:5px;'>message:</div> -->
 		</div>
