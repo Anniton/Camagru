@@ -153,8 +153,8 @@ a, a:hover, a:visited, a:active
 .fuckCss {
 	justify-content: center;
 	display:none;
-
 }
+
 .fuckCss input[type=file]{
 	width: min-content;
 	padding: 0px;

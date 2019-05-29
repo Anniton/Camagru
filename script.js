@@ -51,9 +51,17 @@ function prepare_envoi() {
 	console.log(base64, b64);
 	// canvas.toBlob(function(blob){envoi(blob)}, 'image/jpeg');
 	console.log("Les chats c'est mignon !");
+	data = {
+		image: b64
+	};
+	console.log(data);
+	console.log(data.image);
 	req = new XMLHttpRequest();
-	req.open("POST", "montage.php?photo="+b64, true);
-	req.send();
+	req.open("POST", "montage.php",  true);
+	image = "photo=" + b64;
+	req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+	req.send(image);
+	// console.log(req.readyState);
 };
 
 // function envoi(blob) {

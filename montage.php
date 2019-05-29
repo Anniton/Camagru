@@ -3,11 +3,12 @@
 	include_once("db.php");
 
 	if ($_SESSION['auth']){
-		if(!empty($_GET['photo'])){
-			  $user_id = $_SESSION['auth']->id;
-			  $photo = htmlspecialchars($_GET['photo']);
-			  $bdd->prepare('INSERT INTO photos SET photo = ?, author_id = ?')->execute([$photo, $user_id]);
-			  header('Location: montage.php');
+		if(!empty($_POST['photo'])){
+			$user_id = $_SESSION['auth']->id;
+			$photo = ($_POST['photo']);
+			// $photo = htmlspecialchars($_POST['photo']);
+			$bdd->prepare('INSERT INTO photos SET photo = ?, author_id = ?')->execute([$photo, $user_id]);
+			header('Location: montage.php');
 		  }
 		}
 ?>
@@ -20,7 +21,6 @@
 	<title>MONTAGE</title>
 	<link rel="stylesheet" href="montage.css" type="text/css" media="all">
 	<!-- <script src="script.js"></script> -->
-
 </head>
 
 <body>
@@ -30,14 +30,11 @@
 		<div class="content">
 			<div class="orga">
 				<video class="vidpic" id="sourcevid" width='400' height='300' autoplay="true"></video>
-				<!-- <video class="vidpic" id="sourcevid" width='400' height='300' autoplay="true"></video> -->
-
 				<p id="message" class="message"></p>
 				<div><canvas class="vidpic" id="canvas" width='400'  height='300' style='display:inline-block'></canvas></div>
 			</div>
 
 			<div id="buttons" class='fuckCss'>
-				<!-- <input type="file" id='input'  accept="image/*"> -->
 				<button class="btn" onclick="ouvrir_camera()"><img src="logo_gal/open_cam.svg" alt="open_cam" max-width=100% height=45;></button>
 				<button class="btn" onclick="fermer()"><img src="logo_gal/close_cam.svg" alt="close_cam" max-width=100% height=45;></button>
 				<br>
@@ -48,7 +45,6 @@
 				<label for="input" class="label-file"><img src="logo_gal/add_gallery.svg" alt="choose_pic" max-width=100% height=45;></label>
 				<input id="input" class="input-file" type="file" accept="image/*">
 			</div>
-			<!-- <div id="jaxa" style='width:80%;margin:5px;'>message:</div> -->
 		</div>
 
 		<div class="img_stickers">
