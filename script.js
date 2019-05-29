@@ -1,4 +1,7 @@
-function ouvrir_camera() {
+/**
+ * 	open_cam is a function for open client webcam
+ */
+function open_cam() {
 	navigator.mediaDevices.getUserMedia({ audio: false, video: { width: 400 } }).then(function(mediaStream) {
 		var video = document.getElementById('sourcevid');
 		video.srcObject = mediaStream;
@@ -16,7 +19,10 @@ function ouvrir_camera() {
 	});
 };
 
-function photo() {
+/**
+ *	take_picture is a function for take picture from webcam source
+ */
+function take_picture() {
 	var vivi = document.getElementById('sourcevid');
 	var canvas = document.getElementById('canvas');
 	var ctx = canvas.getContext('2d');
@@ -29,7 +35,10 @@ function photo() {
 	//     document.getElementById('tar').value=base64;
 };
 
-function sauver() {
+/*
+**	dl_image is a function for download image in client pc
+*/
+function dl_image() {
 	if(navigator.msSaveOrOpenBlob){
 		var blobObject = document.getElementById("canvas").msToBlob()
 			window.navigator.msSaveOrOpenBlob(blobObject, "image.png");
@@ -44,48 +53,48 @@ function sauver() {
 	}
 };
 
-function prepare_envoi() {
+/*
+**	save_image_in_db is a function for save image in database
+*/
+function save_image_in_db() {
 	var canvas = document.getElementById('canvas');
+	var preview = document.getElementById('preview');
 	var base64 = canvas.toDataURL("image/png");
 	b64 = base64.split(',')[1];
 	b64 = encodeURIComponent(b64);
 	console.log(base64, b64);
 	// canvas.toBlob(function(blob){envoi(blob)}, 'image/jpeg');
 	console.log("Les chats c'est mignon !");
-	data = {
-		image: b64
-	};
-	console.log(data);
-	console.log(data.image);
 	req = new XMLHttpRequest();
 	req.open("POST", "montage.php",  true);
 	image = "photo=" + b64;
 	req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+	req.onload = function () {
+		if (req.readyState === req.DONE && req.status === 200) {
+			res_data = `<p class='photo_zozor'><img src='data:image/jpg;base64,`+ b64 +`' width=500 height=400;/></p>`
+			preview.insertAdjacentHTML('afterbegin', res_data);
+		}
+	};
 	req.send(image);
-	// console.log(req.readyState);
 };
 
-// function envoi(blob) {
+function delete_image_in_db(image_id) {
+	var data = "pic_id=" + image_id;
+	req = new XMLHttpRequest();
+	req.open("POST", "delete.php", true);
+	req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+	req.onload = function () {
+		if (req.readyState === req.DONE && req.status === 200) {
+			preview_to_delete = document.getElementById(image_id).remove();
+		}
+	};
+	req.send(data);
+}
 
-// 	console.log(blob.type)
-// 	var formImage = new FormData();
-// 	var ajax = new XMLHttpRequest();
-
-// 	formImage.append('image_a', blob, 'image_a.jpg');
-// 	ajax.open("POST","http://scriptevol.free.fr/contenu/reception/upload_camera.php",true);
-// 	ajax.onreadystatechange=function() {
-// 		if (ajax.readyState == 4 && ajax.status==200) {
-// 			document.getElementById("jaxa").innerHTML+=(ajax.responseText);
-// 		}
-// 	};
-// 	ajax.onerror=function() {
-// 		alert("la requette a échoué")
-// 	};
-// 	ajax.send(formImage);
-// 	console.log("ok");
-// };
-
-function fermer() {
+/*
+**	close_cam is a function for close webcam
+*/
+function close_cam() {
 	var video = document.getElementById('sourcevid');
 	var mediaStream = video.srcObject;
 	console.log(mediaStream)
@@ -98,6 +107,15 @@ function fermer() {
 	video.srcObject = null;
 };
 
+
+/**
+ *	setImage is a function for add sticker in image
+ *
+ * @param {it's button id} bouton
+ * @param {it's button id} id
+ * @param {it's the name of sticker} titre
+ * @param {it's the sticker source} srcimage
+ */
 function setImage(bouton,id,titre,srcimage) {
 	var id = document.getElementById(bouton);
 	var canvas, context, data;
@@ -182,7 +200,10 @@ function setImage(bouton,id,titre,srcimage) {
 	};
 }
 
-function effacer() {
+/**
+ * del is a function for clean canvas
+ */
+function del() {
 	canvas = document.getElementById('canvas');
 	ctx = canvas.getContext('2d');
 	ctx.clearRect(0, 0, canvas.width, canvas.height);

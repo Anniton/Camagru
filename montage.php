@@ -4,9 +4,7 @@
 	if ($_SESSION['auth']){
 		if(!empty($_POST['photo'])){
 			$user_id = $_SESSION['auth']->id;
-			$photo = ($_POST['photo']);
-			var_dump($photo);
-			// $photo = htmlspecialchars($_POST['photo']);
+			$photo = htmlspecialchars($_POST['photo']);
 			$bdd->prepare('INSERT INTO photos SET photo = ?, author_id = ?')->execute([$photo, $user_id]);
 			header('Location: montage.php');
 		  }
@@ -23,15 +21,11 @@
 	<meta charset="utf-8">
 	<title>MONTAGE</title>
 	<link rel="stylesheet" href="montage.css" type="text/css" media="all">
-	<!-- <script src="script.js"></script> -->
 </head>
 
 <body>
-
 	<div id="bloc_page">
-
 		<section>
-
 
 			<article>
 				<video class="vidpic" id="sourcevid" width='400' height='300' autoplay="true"></video>
@@ -39,54 +33,52 @@
 				<div><canvas class="vidpic" id="canvas" width='400'  height='300' style='display:inline-block'></canvas></div>
 
 				<div id="buttons" class='fuckCss'>
-				<button class="btn" onclick="ouvrir_camera()"><img src="logo_gal/open_cam.svg" alt="open_cam" max-width=100% height=45;></button>
-				<button class="btn" onclick="fermer()"><img src="logo_gal/close_cam.svg" alt="close_cam" max-width=100% height=45;></button>
-				<br>
-				<button class="btn" onclick="photo()"><img src="logo_gal/take_pic.svg" alt="take_pic" max-width=100% height=45;></button>
-				<button class="btn" onclick="effacer()"><img src="logo_gal/trash.svg" alt="delete" max-width=100% height=45;></button>
-				<button class="btn" onclick="sauver()"><img src="logo_gal/save.svg" alt="save" max-width=100% height=45;></button>
-				<button class="btn" onclick="prepare_envoi()"><img src="logo_gal/save_pic.svg" alt="save_pic" max-width=100% height=45;></button>
-				<label for="input" class="label-file"><img src="logo_gal/add_gallery.svg" alt="choose_pic" max-width=100% height=45;></label>
-				<input id="input" class="input-file" type="file" accept="image/*">
-			</div>
+					<button class="btn" onclick="open_cam()"><img src="logo_gal/open_cam.svg" alt="open_cam" max-width=100% height=45;></button>
+					<button class="btn" onclick="close_cam()"><img src="logo_gal/close_cam.svg" alt="close_cam" max-width=100% height=45;></button>
+					<br>
+					<button class="btn" onclick="take_picture()"><img src="logo_gal/take_pic.svg" alt="take_pic" max-width=100% height=45;></button>
+					<button class="btn" onclick="del()"><img src="logo_gal/trash.svg" alt="delete" max-width=100% height=45;></button>
+					<button class="btn" onclick="dl_image()"><img src="logo_gal/save.svg" alt="save" max-width=100% height=45;></button>
+					<button class="btn" onclick="save_image_in_db()"><img src="logo_gal/save_pic.svg" alt="save_pic" max-width=100% height=45;></button>
+					<label for="input" class="label-file"><img src="logo_gal/add_gallery.svg" alt="choose_pic" max-width=100% height=45;></label>
+					<input id="input" class="input-file" type="file" accept="image/*">
+				</div>
 
-			<div class="img_stickers">
-		<?php
-			/**
-			 * setImage Function:
-			 *
-			 * @bouton est l'id du bouton,
-			 * @id l'id de l'emplacement de l'image,
-			 * @titre le titre de l'image,
-			 * @image le lien
-			 */
-			$tableau=array("stickers/1.png","stickers/2.png","stickers/3.png","stickers/4.png");
-			for($i=0;$i<count($tableau);$i++){
-		?>
-			<div id="bouton<?php echo $i; ?>" onclick="setImage('bouton<?php echo $i; ?>','image<?php echo $i; ?>','<?php echo $tableau[$i]; ?>','<?php echo $tableau[$i]; ?>');">
-			<img src="<?php echo $tableau[$i];?>"></div>
-			<div id="image<?php echo $i; ?>"></div>
-		<?php
-			}
-		?>
-		</div>
-
-
+				<div class="img_stickers">
+				<?php
+					/**
+					 * setImage Function:
+					 *
+					 * @bouton est l'id du bouton,
+					 * @id l'id de l'emplacement de l'image,
+					 * @titre le titre de l'image,
+					 * @image le lien
+					 */
+					$tableau=array("stickers/1.png","stickers/2.png","stickers/3.png","stickers/4.png");
+					for($i=0;$i<count($tableau);$i++){
+				?>
+					<div id="bouton<?php echo $i; ?>" onclick="setImage('bouton<?php echo $i; ?>','image<?php echo $i; ?>','<?php echo $tableau[$i]; ?>','<?php echo $tableau[$i]; ?>');">
+					<img src="<?php echo $tableau[$i];?>"></div>
+					<div id="image<?php echo $i; ?>"></div>
+				<?php
+					}
+				?>
+				</div>
 			</article>
 
-
-			<aside>
-					<?php
-					$rep = $bdd->query('SELECT photo, id, nb_like FROM photos');
-						$pic = $rep->fetchAll();
-						foreach($pic as $data) {
-
-							echo "<p class='photo_zozor'><img src='data:image/jpg;base64, $data->photo' width=500 height=400;/></p>";
-						}
-					?>
+			<aside id="preview">
+			<?php
+				$rep = $bdd->prepare('SELECT photo, id, nb_like FROM photos WHERE author_id=? ORDER BY create_date DESC');
+				$rep->execute([$_SESSION['auth']->id]);
+				$pic = $rep->fetchAll();
+				foreach($pic as $data) {
+					echo "<p class='photo_zozor' id='$data->id'>";
+					echo "<img src='data:image/jpg;base64, $data->photo' width=500 height=400;/>";
+					echo "<button class='delete_preview' onclick='delete_image_in_db($data->id)'><img src='logo_gal/trash.svg' alt='save_pic'></button>";
+					echo "</p>";
+				}
+			?>
 			</aside>
-
-
 
 		</section>
 
