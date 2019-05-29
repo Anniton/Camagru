@@ -25,29 +25,29 @@ if ($_SESSION['auth']){
 		}
 	}
 
-	// if(!empty($_POST)){
-	// 	if(empty($_POST['passwd']) || ($_POST['passwd'] != $_POST['passwd_confirm'])){
-	// 		$_SESSION['flash']['warning'] = "Passwords are differents";
-	// 	}
-	// 	else {
-	// 		$user_id = $_SESSION['auth']->id;
-	// 		$password = password_hash($_POST['passwd'], PASSWORD_BCRYPT);
-	// 		$bdd->prepare('UPDATE membres SET password = ? WHERE id = ?')->execute([$password, $user_id]);
-	// 		$_SESSION['flash']['success'] = "Password update";
-	// 	}
-	// }
+	if(!empty($_POST)){
+		if(empty($_POST['passwd']) || ($_POST['passwd'] != $_POST['passwd_confirm'])){
+			$_SESSION['flash']['warning'] = "Passwords are differents";
+		}
+		else {
+			$user_id = $_SESSION['auth']->id;
+			$password = password_hash($_POST['passwd'], PASSWORD_BCRYPT);
+			$bdd->prepare('UPDATE membres SET password = ? WHERE id = ?')->execute([$password, $user_id]);
+			$_SESSION['flash']['success'] = "Password update";
+		}
+	}
 
-	// if(!empty($_POST)){
-	// 	if(empty($_POST['mail']) || ($_POST['mail'] != $_POST['mail_confirm'])){
-	// 		echo "Mail are differents";
-	// 	}
-	// 	else {
-	// 		$user_id = $_SESSION['auth']->id;
-	// 		$mail = htmlspecialchars($_POST['mail']);
-	// 		$bdd->prepare('UPDATE membres SET mail = ? WHERE id = ?')->execute([$mail, $user_id]);
-	// 		$_SESSION['flash']['success'] = "Mail update";
-	// 	}
-	// }
+	if(!empty($_POST)){
+		if(empty($_POST['mail']) || ($_POST['mail'] != $_POST['mail_confirm'])){
+			echo "Mail are differents";
+		}
+		else {
+			$user_id = $_SESSION['auth']->id;
+			$mail = htmlspecialchars($_POST['mail']);
+			$bdd->prepare('UPDATE membres SET mail = ? WHERE id = ?')->execute([$mail, $user_id]);
+			$_SESSION['flash']['success'] = "Mail update";
+		}
+	}
 
 	if(!empty($_POST)){
 		$user_id = $_SESSION['auth']->id;
@@ -55,11 +55,11 @@ if ($_SESSION['auth']){
 		$mail_active = $_POST['validated_mail'];
 		$mail_unactive = $_POST['unvalidated_mail'];
 		var_dump($mail_active);
-		if(!empty($_POST['validated_mail'])){
+		if(($_POST['validated_mail']) === '1'){
 			$bdd->prepare('UPDATE membres SET mail_active = ? WHERE id = ?')->execute([$mail_active, $user_id]);
 			var_dump($mail_active);
 		}
-		else if(!empty($_POST['unvalidated_mail'])){
+		else if(($_POST['validated_mail']) === '2'){
 			$bdd->prepare('UPDATE membres SET mail_active = ? WHERE id = ?')->execute([$mail_unactive, $user_id]);
 			var_dump($mail_unactive);
 		}
@@ -94,7 +94,7 @@ if ($_SESSION['auth']){
 				<div> <input type="submit" name="cg_username" value="Change username"></div>
 			</form>
 
-<!--
+
 			<form id="cg_mdp" action="" method="post">
 					<br/>
 					<div> CHANGE PASSWORD</div>
@@ -118,15 +118,12 @@ if ($_SESSION['auth']){
 					<input class="form-control" type="email" name="mail_confirm" placeholder="<?= $_SESSION['auth']->mail; ?>">
 					</div>
 					<div> <input name="cg_mail" type="submit" value="Change my mail"></div>
-			</form> -->
+			</form>
 
 			<form id="active_mail"  action="account.php" method="post">
 					<input type="radio" name="validated_mail" value="1"/>Enable email
-					<input  type="radio" name="unvalidated_mail" value="0"/>Disable email
+					<input type="radio" name="validated_mail" value="2"/>Disable email
 					<div><input type="submit" value="Submit"></div>
-			<?php
-			var_dump($_POST['validated_mail']);
-			?>
 			</form>
 
 

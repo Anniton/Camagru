@@ -28,7 +28,20 @@ if ($_SESSION['auth']){
 		$tab = $res->fetchAll(PDO::FETCH_COLUMN, 'nb_like');
 		$nb_like = (int)$tab[0] + 1;
 		$msg = $_SESSION['auth']->username." vient de liker ta photo. Reviens vite sur notre site !";
-		mail($email, "Quelqu'un aime ta photo REVIENS !", $msg);
+			/*A VERIFIER ICI CEST TOUT CASSE MAIS LA BOOLEEN FONCTIONNE*/
+
+		// $res_vmail = $bdd->prepare('SELECT mail_active FROM membres WHERE id=?');
+		// $res_vmail->execute([$id]);
+		// $uid_mail = $res_vmail->fetchAll();
+
+		// if ($uid_mail == 1){
+		// 	mail($email, "Quelqu'un aime ta photo REVIENS !", $msg);
+		// 	echo "mail envoye";
+		// }
+		// else {
+		// 	echo "mail non envoye";
+		// }
+
 		$req = $bdd->prepare('UPDATE photos SET nb_like=? WHERE id=?')->execute([$nb_like, $id]);
 		$data['nb_like'] = $nb_like;
 		echo json_encode($data);
