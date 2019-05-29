@@ -48,13 +48,30 @@
         display: none;
     }
 
-    #photo_zozor img
+	.delete_preview {
+		border: none;
+	}
+
+	.delete_preview img {
+		height: 20px;
+		width: 20px;
+	}
+
+	.photo_zozor {
+		display: flex;
+		align-items: center;
+		flex-flow: column;
+	}
+
+	#photo_zozor img
     {
         width: 110px;
         float: right;
         margin-left: 15px;
-    }
+	}
 }
+
+
 aside {
 	width: 200px;
 	height: 880px;
