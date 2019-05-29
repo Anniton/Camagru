@@ -24,7 +24,7 @@ function photo() {
 	canvas.width = vivi.videoWidth;
 	// console.log(vivi.videoWidth);
 	ctx.drawImage(vivi, 0,0, vivi.videoWidth, vivi.videoHeight);
-	//     var base64=canvas1.toDataURL("image/png"); //l'image au format base 64
+	    var base64=canvas.toDataURL("image/png"); //l'image au format base 64
 	//     document.getElementById('tar').value='';
 	//     document.getElementById('tar').value=base64;
 };
@@ -46,28 +46,35 @@ function sauver() {
 
 function prepare_envoi() {
 	var canvas = document.getElementById('canvas');
-	canvas.toBlob(function(blob){envoi(blob)}, 'image/jpeg');
+	var base64=canvas.toDataURL("image/png");
+	b64 = base64.split(',')[1];
+	console.log(base64, b64);
+	// canvas.toBlob(function(blob){envoi(blob)}, 'image/jpeg');
+	console.log("Les chats c'est mignon !");
+	req = new XMLHttpRequest();
+	req.open("POST", "montage.php?photo="+b64, true);
+	req.send();
 };
 
-function envoi(blob) {
+// function envoi(blob) {
 
-	console.log(blob.type)
-	var formImage = new FormData();
-	var ajax = new XMLHttpRequest();
+// 	console.log(blob.type)
+// 	var formImage = new FormData();
+// 	var ajax = new XMLHttpRequest();
 
-	formImage.append('image_a', blob, 'image_a.jpg');
-	ajax.open("POST","http://scriptevol.free.fr/contenu/reception/upload_camera.php",true);
-	ajax.onreadystatechange=function() {
-		if (ajax.readyState == 4 && ajax.status==200) {
-			document.getElementById("jaxa").innerHTML+=(ajax.responseText);
-		}
-	};
-	ajax.onerror=function() {
-		alert("la requette a échoué")
-	};
-	ajax.send(formImage);
-	console.log("ok");
-};
+// 	formImage.append('image_a', blob, 'image_a.jpg');
+// 	ajax.open("POST","http://scriptevol.free.fr/contenu/reception/upload_camera.php",true);
+// 	ajax.onreadystatechange=function() {
+// 		if (ajax.readyState == 4 && ajax.status==200) {
+// 			document.getElementById("jaxa").innerHTML+=(ajax.responseText);
+// 		}
+// 	};
+// 	ajax.onerror=function() {
+// 		alert("la requette a échoué")
+// 	};
+// 	ajax.send(formImage);
+// 	console.log("ok");
+// };
 
 function fermer() {
 	var video = document.getElementById('sourcevid');

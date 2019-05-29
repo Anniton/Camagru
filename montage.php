@@ -1,6 +1,18 @@
 <?php
 	include_once('navigation.php');
+	include_once("db.php");
+
+	if ($_SESSION['auth']){
+		if(!empty($_GET['photo'])){
+			  $user_id = $_SESSION['auth']->id;
+			  $photo = htmlspecialchars($_GET['photo']);
+			  $bdd->prepare('INSERT INTO photos SET photo = ?, author_id = ?')->execute([$photo, $user_id]);
+			  header('Location: montage.php');
+		  }
+		}
 ?>
+
+
 <!doctype html>
 <html lang="fr">
 <head>
@@ -22,7 +34,6 @@
 
 				<p id="message" class="message"></p>
 				<div><canvas class="vidpic" id="canvas" width='400'  height='300' style='display:inline-block'></canvas></div>
-				<!-- <canvas class="vidpic" id="img" width='400'  height='300' style='display:inline-block'></canvas> -->
 			</div>
 
 			<div id="buttons" class='fuckCss'>
