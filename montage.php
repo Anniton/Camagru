@@ -1,7 +1,6 @@
 <?php
 	include_once('navigation.php');
 	include_once("db.php");
-
 	if ($_SESSION['auth']){
 		if(!empty($_POST['photo'])){
 			$user_id = $_SESSION['auth']->id;
@@ -29,16 +28,17 @@
 
 <body>
 
-	<div class="container">
-		<div class="menu"></div>
-		<div class="content">
-			<div class="orga">
+	<div id="bloc_page">
+
+		<section>
+
+
+			<article>
 				<video class="vidpic" id="sourcevid" width='400' height='300' autoplay="true"></video>
 				<p id="message" class="message"></p>
 				<div><canvas class="vidpic" id="canvas" width='400'  height='300' style='display:inline-block'></canvas></div>
-			</div>
 
-			<div id="buttons" class='fuckCss'>
+				<div id="buttons" class='fuckCss'>
 				<button class="btn" onclick="ouvrir_camera()"><img src="logo_gal/open_cam.svg" alt="open_cam" max-width=100% height=45;></button>
 				<button class="btn" onclick="fermer()"><img src="logo_gal/close_cam.svg" alt="close_cam" max-width=100% height=45;></button>
 				<br>
@@ -49,9 +49,8 @@
 				<label for="input" class="label-file"><img src="logo_gal/add_gallery.svg" alt="choose_pic" max-width=100% height=45;></label>
 				<input id="input" class="input-file" type="file" accept="image/*">
 			</div>
-		</div>
 
-		<div class="img_stickers">
+			<div class="img_stickers">
 		<?php
 			/**
 			 * setImage Function:
@@ -72,7 +71,26 @@
 		?>
 		</div>
 
-		<div class="footer">ABOUT US . SUPPORT . PRESS . API . JOBS . PRIVACY . TERMS . DIRECTORY . PROFILES . HASHTAGS . LANGUAGE</div>
+
+			</article>
+
+
+			<aside>
+					<?php
+					$rep = $bdd->query('SELECT photo, id, nb_like FROM photos');
+						$pic = $rep->fetchAll();
+						foreach($pic as $data) {
+
+							echo "<p class='photo_zozor'><img src='data:image/jpg;base64, $data->photo' width=500 height=400;/></p>";
+						}
+					?>
+			</aside>
+
+
+
+		</section>
+
+		<footer>ABOUT US . SUPPORT . PRESS . API . JOBS . PRIVACY . TERMS . DIRECTORY . PROFILES . HASHTAGS . LANGUAGE</div>
 	</div>
 </body>
 <script async src="script.js"></script>
