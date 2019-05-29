@@ -3,6 +3,10 @@ session_start();
 include_once("navigation.php");
 include_once("user_functions.php");
 include_once("db.php");
+
+$pages = 0;
+$nb_per_pages = 5;
+$offest = $pages * $nb_per_pages;
 if ($_SESSION['auth']){
   if(!empty($_POST['comment'])){
 		$user_id = $_SESSION['auth']->id;
@@ -29,6 +33,7 @@ if ($_SESSION['auth']){
 		var_dump($msg);
 		mail($email, "Quelqu'un aime ta photo REVIENS !", $msg);
 		$req = $bdd->prepare('UPDATE photos SET nb_like=? WHERE id=?')->execute([$nb_like, $id]);
+		// $req = $bdd->prepare('INSERT INTO likes SET photo_id=?, uid=?, like=true')->execute([$id, $_SESSION['auth']->id]);
 		// header('Location: gallery.php/#'+$id);
 		// header('Location: login.php');
 		exit();
@@ -49,17 +54,18 @@ if ($_SESSION['auth']){
 	<div class="container">
 		<div class="header"></div>
 		<div class="menu"></div>
-		<div class="content">
+		<div id="pictures" class="content">
 		<?php
 			/**
 			 *	Foreach photo in the "photos" table in the db,
 			 *	We create a block html for each image and these comments
 			 */
-			$rep = $bdd->query('SELECT photo, id, nb_like FROM photos');
+			$sql = "SELECT photo, id, nb_like FROM photos ORDER BY create_date DESC LIMIT $offest, $nb_per_pages";
+			$rep = $bdd->query($sql);
 			$pic = $rep->fetchAll();
 
 			foreach($pic as $data) {
-				$reponse = $bdd->prepare('SELECT comment FROM comments INNER JOIN photos ON comments.photo_id = photos.id WHERE photos.id = ?');
+				$reponse = $bdd->prepare('SELECT comment FROM comments INNER JOIN photos ON comments.photo_id = photos.id WHERE photos.id = ? ORDER BY comments.date DESC');
 				$reponse->execute([$data->id]);
 				$donnees = $reponse->fetchAll(PDO::FETCH_COLUMN, 'comments');
 
@@ -90,13 +96,36 @@ if ($_SESSION['auth']){
 				echo "</form>";
 
 			}
-		?>
+			?>
 		</div>
-		<div class="footer">ABOUT US . SUPPORT . PRESS . API . JOBS . PRIVACY . TERMS . DIRECTORY . PROFILES . HASHTAGS . LANGUAGE</div>
+		<input type="hidden" id="pages" value="1">
+		<div class="footer">ABOUT US . SUPPORT . PRESS . API . JOBS . PRIVACY . TERMS . DIRECTORY . PROFILES . HASHTAGS . LANGUAGE</div></div>
 	</div>
 </body>
 </html>
 <script>
+
+document.addEventListener('scroll', function(event) {
+	var element = event.target.scrollingElement;
+    if (element.scrollHeight - element.scrollTop === element.clientHeight) {
+		next_page = document.getElementById("pages").value;
+		pictures = document.getElementById("pictures");
+		next_page++;
+		data = "pages="+next_page;
+		req = new XMLHttpRequest();
+		req.open("POST", "pages.php", true);
+		req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+		req.onload = function () {
+			if (req.readyState === req.DONE && req.status === 200) {
+				res_data = req.response;
+				pictures.insertAdjacentHTML('beforeend', res_data);
+				document.getElementById("pages").value = next_page;
+			}
+		};
+		req.send(data);
+	}
+});
+
 function addLike(id) {
 	req = new XMLHttpRequest();
 	req.open("POST", "gallery.php?pic_id="+id, true);
