@@ -37,7 +37,7 @@ if(!empty($_POST) && !empty($_POST['username']) && !empty($_POST['passwd']))
 	$user = $req->fetch();
 	if(password_verify($_POST['passwd'], $user->password)){
 		$_SESSION['auth'] = $user;
-		$_SESSION['flash']['success'] = 'Vous etes maintenant connecte au site';
+		// $_SESSION['flash']['success'] = 'Vous etes maintenant connecte au site';
 		if($_POST['remember']){
 			$remember_token = str_random(250);
 			$bdd->prepare('UPDATE membres SET remember_token = ? WHERE id = ?')->execute([$remember_token, $user->id]);

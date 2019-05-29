@@ -9,73 +9,63 @@ logged_only();
 
 if ($_SESSION['auth']){
 	if(!empty($_POST)){
-		// var_dump($_POST);
-
 		if(!empty($_POST['new_username'])){
-
 			$user_id = $_SESSION['auth']->id;
 			var_dump($_SESSION);
 			$newusername = htmlspecialchars($_POST['new_username']);
-
 			$bdd->prepare('UPDATE membres SET username = ? WHERE id = ?')->execute([$newusername, $user_id]);
-
 			$_SESSION['flash']['success'] = "Username update";
-
-			//actualisation si changement)
-			// $req = $bdd->prepare('SELECT * FROM membres WHERE id = ?');
-			// $req->execute([$user_id]);
-			// $user = $req->fetch();
-			// $_SESSION['auth'] = $user;
-
-			// header('Location: account.php?id='.$_SESSION['auth']);
 		}
-		else{
+		elseif ($_POST['validated_mail'])
+		{
+			var_dump("OUIIIIIII!!!");
+		}
+		else {
 			header('Location: account.php');
 		}
 	}
 
+	// if(!empty($_POST)){
+	// 	if(empty($_POST['passwd']) || ($_POST['passwd'] != $_POST['passwd_confirm'])){
+	// 		$_SESSION['flash']['warning'] = "Passwords are differents";
+	// 	}
+	// 	else {
+	// 		$user_id = $_SESSION['auth']->id;
+	// 		$password = password_hash($_POST['passwd'], PASSWORD_BCRYPT);
+	// 		$bdd->prepare('UPDATE membres SET password = ? WHERE id = ?')->execute([$password, $user_id]);
+	// 		$_SESSION['flash']['success'] = "Password update";
+	// 	}
+	// }
+
+	// if(!empty($_POST)){
+	// 	if(empty($_POST['mail']) || ($_POST['mail'] != $_POST['mail_confirm'])){
+	// 		echo "Mail are differents";
+	// 	}
+	// 	else {
+	// 		$user_id = $_SESSION['auth']->id;
+	// 		$mail = htmlspecialchars($_POST['mail']);
+	// 		$bdd->prepare('UPDATE membres SET mail = ? WHERE id = ?')->execute([$mail, $user_id]);
+	// 		$_SESSION['flash']['success'] = "Mail update";
+	// 	}
+	// }
+
 	if(!empty($_POST)){
-		// var_dump($_POST);
-		if(empty($_POST['passwd']) || ($_POST['passwd'] != $_POST['passwd_confirm'])){
-
-			$_SESSION['flash']['warning'] = "Passwords are differents";
-			// echo "Passwords are differents";
+		$user_id = $_SESSION['auth']->id;
+		if(!empty($_POST['validated_mail'])){
+		$mail_active = $_POST['validated_mail'];
+		$mail_unactive = $_POST['unvalidated_mail'];
+		var_dump($mail_active);
+		if(!empty($_POST['validated_mail'])){
+			$bdd->prepare('UPDATE membres SET mail_active = ? WHERE id = ?')->execute([$mail_active, $user_id]);
+			var_dump($mail_active);
 		}
-		else {
-
-			$user_id = $_SESSION['auth']->id;
-
-			$password = password_hash($_POST['passwd'], PASSWORD_BCRYPT);
-
-			$bdd->prepare('UPDATE membres SET password = ? WHERE id = ?')->execute([$password, $user_id]);
-
-			$_SESSION['flash']['success'] = "Password update";
-		}
-
-
-
-		if(!empty($_POST)){
-			//  var_dump($_POST);
-			if(empty($_POST['mail']) || ($_POST['mail'] != $_POST['mail_confirm'])){
-
-				echo "Mail are differents";
-			}
-			else {
-				$user_id = $_SESSION['auth']->id;
-
-				$mail = htmlspecialchars($_POST['mail']);
-
-				$bdd->prepare('UPDATE membres SET mail = ? WHERE id = ?')->execute([$mail, $user_id]);
-
-				$_SESSION['flash']['success'] = "Mail update";
-			}
-			// //actualisation si changement)
-			// $req = $bdd->prepare('SELECT * FROM membres WHERE id = ?');
-			// $req->execute([$user_id]);
-			// $mail = $req->fetch();
-			// $_SESSION['auth'] = $mail;
+		else if(!empty($_POST['unvalidated_mail'])){
+			$bdd->prepare('UPDATE membres SET mail_active = ? WHERE id = ?')->execute([$mail_unactive, $user_id]);
+			var_dump($mail_unactive);
 		}
 	}
+}
+
 ?>
 
 <!doctype html>
@@ -86,8 +76,6 @@ if ($_SESSION['auth']){
   <link rel="stylesheet" href="style.css">
   <script src="script.js"></script>
 </head>
-
-
 <body>
  <div class="container">
 			<div class="header">CAMAGRU</div>
@@ -106,7 +94,7 @@ if ($_SESSION['auth']){
 				<div> <input type="submit" name="cg_username" value="Change username"></div>
 			</form>
 
-
+<!--
 			<form id="cg_mdp" action="" method="post">
 					<br/>
 					<div> CHANGE PASSWORD</div>
@@ -130,8 +118,16 @@ if ($_SESSION['auth']){
 					<input class="form-control" type="email" name="mail_confirm" placeholder="<?= $_SESSION['auth']->mail; ?>">
 					</div>
 					<div> <input name="cg_mail" type="submit" value="Change my mail"></div>
-			</form>
+			</form> -->
 
+			<form id="active_mail"  action="account.php" method="post">
+					<input type="radio" name="validated_mail" value="1"/>Enable email
+					<input  type="radio" name="unvalidated_mail" value="0"/>Disable email
+					<div><input type="submit" value="Submit"></div>
+			<?php
+			var_dump($_POST['validated_mail']);
+			?>
+			</form>
 
 
 		<div class="txt"><a href="forgot_passwd.php"></a></div>
@@ -142,6 +138,7 @@ if ($_SESSION['auth']){
 		</div>
 
 </body>
+<script async src="script.js"></script>
 </html>
 <?php
 }
