@@ -1,6 +1,5 @@
 <?php
 session_start();
-include_once("navigation.php");
 include_once("user_functions.php");
 include_once("db.php");
 
@@ -13,11 +12,9 @@ if ($_SESSION['auth']){
 		$pic_id = (int)htmlspecialchars($_POST['pic_id']);
 		$comments = htmlspecialchars($_POST['comment']);
 		$bdd->prepare('INSERT INTO comments SET comment = ?, uid = ?, photo_id = ?')->execute([$comments, $user_id, $pic_id]);
-		header('Location: gallery.php');
 	}
-
-		if (!empty($_GET['pic_id'])) {
-		$id = (int)$_GET['pic_id'];
+	if (!empty($_POST['pic_like_id'])) {
+		$id = (int)$_POST['pic_like_id'];
 		$res_uid = $bdd->prepare('SELECT author_id FROM photos WHERE id=?');
 		$res_uid->execute([$id]);
 		$uid = $res_uid->fetchAll(PDO::FETCH_COLUMN, 'author_id')[0];
@@ -31,15 +28,15 @@ if ($_SESSION['auth']){
 		$tab = $res->fetchAll(PDO::FETCH_COLUMN, 'nb_like');
 		$nb_like = (int)$tab[0] + 1;
 		$msg = $_SESSION['auth']->username." vient de liker ta photo. Reviens vite sur notre site !";
-
 		mail($email, "Quelqu'un aime ta photo REVIENS !", $msg);
 		$req = $bdd->prepare('UPDATE photos SET nb_like=? WHERE id=?')->execute([$nb_like, $id]);
-		// $req = $bdd->prepare('INSERT INTO likes SET photo_id=?, uid=?, like=true')->execute([$id, $_SESSION['auth']->id]);
-		// header('Location: gallery.php/#'+$id);
-		// header('Location: login.php');
+		$data['nb_like'] = $nb_like;
+		echo json_encode($data);
 		exit();
 	}
 }
+
+include_once("navigation.php");
 ?>
 
 <!doctype html>
@@ -70,7 +67,6 @@ if ($_SESSION['auth']){
 				$reponse->execute([$data->id]);
 				$donnees = $reponse->fetchAll(PDO::FETCH_COLUMN, 'comments');
 
-				echo "<form action='' method='post'>";
 				echo "<div id='$data->id' class='gallery'>";
 				echo "<img src='data:image/jpg;base64, $data->photo' width=500 height=400;/>";
 				echo "<div class='comments'>";
@@ -80,39 +76,28 @@ if ($_SESSION['auth']){
 					echo "<span class='heartg' alt='Heart''></span>";
 					echo "</div>";
 				} else {
+					// echo "<form action='' method='post'>";
 					echo "<input name='pic_id' value='$data->id' type='hidden'>";
-					echo "<input name='comment' type='text' placeholder= 'Add a comment...'><input type=submit Value='Done'>";
-
-
+					echo "<input id='comment_$data->id' name='comment' type='text' placeholder= 'Add a comment...' onkeydown='comment_key($data->id)'><input onclick='submit_comment($data->id)' type=submit Value='Done'>";
+					// echo "</form>";
 					echo "<div class='like'>";
 					echo "<button name='like' type='hidden' onclick='addLike($data->id);'><span class='heart' alt='Heart' style='fill:red;'></span></button>";
-
-
 					if ($_SESSION['auth']->id === $data->author_id){
 						echo "<button class='delete_preview' onclick='delete_image_in_db($data->id)'><img src='logo_gal/trash.svg' alt='delete' max-width=100% height=45;></button>";
-
 					} else {
 						echo "<span class='delte' alt='delete' style='display: none'</span>";
 					}
-
 					echo "</div>";
 				}
-
-
-				echo "<p style='color:black;font-weight:bold;'> $data->nb_like Likes</p>";
-				echo "<div class='text'>";
-
+				echo "<p id='like_$data->id' style='color:black;font-weight:bold;'> $data->nb_like Likes</p>";
+				echo "<div id='comments_$data->id' class='text'>";
 				foreach($donnees as $commentaire) {
 					echo "<p class='comment'>$commentaire</p>";
 
 				}
-
 				echo "</div>";
 				echo "</div>";
 				echo "</div>";
-				echo "</form>";
-
-
 			}
 			?>
 		</div>
@@ -146,7 +131,43 @@ document.addEventListener('scroll', function(event) {
 
 function addLike(id) {
 	req = new XMLHttpRequest();
-	req.open("POST", "gallery.php?pic_id="+id, true);
-	req.send();
+	data = "pic_like_id=" + id;
+	req.open("POST", "gallery.php", true);
+	req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+	req.onload = function () {
+		if (req.readyState === req.DONE && req.status === 200) {
+			res = req.response;
+			resd = JSON.parse(res);
+			document.getElementById("like_"+id).innerHTML = " " + resd.nb_like + " Likes";
+		}
+		else {
+			console.log("Failure");
+		}
+	};
+	req.send(data);
+}
+
+function comment_key(id) {
+	if (event.key === "Enter")
+		submit_comment(id);
+}
+
+function submit_comment(id) {
+	req = new XMLHttpRequest();
+	comment = document.getElementById("comment_"+id).value;
+	data = "comment=" + comment + "&pic_id=" + id;
+	req.open("POST", "gallery.php", true);
+	req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+	req.onload = function () {
+		if (req.readyState === req.DONE && req.status === 200) {
+			res = `<p class='comment'>` + comment + `</p>`;
+			comments = document.getElementById("comments_" + id);
+			comments.insertAdjacentHTML('afterbegin', res);
+		}
+		else {
+			console.log("Failure");
+		}
+	};
+	req.send(data);
 }
 </script>
