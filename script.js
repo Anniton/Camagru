@@ -46,8 +46,9 @@ function sauver() {
 
 function prepare_envoi() {
 	var canvas = document.getElementById('canvas');
-	var base64=canvas.toDataURL("image/png");
+	var base64 = canvas.toDataURL("image/png");
 	b64 = base64.split(',')[1];
+	b64 = encodeURIComponent(b64);
 	console.log(base64, b64);
 	// canvas.toBlob(function(blob){envoi(blob)}, 'image/jpeg');
 	console.log("Les chats c'est mignon !");

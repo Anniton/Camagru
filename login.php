@@ -24,8 +24,8 @@ include_once("db.php");
 
 
 
-	
-	
+
+
 
 if(!empty($_POST) && !empty($_POST['username']) && !empty($_POST['passwd']))
 {
@@ -64,7 +64,7 @@ if(!empty($_POST) && !empty($_POST['username']) && !empty($_POST['passwd']))
 <head>
   <meta charset="utf-8">
   <title>login</title>
-  <link rel="stylesheet" href="style.css">	
+  <link rel="stylesheet" href="style.css">
   <script src="script.js"></script>
 </head>
 
@@ -94,17 +94,17 @@ if(!empty($_POST) && !empty($_POST['username']) && !empty($_POST['passwd']))
 
 					<div>
 				 	  <input type="submit"value="Log In">
-					 
+
 					</div>
 		</form>
 
-	
+
 		<div class="txt"><a href="forgot_passwd.php">Forgot password?</a></div>
 </div>
-<div class="article" class="text">Don't have an account?<b>  <a href="signup.php">&nbsp;Sign up</a></b></div>
+<div class="article" class="text">Don't have an account?<b>  <a href="index.php">&nbsp;Sign up</a></b></div>
 
             <div class="footer">ABOUT US . SUPPORT . PRESS . API . JOBS . PRIVACY . TERMS . DIRECTORY . PROFILES . HASHTAGS . LANGUAGE</div>
         </div>
-  
+
 </body>
 </html>

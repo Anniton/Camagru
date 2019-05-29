@@ -6,10 +6,14 @@
 		if(!empty($_POST['photo'])){
 			$user_id = $_SESSION['auth']->id;
 			$photo = ($_POST['photo']);
+			var_dump($photo);
 			// $photo = htmlspecialchars($_POST['photo']);
 			$bdd->prepare('INSERT INTO photos SET photo = ?, author_id = ?')->execute([$photo, $user_id]);
 			header('Location: montage.php');
 		  }
+		}
+		else{
+			header('Location:gallery.php');
 		}
 ?>
 

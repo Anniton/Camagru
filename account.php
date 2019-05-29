@@ -83,7 +83,7 @@ if ($_SESSION['auth']){
 <head>
   <meta charset="utf-8">
   <title>Profile</title>
-  <link rel="stylesheet" href="style.css">	
+  <link rel="stylesheet" href="style.css">
   <script src="script.js"></script>
 </head>
 
@@ -130,20 +130,20 @@ if ($_SESSION['auth']){
 					<input class="form-control" type="email" name="mail_confirm" placeholder="<?= $_SESSION['auth']->mail; ?>">
 					</div>
 					<div> <input name="cg_mail" type="submit" value="Change my mail"></div>
-			</form> 
+			</form>
 
 
 
 		<div class="txt"><a href="forgot_passwd.php"></a></div>
 </div>
-<!-- <div class="article" class="text">Don't have an account?<b>  <a href="signup.php">&nbsp;Sign up</a></b></div> -->
+<!-- <div class="article" class="text">Don't have an account?<b>  <a href="index.php">&nbsp;Sign up</a></b></div> -->
 
 			<div class="footer">ABOUT US . SUPPORT . PRESS . API . JOBS . PRIVACY . TERMS . DIRECTORY . PROFILES . HASHTAGS . LANGUAGE</div>
 		</div>
 
 </body>
 </html>
-<?php 
+<?php
 }
 else {
 	header("Location: login.php");
