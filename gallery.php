@@ -15,7 +15,8 @@ if ($_SESSION['auth']){
 		$bdd->prepare('INSERT INTO comments SET comment = ?, uid = ?, photo_id = ?')->execute([$comments, $user_id, $pic_id]);
 		header('Location: gallery.php');
 	}
-	if (!empty($_GET['pic_id'])) {
+
+		if (!empty($_GET['pic_id'])) {
 		$id = (int)$_GET['pic_id'];
 		$res_uid = $bdd->prepare('SELECT author_id FROM photos WHERE id=?');
 		$res_uid->execute([$id]);
@@ -30,7 +31,7 @@ if ($_SESSION['auth']){
 		$tab = $res->fetchAll(PDO::FETCH_COLUMN, 'nb_like');
 		$nb_like = (int)$tab[0] + 1;
 		$msg = $_SESSION['auth']->username." vient de liker ta photo. Reviens vite sur notre site !";
-		var_dump($msg);
+
 		mail($email, "Quelqu'un aime ta photo REVIENS !", $msg);
 		$req = $bdd->prepare('UPDATE photos SET nb_like=? WHERE id=?')->execute([$nb_like, $id]);
 		// $req = $bdd->prepare('INSERT INTO likes SET photo_id=?, uid=?, like=true')->execute([$id, $_SESSION['auth']->id]);
@@ -60,7 +61,7 @@ if ($_SESSION['auth']){
 			 *	Foreach photo in the "photos" table in the db,
 			 *	We create a block html for each image and these comments
 			 */
-			$sql = "SELECT photo, id, nb_like FROM photos ORDER BY create_date DESC LIMIT $offest, $nb_per_pages";
+			$sql = "SELECT photo, id, nb_like, author_id FROM photos ORDER BY create_date DESC LIMIT $offest, $nb_per_pages";
 			$rep = $bdd->query($sql);
 			$pic = $rep->fetchAll();
 
@@ -81,19 +82,36 @@ if ($_SESSION['auth']){
 				} else {
 					echo "<input name='pic_id' value='$data->id' type='hidden'>";
 					echo "<input name='comment' type='text' placeholder= 'Add a comment...'><input type=submit Value='Done'>";
+
+
 					echo "<div class='like'>";
 					echo "<button name='like' type='hidden' onclick='addLike($data->id);'><span class='heart' alt='Heart' style='fill:red;'></span></button>";
+
+
+					if ($_SESSION['auth']->id === $data->author_id){
+						echo "<button class='delete_preview' onclick='delete_image_in_db($data->id)'><img src='logo_gal/trash.svg' alt='delete' max-width=100% height=45;></button>";
+
+					} else {
+						echo "<span class='delte' alt='delete' style='display: none'</span>";
+					}
+
 					echo "</div>";
 				}
+
+
 				echo "<p style='color:black;font-weight:bold;'> $data->nb_like Likes</p>";
 				echo "<div class='text'>";
+
 				foreach($donnees as $commentaire) {
 					echo "<p class='comment'>$commentaire</p>";
+
 				}
+
 				echo "</div>";
 				echo "</div>";
 				echo "</div>";
 				echo "</form>";
+
 
 			}
 			?>
