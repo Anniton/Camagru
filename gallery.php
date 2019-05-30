@@ -12,6 +12,19 @@ if ($_SESSION['auth']){
 		$pic_id = (int)htmlspecialchars($_POST['pic_id']);
 		$comments = htmlspecialchars($_POST['comment']);
 		$bdd->prepare('INSERT INTO comments SET comment = ?, uid = ?, photo_id = ?')->execute([$comments, $user_id, $pic_id]);
+
+		$res_uid = $bdd->prepare('SELECT author_id FROM photos WHERE id=?');
+		$res_uid->execute([$id]);
+		$uid = $res_uid->fetchAll(PDO::FETCH_COLUMN, 'author_id')[0];
+
+		$res_mail = $bdd->prepare('SELECT mail, mail_active FROM membres WHERE id=?');
+		$res_mail->execute([$uid]);
+		$email = $res_mail->fetchAll()[0];
+
+		if ((int)$email->mail_active === 1){
+			$msg = $_SESSION['auth']->username." vient de commenter ta photo. Reviens vite sur notre site !";
+			mail($email->mail, "Quelqu'un aime ta photo REVIENS !", $msg);
+		}
 	}
 	if (!empty($_POST['pic_like_id'])) {
 		$id = (int)$_POST['pic_like_id'];
@@ -28,8 +41,8 @@ if ($_SESSION['auth']){
 		$tab = $res->fetchAll(PDO::FETCH_COLUMN, 'nb_like');
 
 		$nb_like = (int)$tab[0] + 1;
-		$msg = $_SESSION['auth']->username." vient de liker ta photo. Reviens vite sur notre site !";
 		if ((int)$email->mail_active === 1){
+			$msg = $_SESSION['auth']->username." vient de liker ta photo. Reviens vite sur notre site !";
 			mail($email->mail, "Quelqu'un aime ta photo REVIENS !", $msg);
 		}
 

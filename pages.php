@@ -28,10 +28,8 @@ foreach($pic as $data) {
 		echo "<span class='heartg' alt='Heart''></span>";
 		echo "</div>";
 	} else {
-		// echo "<form action='' method='post'>";
 		echo "<input name='pic_id' value='$data->id' type='hidden'>";
 		echo "<input id='comment_$data->id' name='comment' type='text' placeholder= 'Add a comment...' onkeydown='comment_key($data->id)'><input onclick='submit_comment($data->id)' type=submit Value='Done'>";
-		// echo "</form>";
 		echo "<div class='like'>";
 		echo "<button name='like' type='hidden' onclick='addLike($data->id);'><span class='heart' alt='Heart' style='fill:red;'></span></button>";
 		if ($_SESSION['auth']->id === $data->author_id){

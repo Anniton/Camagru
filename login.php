@@ -4,29 +4,6 @@ include_once("navigation.php");
 include_once("user_functions.php");
 include_once("db.php");
 
-// if(isset($_COOKIE['remember'])){
-// 	var_dump($_COOKIE['remember']);
-// 	$remember_token = $_COOKIe['remember'];
-// 	$parts = explode('==', $remember_token);
-// 	$user_id = $part[0];
-// 	$req= $bdd->prepare('SELECTI * FROM membres WHERE id = ?');
-// 	$req->execute([$user_id]);
-// 	$user = $req->fetch();
-// 	if($user){
-// 		$expected = $user_id . '==' . $user->remember_token . sha1($user->id . 'ratonlaveurs');
-// 		if($expected == $remember_token){
-// 			$_SESSION['auth'] = $user;
-// 			$_SESSION['flash']['success'] = 'Vous etes maintenant connecte au site';
-// 			header('Location: account.php');
-// 		}
-// 	}
-// }
-
-
-
-
-
-
 if(!empty($_POST) && !empty($_POST['username']) && !empty($_POST['passwd']))
 {
 	$username = htmlspecialchars($_POST['username']);
@@ -78,19 +55,11 @@ if(!empty($_POST) && !empty($_POST['username']) && !empty($_POST['passwd']))
 
     		<form action="" method="post">
 				    <div>
-				       <!--  <label for="name">Nom :</label> -->
 				        <input type="text" id="username" name="username" placeholder="Username">
 				    </div>
 				    <div>
 				        <input type="password" id="passwd" name="passwd" minlength="6" required placeholder="Password">
 				    </div>
-					<!-- <div class="form_group">
-						<label>
-						<input type="checkbox" name="remember" value="1">Remember me
-						</label>
-					</div> -->
-
-
 
 					<div>
 				 	  <input type="submit"value="Log In">
