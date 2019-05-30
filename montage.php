@@ -1,17 +1,22 @@
 <?php
-	include_once('navigation.php');
 	include_once("db.php");
+	session_start();
+
 	if ($_SESSION['auth']){
 		if(!empty($_POST['photo'])){
 			$user_id = $_SESSION['auth']->id;
 			$photo = htmlspecialchars($_POST['photo']);
-			$bdd->prepare('INSERT INTO photos SET photo = ?, author_id = ?')->execute([$photo, $user_id]);
-			header('Location: montage.php');
-		  }
+			$req = $bdd->prepare('INSERT INTO photos SET photo = ?, author_id = ?')->execute([$photo, $user_id]);
+			$test = $bdd->lastInsertId();
+			$data['new_pic_id'] = (int)$test;
+			echo json_encode($data);
+			exit();
 		}
-		else{
-			header('Location:gallery.php');
-		}
+	}
+	else{
+		header('Location:gallery.php');
+	}
+	include_once('navigation.php');
 ?>
 
 
@@ -68,7 +73,7 @@
 
 			<aside id="preview">
 			<?php
-				$rep = $bdd->prepare('SELECT photo, id, nb_like FROM photos WHERE author_id=? ORDER BY create_date DESC');
+				$rep = $bdd->prepare('SELECT photo, id FROM photos WHERE author_id=? ORDER BY create_date DESC');
 				$rep->execute([$_SESSION['auth']->id]);
 				$pic = $rep->fetchAll();
 				foreach($pic as $data) {

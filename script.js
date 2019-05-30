@@ -71,8 +71,13 @@ function save_image_in_db() {
 	req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 	req.onload = function () {
 		if (req.readyState === req.DONE && req.status === 200) {
-			res_data = `<p class='photo_zozor'><img src='data:image/jpg;base64,`+ b64 +`' width=500 height=400;/></p>`
-			preview.insertAdjacentHTML('afterbegin', res_data);
+			res = req.response;
+			res_data = JSON.parse(res);
+			html = `<p class='photo_zozor' id=` + res_data.new_pic_id + `>` +
+			`<img src='data:image/jpg;base64,`+ b64 +`' width=500 height=400;/>` +
+			`<button class='delete_preview' onclick='delete_image_in_db(` + res_data.new_pic_id + `)'><img src='logo_gal/trash.svg' alt='save_pic'></button>"` +
+			`</p>`;
+			preview.insertAdjacentHTML('afterbegin', html);
 		}
 	};
 	req.send(image);
