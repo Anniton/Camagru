@@ -2,9 +2,9 @@
 	require 'db.php';
 	try
 	{
-	$bdd = new PDO('mysql:host=localhost;dbname=espace_membre;charset=utf8', $DB_USER, $DB_PASSWORD);
-	$bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-	catch(PDOException $ex) { exit($ex); };
+		$bdd = new PDO('mysql:host=localhost;dbname=espace_membre;charset=utf8', $DB_USER, $DB_PASSWORD);
+		$bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+	} catch(PDOException $ex) { exit($ex); };
 
     // Creation de la BDD
     try {
