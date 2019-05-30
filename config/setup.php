@@ -29,6 +29,29 @@
             profile_pic VARCHAR(42)
         );";
         $bdd->prepare($sql)->execute();
-    } catch(PDOException $ex) { exit($ex); };
+	} catch(PDOException $ex) { exit($ex); };
 
+    try {
+        $sql = "CREATE TABLE IF NOT EXISTS `photos`
+        (
+            id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+            create_date DATETIME DEFAULT GETDATE(),
+            photo VARCHAR(20),
+            nb_like BIGINT(20),
+            author_id INT(11)
+        );";
+        $bdd->prepare($sql)->execute();
+	} catch(PDOException $ex) { exit($ex); };
+
+	try {
+        $sql = "CREATE TABLE IF NOT EXISTS `comments`
+        (
+            id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+            date DATETIME DEFAULT GETDATE(),
+            comment VARCHAR(255),
+            uid BIGINT(11),
+            photo_id INT(11)
+        );";
+        $bdd->prepare($sql)->execute();
+    } catch(PDOException $ex) { exit($ex); };
 ?>
