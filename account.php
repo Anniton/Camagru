@@ -8,60 +8,75 @@ include_once('db.php');
 logged_only();
 
 if ($_SESSION['auth']){
+	$errors_mdp = array();
+	$errors_mail = array();
+	$errors_name = array();
+
 	if(!empty($_POST)){
 		if(!empty($_POST['new_username'])){
 			$user_id = $_SESSION['auth']->id;
-			var_dump($_SESSION);
 			$newusername = htmlspecialchars($_POST['new_username']);
 			$bdd->prepare('UPDATE membres SET username = ? WHERE id = ?')->execute([$newusername, $user_id]);
-			$_SESSION['flash']['success'] = "Username update";
+			// $_SESSION['flash']['success'] = "Username update";
+			$errors_name['name'] = "Username update";
 		}
-		elseif ($_POST['validated_mail'])
-		{
-			var_dump("OUIIIIIII!!!");
-		}
-		else {
-			header('Location: account.php');
-		}
+		// elseif ($_POST['validated_mail'])
+		// {
+		// 	var_dump("OUIIIIIII!!!");
+		// }
+		// else {
+		// 	header('Location: account.php');
+		// }
 	}
 
 	if(!empty($_POST)){
-		if(empty($_POST['passwd']) || ($_POST['passwd'] != $_POST['passwd_confirm'])){
-			$_SESSION['flash']['warning'] = "Passwords are differents";
+
+		if(empty($_POST['passwd']) || ($_POST['passwd'] != $_POST['passwd2'])){
+			// $_SESSION['flash']['warning'] = "Passwords are differents";
+			$errors_mdp['passwd_cg'] = "Les mots de passe sont différents.";
+		}
+		elseif (empty($_POST['passwd']) || empty($_POST['passwd2']) || strlen($_POST['passwd']) < 6 ||
+				(!preg_match('#^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W)#', $_POST['passwd'])) ||
+				(!preg_match('#^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W)#', $_POST['passwd2']))){
+			$errors_mdp['passwd_cg'] = "Vous devez entrer au moins un chiffre, une minuscule, une majuscule et un caractère spécial(#, @, &...).";
 		}
 		else {
 			$user_id = $_SESSION['auth']->id;
 			$password = password_hash($_POST['passwd'], PASSWORD_BCRYPT);
 			$bdd->prepare('UPDATE membres SET password = ? WHERE id = ?')->execute([$password, $user_id]);
-			$_SESSION['flash']['success'] = "Password update";
+			$errors_mdp['passwd_cg'] = "Le mot de passe a bien été modifié.";
 		}
 	}
 
 	if(!empty($_POST)){
-		if(empty($_POST['mail']) || ($_POST['mail'] != $_POST['mail_confirm'])){
-			echo "Mail are differents";
+		if (empty($_POST['mail']) || ($_POST['mail'] != $_POST['mail_confirm'])){
+			// echo "Mail are differents";
+			$errors_mail['mail_cg'] = "Les email sont differents.";
 		}
 		else {
 			$user_id = $_SESSION['auth']->id;
 			$mail = htmlspecialchars($_POST['mail']);
 			$bdd->prepare('UPDATE membres SET mail = ? WHERE id = ?')->execute([$mail, $user_id]);
-			$_SESSION['flash']['success'] = "Mail update";
+			// $_SESSION['flash']['success'] = "Mail update";
+			$errors_mail['mail_cg'] = "L'email a bien été modifié.";
 		}
 	}
 
 	if(!empty($_POST)){
 		$user_id = $_SESSION['auth']->id;
-		if(!empty($_POST['validated_mail'])){
-		$mail_active = $_POST['validated_mail'];
-		$mail_unactive = $_POST['unvalidated_mail'];
-		var_dump($mail_active);
-		if(($_POST['validated_mail']) === '1'){
+		if (!empty($_POST['validated_mail'])){
+			$mail_active = $_POST['validated_mail'];
+			$mail_unactive = $_POST['unvalidated_mail'];
+		// var_dump($mail_active);
+		if ($_POST['validated_mail'] === '1'){
 			$bdd->prepare('UPDATE membres SET mail_active = ? WHERE id = ?')->execute([$mail_active, $user_id]);
-			var_dump($mail_active);
+			// var_dump($mail_active);
+			$errors_sendmail['mail_cg'] = "Vous avez activé les emails";
 		}
-		else if(($_POST['validated_mail']) === '2'){
+		else if ($_POST['validated_mail'] === '2'){
 			$bdd->prepare('UPDATE membres SET mail_active = ? WHERE id = ?')->execute([$mail_unactive, $user_id]);
-			var_dump($mail_unactive);
+			// var_dump($mail_unactive);
+			$errors_sendmail['mail_cg'] = "Vous avez desactivé les emails";
 		}
 	}
 }
@@ -78,10 +93,10 @@ if ($_SESSION['auth']){
 </head>
 <body>
  <div class="container">
-			<div class="header">CAMAGRU</div>
+			<!-- <div class="header">CAMAGRU</div> -->
 			<div class="menu"></div>
 			<div class="content">
-			<div>Bonjour <?= $_SESSION['auth']->username; ?>,</div>
+			<div style="margin-top:20px; font-weight:bold">Bonjour <?= $_SESSION['auth']->username; ?>,</div>
 				<br/>
 
 
@@ -93,20 +108,38 @@ if ($_SESSION['auth']){
 				</div>
 				<div> <input type="submit" name="cg_username" value="Change username"></div>
 			</form>
-
+			<?php if (!empty($errors_name)): ?>
+				<?php foreach($errors_name as $error): ?>
+						<div class="error">
+							<?= $error; ?>
+							<?php endforeach; ?>
+						</div>
+				<?php else : ?>
+					<div  class="error"></div>
+				<?php ; ?>
+			<?php endif; ?>
 
 			<form id="cg_mdp" action="" method="post">
 					<br/>
 					<div> CHANGE PASSWORD</div>
 					<div>
-					<input type="password" name="passwd" placeholder="New password">
+					<input type="password" name="passwd" minlength="6"  placeholder="New password">
 					</div>
 					<div>
-					<input type="password" name="passwd_confirm" placeholder="Confirm new password">
+					<input type="password" name="passwd2" minlength="6"  placeholder="Confirm new password">
 					</div>
 					<div> <input type="submit" name="cg_mdp" value="Change my password"></div>
 			</form>
-
+			<?php if (!empty($errors_mdp) && !empty($_POST['passwd']) && !empty($_POST['passwd2'])): ?>
+				<?php foreach($errors_mdp as $error): ?>
+						<div class="error">
+							<?= $error; ?>
+							<?php endforeach; ?>
+						</div>
+				<?php elseif (empty($_POST['passwd']) && empty($_POST['passwd2'])) : ?>
+				<div style="display=none"; class="error"></div>
+				<?php ; ?>
+			<?php endif; ?>
 
 			<form id="cg_mail"  action="" method="post">
 					<br/>
@@ -119,13 +152,29 @@ if ($_SESSION['auth']){
 					</div>
 					<div> <input name="cg_mail" type="submit" value="Change my mail"></div>
 			</form>
+			<?php if (!empty($errors_mail) && !empty($_POST['mail']) && !empty($_POST['mail_confirm'])): ?>
+				<?php foreach($errors_mail as $error): ?>
+						<div class="error">
+							<?= $error; ?>
+							<?php endforeach; ?>
+						</div>
+			<?php elseif (empty($_POST['mail']) || empty($_POST['mail_confirm'])): ?>
+					<div style="display=none"; class="error"></div>
+				<?php ; ?>
+			<?php endif; ?>
 
 			<form id="active_mail"  action="account.php" method="post">
 					<input type="radio" name="validated_mail" value="1"/>Enable email
 					<input type="radio" name="validated_mail" value="2"/>Disable email
 					<div><input type="submit" value="Submit"></div>
 			</form>
-
+			<?php if (!empty($errors_sendmail)): ?>
+				<?php foreach($errors_sendmail as $error): ?>
+						<div class="error">
+							<?= $error; ?>
+							<?php endforeach; ?>
+						</div>
+			<?php endif; ?>
 
 		<div class="txt"><a href="forgot_passwd.php"></a></div>
 </div>

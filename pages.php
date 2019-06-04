@@ -2,8 +2,8 @@
 session_start();
 /**
  *	Foreach photo in the "photos" table in the db,
-	*	We create a block html for each image and these comments
-	*/
+ *	We create a block html for each image and these comments
+ **/
 include_once("db.php");
 if (!empty($_POST['pages'])) {
 	$pages = (int)$_POST['pages'];

@@ -17,7 +17,7 @@ if(session_status() == PHP_SESSION_NONE){
         <div><a href="montage.php"><img src="logo_hdr/montage.png" max-width=100% height=45; alt="Take a Picture"></a><?php } ?>
         <?php if ($_SESSION['auth']) { ?></div>
 
-        <div style="position:absolute; left:170; top:25;"><a href="account.php"><img src="logo_hdr/login.png" alt="Sign In" max-width=100% height=35;><?php } ?>
+        <div style="position:absolute; left:170; top:25;"><a href="account.php"><img src="logo_hdr/login.png" alt="Sign In" max-width=100% height=35;></a><?php } ?>
         <?php if ($_SESSION['auth']) { ?></div>
         <div style="position:absolute; right:20;"><a href="logout.php"><img src="logo_hdr/logout.png" alt="Log Out" max-width=100% height=45;></a><?php } ?></div>
     </div>

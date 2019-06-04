@@ -1,3 +1,19 @@
+/* @media (min-width: 400px)
+{
+	.comments{
+		overflow-y: auto;
+		overflow-x: none;
+		text-align: left;
+		width: auto;
+		height: 400px;
+		background-color: white;
+	  }
+
+  .gallery {
+    display:none;
+  }
+} */
+
 .container {
     height: 100%;
     display: grid;
@@ -70,10 +86,9 @@ a, a:hover, a:visited, a:active
   .gallery {
     display:flex;
     flex-wrap: wrap;
-    background-color:rgba(204, 204, 168, 0.5);
+    background-color:rgba(250, 250, 250, 0.7);
     padding: 10px;
     margin: 50px 20px 20px 20px;
-
   }
   .comments{
 	overflow-y: auto;

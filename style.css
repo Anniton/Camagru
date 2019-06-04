@@ -4,12 +4,12 @@
     grid-gap: 50px;
     grid-template-columns: repeat(13wv 1fr);
     grid-template-rows: 80px auto 150px 200px;
-     grid-template-areas: 
+     grid-template-areas:
         "h h h h h h h h h h h h h"
         ". . c c c c c c c m m m m "
         ". . a a a a a a a m m m m"
         "f f f f f f f f f f f f f";
-       
+
 }
 html, body {
   box-sizing: border-box;
@@ -34,18 +34,19 @@ a, a:hover, a:visited, a:active
 
 .h1 {text-align:center;}
 
-.header {grid-area: h;
+/* .header {grid-area: h;
     background-color:#333;
     color:white;
-    font-size:7.9em; 
-    font-weight: 900; 
-}
+    font-size:7.9em;
+    font-weight: 900;
+} */
 /*.menu {grid-area: m;
 }
 */
 .content {grid-area: c;
   /* display: flex; */
   min-width: 600px;
+  min-height: auto;
   flex-direction: column ;
   background-color: rgba(255,255,255,0.7);
   border: 1px solid lightgrey;
@@ -120,15 +121,19 @@ a, a:hover, a:visited, a:active
   font-family: Avantgarde, TeX Gyre Adventor, URW Gothic L, sans-serif;
   font-weight: bold;
   color: grey;
+  margin-bottom: 10px;
   font-size: 1,5em;}
 
 .txt{
   width: 400px;
   font-family: Avantgarde, TeX Gyre Adventor, URW Gothic L, sans-serif;
   color: grey;
+  margin-bottom: 20px;
   font-size: 1,5em;}
 .error{
     width: 400px;
     font-family: Avantgarde, TeX Gyre Adventor, URW Gothic L, sans-serif;
-    color:red;
-    font-size: 1em;}
+	color:red;
+	margin-bottom: 20px;
+	font-weight:lighter;
+    font-size: 0.7em;}

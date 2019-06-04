@@ -39,7 +39,7 @@ if(!empty($_POST)){
 	}
 
 	if (empty($_POST['passwd']) || empty($_POST['passwd2']) || strlen($_POST['passwd']) < 6 ||
-	(!preg_match('#^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W)#', $passwd))){
+	!preg_match('#^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W)#', $passwd) || !preg_match('#^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W)#', $_POST['passwd2'])){
 		$errors['passwd'] = "Vous devez entrer au moins un chiffre, une minuscule, une majuscule et un caractère spécials(#, @, &...).";
 	}
 
@@ -127,8 +127,8 @@ if(!empty($_POST)){
 				<?php else : ?>
 					<div  class="error"></div>
 				<?php ; ?>
-
 				<?php endif; ?>
+
 				<div class="txt">By signing up, you agree to our Terms .
 				Learn how we collect, use and share your data in our Data Policy and how we use cookies and similar technology in our Cookies Policy .</div>
 				</div>
