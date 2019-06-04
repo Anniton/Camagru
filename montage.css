@@ -5,6 +5,7 @@
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
+
     }
 
 	article
@@ -36,6 +37,8 @@
 	#vidpic {
 		padding:10px;
 		margin:10px;
+		width:300px;
+		height:300px;
 	}
 	aside p{
 		width: 155px;
@@ -91,7 +94,7 @@ section
 {
 	display: flex;
 	justify-content: center;
-
+	margin-bottom: 50px;
 }
 
 article

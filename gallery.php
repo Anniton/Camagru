@@ -67,7 +67,7 @@ include_once("navigation.php");
 
 <body>
 	<div class="container">
-		<div class="header"></div>
+		<!-- <div class="header"></div> -->
 		<div class="menu"></div>
 		<div id="pictures" class="content">
 		<?php

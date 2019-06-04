@@ -33,9 +33,9 @@
 		<section>
 
 			<article>
-				<video class="vidpic" id="sourcevid" width='400' height='300' autoplay="true"></video>
+				<video class="vidpic" id="sourcevid"  autoplay="true"></video>
 				<p id="message" class="message"></p>
-				<div><canvas class="vidpic" id="canvas" width='400'  height='300' style='display:inline-block'></canvas></div>
+				<div><canvas class="vidpic" id="canvas" width='400' height='300' style='display:inline-block'></canvas></div>
 
 				<div id="buttons" class='fuckCss'>
 					<button class="btn" onclick="open_cam()"><img src="logo_gal/open_cam.svg" alt="open_cam" max-width=100% height=45;></button>
@@ -44,9 +44,10 @@
 					<button class="btn" onclick="take_picture()"><img src="logo_gal/take_pic.svg" alt="take_pic" max-width=100% height=45;></button>
 					<button class="btn" onclick="del()"><img src="logo_gal/trash.svg" alt="delete" max-width=100% height=45;></button>
 					<button class="btn" onclick="dl_image()"><img src="logo_gal/save.svg" alt="save" max-width=100% height=45;></button>
-					<button class="btn" onclick="save_image_in_db()"><img src="logo_gal/save_pic.svg" alt="save_pic" max-width=100% height=45;></button>
-					<label for="input" class="label-file"><img src="logo_gal/add_gallery.svg" alt="choose_pic" max-width=100% height=45;></label>
+
+					<label for="input" class="label-file"><img src="logo_gal/save_pic.svg" alt="choose_pic" max-width=100% height=45;></label>
 					<input id="input" class="input-file" type="file" accept="image/*">
+					<button class="btn" onclick="save_image_in_db()"><img src="logo_gal/add_gallery.svg" alt="save_pic" max-width=100% height=45;></button>
 				</div>
 
 				<div class="img_stickers">
