@@ -7,15 +7,15 @@ include_once("db.php");
 if(!empty($_POST) && !empty($_POST['username']) && !empty($_POST['passwd']))
 {
 	$username = htmlspecialchars($_POST['username']);
+	$errors = array();
 
 	$req = $bdd->prepare('SELECT * FROM membres WHERE (username = :username OR mail = :username) AND confirmed_at IS NOT NULL');
-	// $req->execute(['username' => $_POST['username']]);
 	$req->execute(['username' => $username]);
 	$user = $req->fetch();
-	if(password_verify($_POST['passwd'], $user->password)){
+	if (password_verify($_POST['passwd'], $user->password)){
 		$_SESSION['auth'] = $user;
 		// $_SESSION['flash']['success'] = 'Vous etes maintenant connecte au site';
-		if($_POST['remember']){
+		if ($_POST['remember']){
 			$remember_token = str_random(250);
 			$bdd->prepare('UPDATE membres SET remember_token = ? WHERE id = ?')->execute([$remember_token, $user->id]);
 			// setcookie('remember', $user->id . '==' . $remember_token . sha1($user->id . 'ratonlaveurs'), time() + 60 * 60 * 24 * 7);
@@ -24,14 +24,12 @@ if(!empty($_POST) && !empty($_POST['username']) && !empty($_POST['passwd']))
 		exit();
 	}
 	else{
-		$_SESSION['flash']['warning'] = 'Identifiant ou mdp incorrect';
-		header('Location: login.php');
-		exit();
+		// $_SESSION['flash']['warning'] = ' Identifiant ou mdp incorrect';
+		$errors['faux'] = "Identifiant ou mot de passe incorrect.";
+		// header('Location: login.php');
+		// exit();
 	}
 }
-	else{
-		// $_SESSION['flash']['warning'] = 'Identifiant ou mdp incorrect';
-	}
 
 
 ?>
@@ -48,7 +46,7 @@ if(!empty($_POST) && !empty($_POST['username']) && !empty($_POST['passwd']))
 
 <body>
  <div class="container">
-            <div class="header">CAMAGRU</div>
+            <!-- <div class="header">CAMAGRU</div> -->
             <div class="menu"></div>
             <div class="content">
 			<div class="title">CAMAGRU</div><br>
@@ -66,7 +64,17 @@ if(!empty($_POST) && !empty($_POST['username']) && !empty($_POST['passwd']))
 
 					</div>
 		</form>
+		<?php if (!empty($errors)): ?>
+				<?php foreach($errors as $error): ?>
+						<div class="error">
+							<?= $error; ?>
+							<?php endforeach; ?>
+						</div>
+				<?php else : ?>
+					<div  class="error"></div>
+				<?php ; ?>
 
+		<?php endif; ?>
 
 		<div class="txt"><a href="forgot_passwd.php">Forgot password?</a></div>
 </div>
