@@ -56,6 +56,32 @@ function dl_image() {
 /*
 **	save_image_in_db is a function for save image in database
 */
+// function save_image_in_db() {
+// 	var canvas = document.getElementById('canvas');
+// 	var preview = document.getElementById('preview');
+// 	var base64 = canvas.toDataURL("image/png");
+// 	b64 = base64.split(',')[1];
+// 	b64 = encodeURIComponent(b64);
+// 	console.log(base64, b64);
+// 	// canvas.toBlob(function(blob){envoi(blob)}, 'image/jpeg');
+// 	console.log("Les chats c'est mignon !");
+// 	req = new XMLHttpRequest();
+// 	req.open("POST", "montage.php",  true);
+// 	image = "photo=" + b64;
+// 	req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+// 	req.onload = function () {
+// 		if (req.readyState === req.DONE && req.status === 200) {
+// 			res = req.response;
+// 			res_data = JSON.parse(res);
+// 			html = `<p class='photo_zozor' id=` + res_data.new_pic_id + `>` +
+// 			`<img src='data:image/jpg;base64,`+ b64 +`' width=500 height=400;/>` +
+// 			`<button class='delete_preview' onclick='delete_image_in_db(` + res_data.new_pic_id + `)'><img src='logo_gal/trash.svg' alt='save_pic'></button>"` +
+// 			`</p>`;
+// 			preview.insertAdjacentHTML('afterbegin', html);
+// 		}
+// 	};
+// 	req.send(image);
+// };
 function save_image_in_db() {
 	var canvas = document.getElementById('canvas');
 	var preview = document.getElementById('preview');
@@ -75,7 +101,7 @@ function save_image_in_db() {
 			res_data = JSON.parse(res);
 			html = `<p class='photo_zozor' id=` + res_data.new_pic_id + `>` +
 			`<img src='data:image/jpg;base64,`+ b64 +`' width=500 height=400;/>` +
-			`<button class='delete_preview' onclick='delete_image_in_db(` + res_data.new_pic_id + `)'><img src='logo_gal/trash.svg' alt='save_pic'></button>"` +
+			`<button class='delete_preview' onclick='delete_image_in_db(` + res_data.new_pic_id + `)'><img src='logo_gal/trash.svg' alt='save_pic'></button>` +
 			`</p>`;
 			preview.insertAdjacentHTML('afterbegin', html);
 		}
