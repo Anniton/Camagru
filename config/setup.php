@@ -23,11 +23,15 @@
         $sql = "CREATE TABLE IF NOT EXISTS `membres`
         (
             id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-            name VARCHAR(20),
-            mail VARCHAR(64),
-            password VARCHAR(128),
-            username VARCHAR(20),
-            profile_pic VARCHAR(42)
+            username VARCHAR(255),
+            mail VARCHAR(255),
+            password TEXT,
+            confirmation_token VARCHAR(60) NULL,
+			confirmed_at DATETIME NULL,
+			reset_token VARCHAR(60) NULL,
+			reset_at DATETIME NULL,
+			remember_token VARCHAR(250),
+			mail_active TINYINT(1)
         );";
         $bdd->prepare($sql)->execute();
 	} catch(PDOException $ex) { exit($ex); };
@@ -36,10 +40,10 @@
         $sql = "CREATE TABLE IF NOT EXISTS `photos`
         (
             id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-            create_date DATETIME DEFAULT NOW(),
-            photo VARCHAR(20),
+            photo LONGTEXT,
+            author_id INT(11),
             nb_like BIGINT(20),
-            author_id INT(11)
+            create_date DATETIME DEFAULT NOW(),
         );";
         $bdd->prepare($sql)->execute();
 	} catch(PDOException $ex) { exit($ex); };
@@ -48,9 +52,9 @@
         $sql = "CREATE TABLE IF NOT EXISTS `comments`
         (
             id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-            date DATETIME DEFAULT NOW(),
             comment VARCHAR(255),
-            uid BIGINT(11),
+            date DATETIME DEFAULT NOW(),
+            uid INT(11),
             photo_id INT(11)
         );";
         $bdd->prepare($sql)->execute();
