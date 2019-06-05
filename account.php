@@ -2,7 +2,7 @@
 session_start();
 include_once('navigation.php');
 require_once('user_functions.php');
-include_once('db.php');
+require 'config/setup.php';
 
 
 logged_only();
@@ -13,20 +13,18 @@ if ($_SESSION['auth']){
 	$errors_name = array();
 
 	if(!empty($_POST)){
-		if(!empty($_POST['new_username'])){
+		$newusername = htmlspecialchars($_POST['new_username']);
+		if (empty($_POST['new_username']) || !preg_match('/^[a-zA-Z]+$/',$_POST['new_username'])){
+			$errors_name['name']= "Votre pseudo n'est pas valide (alphanumérique uniquement).";
+		}
+		// else (!empty($_POST['new_username'])){
+			else {
 			$user_id = $_SESSION['auth']->id;
-			$newusername = htmlspecialchars($_POST['new_username']);
+
 			$bdd->prepare('UPDATE membres SET username = ? WHERE id = ?')->execute([$newusername, $user_id]);
 			// $_SESSION['flash']['success'] = "Username update";
 			$errors_name['name'] = "Username update";
 		}
-		// elseif ($_POST['validated_mail'])
-		// {
-		// 	var_dump("OUIIIIIII!!!");
-		// }
-		// else {
-		// 	header('Location: account.php');
-		// }
 	}
 
 	if(!empty($_POST)){
@@ -108,14 +106,14 @@ if ($_SESSION['auth']){
 				</div>
 				<div> <input type="submit" name="cg_username" value="Change username"></div>
 			</form>
-			<?php if (!empty($errors_name)): ?>
+			<?php if (!empty($errors_name) && !empty($_POST['new_username'])): ?>
 				<?php foreach($errors_name as $error): ?>
 						<div class="error">
 							<?= $error; ?>
 							<?php endforeach; ?>
 						</div>
-				<?php else : ?>
-					<div  class="error"></div>
+				<?php elseif (empty($_POST['new_username'])) : ?>
+				<div style="display=none"; class="error"></div>
 				<?php ; ?>
 			<?php endif; ?>
 

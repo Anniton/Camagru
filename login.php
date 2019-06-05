@@ -2,7 +2,7 @@
 session_start();
 include_once("navigation.php");
 include_once("user_functions.php");
-include_once("db.php");
+require 'config/setup.php';
 
 if(!empty($_POST) && !empty($_POST['username']) && !empty($_POST['passwd']))
 {
@@ -15,11 +15,11 @@ if(!empty($_POST) && !empty($_POST['username']) && !empty($_POST['passwd']))
 	if (password_verify($_POST['passwd'], $user->password)){
 		$_SESSION['auth'] = $user;
 		// $_SESSION['flash']['success'] = 'Vous etes maintenant connecte au site';
-		if ($_POST['remember']){
-			$remember_token = str_random(250);
-			$bdd->prepare('UPDATE membres SET remember_token = ? WHERE id = ?')->execute([$remember_token, $user->id]);
-			// setcookie('remember', $user->id . '==' . $remember_token . sha1($user->id . 'ratonlaveurs'), time() + 60 * 60 * 24 * 7);
-		}
+		// if ($_POST['remember']){
+		// 	$remember_token = str_random(250);
+		// 	$bdd->prepare('UPDATE membres SET remember_token = ? WHERE id = ?')->execute([$remember_token, $user->id]);
+		// 	// setcookie('remember', $user->id . '==' . $remember_token . sha1($user->id . 'ratonlaveurs'), time() + 60 * 60 * 24 * 7);
+		// }
 		header('Location: account.php');
 		exit();
 	}
@@ -30,8 +30,6 @@ if(!empty($_POST) && !empty($_POST['username']) && !empty($_POST['passwd']))
 		// exit();
 	}
 }
-
-
 ?>
 
 <!doctype html>

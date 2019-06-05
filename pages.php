@@ -4,7 +4,8 @@ session_start();
  *	Foreach photo in the "photos" table in the db,
  *	We create a block html for each image and these comments
  **/
-include_once("db.php");
+require 'config/setup.php';
+
 if (!empty($_POST['pages'])) {
 	$pages = (int)$_POST['pages'];
 	$nb_per_pages = 5;

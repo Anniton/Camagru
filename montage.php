@@ -1,6 +1,6 @@
 <?php
-	include_once("db.php");
 	session_start();
+	require 'config/setup.php';
 
 	if ($_SESSION['auth']){
 		if(!empty($_POST['photo'])){

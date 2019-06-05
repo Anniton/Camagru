@@ -2,7 +2,7 @@
 session_start();
 include_once("navigation.php");
 include_once("user_functions.php");
-include_once("db.php");
+require 'config/setup.php';
 
 
 if(!empty($_POST) && !empty($_POST['mail']))
@@ -19,7 +19,7 @@ if(!empty($_POST) && !empty($_POST['mail']))
 
 		$bdd->prepare('UPDATE membres SET reset_token = ?, reset_at = NOW() WHERE id = ?')->execute([$reset_token, $user->id]);
 
-		$_SESSION['flash']['success'] = 'Les instruction du rappel de mot de passe vous ont ete envoye par email';
+		$_SESSION['flash']['success'] = 'Les instructions du rappel de mot de passe vous ont été envoyé par email.';
 		// mail($_POST['mail'], 'Reinitialisation du mot de passe', "Afin de reinitialiser votre mot de passe cliquer sur ce lien\n\nhttp://localhost:8080/reset.php?id={$user->id}&token=$reset_token");
 		mail($email, 'Reinitialisation du mot de passe', "Afin de reinitialiser votre mot de passe cliquer sur ce lien\n\nhttp://localhost:8080/reset.php?id={$user->id}&token=$reset_token");
 
@@ -45,7 +45,7 @@ if(!empty($_POST) && !empty($_POST['mail']))
 
 <body>
  <div class="container">
-            <div class="header">CAMAGRU</div>
+            <!-- <div class="header">CAMAGRU</div> -->
             <div class="menu"></div>
             <div class="content">
 			<div class="title">Trouble Logging In?</div><br>

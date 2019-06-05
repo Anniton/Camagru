@@ -2,7 +2,7 @@
 session_start();
 include_once("navigation.php");
 include_once("user_functions.php");
-include_once 'db.php';
+require 'config/setup.php';
 
 if(!empty($_POST)){
 	$errors = array();
@@ -40,7 +40,7 @@ if(!empty($_POST)){
 
 	if (empty($_POST['passwd']) || empty($_POST['passwd2']) || strlen($_POST['passwd']) < 6 ||
 	!preg_match('#^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W)#', $passwd) || !preg_match('#^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W)#', $_POST['passwd2'])){
-		$errors['passwd'] = "Vous devez entrer au moins un chiffre, une minuscule, une majuscule et un caractère spécials(#, @, &...).";
+		$errors['passwd'] = "Vous devez entrer un mot de passe avec au moins un chiffre, une minuscule, une majuscule et un caractère spécial (#, @, &...).";
 	}
 
 	if (empty($_POST['passwd2']) || $_POST['passwd'] != $_POST['passwd2'] || strlen($_POST['passwd']) < 6){
@@ -120,14 +120,12 @@ if(!empty($_POST)){
 
 				<?php if (!empty($errors)): ?>
 				<?php foreach($errors as $error): ?>
-						<div class="error">
+						<li class="error">
 							<?= $error; ?>
-							<?php endforeach; ?>
-						</div>
-				<?php else : ?>
+						</li>
+				<?php endforeach; else : ?>
 					<div  class="error"></div>
-				<?php ; ?>
-				<?php endif; ?>
+				<?php ; endif; ?>
 
 				<div class="txt">By signing up, you agree to our Terms .
 				Learn how we collect, use and share your data in our Data Policy and how we use cookies and similar technology in our Cookies Policy .</div>

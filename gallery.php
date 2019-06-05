@@ -1,7 +1,7 @@
 <?php
 session_start();
 include_once("user_functions.php");
-include_once("db.php");
+require 'config/setup.php';
 
 $pages = 0;
 $nb_per_pages = 5;
@@ -22,8 +22,8 @@ if ($_SESSION['auth']){
 		$email = $res_mail->fetchAll()[0];
 
 		if ((int)$email->mail_active === 1){
-			$msg = $_SESSION['auth']->username." vient de commenter ta photo. Reviens vite sur notre site !";
-			mail($email->mail, "Quelqu'un a commenter ta photo REVIENS !", $msg);
+			$msg = $_SESSION['auth']->username." vient de commenter ta photo. Reviens vite lui répondre!";
+			mail($email->mail, "Quelqu'un a commenté ta photo sur Camagru!", $msg);
 		}
 	}
 	if (!empty($_POST['pic_like_id'])) {
@@ -42,8 +42,8 @@ if ($_SESSION['auth']){
 
 		$nb_like = (int)$tab[0] + 1;
 		if ((int)$email->mail_active === 1){
-			$msg = $_SESSION['auth']->username." vient de liker ta photo. Reviens vite sur notre site !";
-			mail($email->mail, "Quelqu'un aime ta photo REVIENS !", $msg);
+			$msg = $_SESSION['auth']->username." vient de liker ta photo. Reviens vite sur Camagru!";
+			mail($email->mail, "Quelqu'un a liké ta photo sur Camagru!", $msg);
 		}
 
 		$req = $bdd->prepare('UPDATE photos SET nb_like=? WHERE id=?')->execute([$nb_like, $id]);

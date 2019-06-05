@@ -4,7 +4,8 @@ session_start();
 $user_id = $_GET['id'];
 $token = $_GET['token'];
 
-require 'db.php';
+require 'config/setup.php';
+
 $req = $bdd->prepare('SELECT * FROM membres WHERE id = ?');
 $req->execute([$user_id]);
 $user = $req->fetch();
