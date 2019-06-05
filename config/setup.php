@@ -1,16 +1,5 @@
 <?php
 	require 'config/database.php';
-	// try
-	// {
-	// 	$bdd = new PDO('mysql:host=localhost;dbname=espace_membre;charset=utf8', $DB_USER, $DB_PASSWORD);
-	// 	$bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-	// } catch(PDOException $ex) { exit($ex); };
-
- // Creation de la BDD
-	try {
-		$sql = "CREATE DATABASE IF NOT EXISTS $db;";
-		$bdd->prepare($sql)->execute();
-	} catch(PDOException $ex) { exit($ex); };
 
   // Connexion a la BDD
 	try {
@@ -19,9 +8,14 @@
 		$bdd->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_OBJ);
 	} catch(PDOException $ex) { exit($ex); };
 
+	// Creation de la BDD
+	try {
+		$sql = "CREATE DATABASE IF NOT EXISTS $db;";
+		$bdd->prepare($sql)->execute();
+	} catch(PDOException $ex) { exit($ex); };
 
 
-	$pdo = null; // Deconnexion au serveur de BDD
+	// $pdo = null; // Deconnexion au serveur de BDD
 
 
     // Creation de la table users
