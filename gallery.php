@@ -85,7 +85,7 @@ include_once("navigation.php");
 				$donnees = $reponse->fetchAll(PDO::FETCH_COLUMN, 'comments');
 
 				echo "<div id='$data->id' class='gallery'>";
-				echo "<img src='data:image/jpg;base64, $data->photo' width=500 height=400;/>";
+				echo "<img class='test_img' src='data:image/jpg;base64, $data->photo' width=500 height=400;/>";
 				echo "<div class='comments'>";
                 if (!($_SESSION['auth'])) {
 					echo "<div class='nop'><a href='login.php'>Log in to like or comment</a></div>";
