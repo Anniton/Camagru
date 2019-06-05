@@ -17,8 +17,20 @@ function logged_only(){
     if(!isset($_SESSION['auth'])){
         $_SESSION['flash']['error'] = "Vous n'avez pas le droit d'acceder a cette page.";
         header('Location: Login.php');
-    
+
         exit();
     }
 }
+
 ?>
+
+<script>
+function escapeHtml(unsafe){
+    return unsafe
+         .replace(/&/g, "&amp;")
+         .replace(/</g, "&lt;")
+         .replace(/>/g, "&gt;")
+         .replace(/"/g, "&quot;")
+		 .replace(/'/g, "&#039;");
+ }
+ </script>

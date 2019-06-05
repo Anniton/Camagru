@@ -177,6 +177,7 @@ function submit_comment(id) {
 	req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 	req.onload = function () {
 		if (req.readyState === req.DONE && req.status === 200) {
+			comment = escapeHtml(comment);
 			res = `<p class='comment'>` + comment + `</p>`;
 			comments = document.getElementById("comments_" + id);
 			comments.insertAdjacentHTML('afterbegin', res);
