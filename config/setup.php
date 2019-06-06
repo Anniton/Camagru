@@ -1,11 +1,6 @@
 <?php
 	require 'database.php';
-	// $db = 'espace_membre';
 
-	// $DB_DSN = "mysql:host=localhost;dbname=$db;port=8080;charset=utf8";
-	// $DB_USER = "root";
-	// $DB_PASSWORD = "camagru";
-    // Connexion au serveur MYSQL
     try {
 		// $pdo = new PDO("mysql:host=localhost;port:8080", $DB_USER, $DB_PASSWORD);
 		$bdd = new PDO("mysql:host=localhost;port=8080", $DB_USER, $DB_PASSWORD);

@@ -3,7 +3,7 @@ if(session_status() == PHP_SESSION_NONE){
     session_start();
 }
 ?>
-<link rel="stylesheet" href="navigation.css">
+<link rel="stylesheet" href="css/navigation.css">
 <div class="navigation">
         <div><a href="gallery.php"><img src="logo_hdr/logo_camagru_color.png" alt="Home" max-width=100% height=45;></a>
         <?php if (!$_SESSION) { ?></div>

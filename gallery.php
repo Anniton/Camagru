@@ -61,8 +61,8 @@ include_once("navigation.php");
 <head>
   <meta charset="utf-8">
   <title>Gallery</title>
-  <link rel="stylesheet" href="gallery.css">
-  <script src="script.js"></script>
+  <link rel="stylesheet" href="css/gallery.css">
+  <script src="js/script.js"></script>
 </head>
 
 <body>
@@ -123,4 +123,4 @@ include_once("navigation.php");
 	</div>
 </body>
 </html>
-<script src="like_comment.js"></script>
+<script src="js/like_comment.js"></script>

@@ -54,8 +54,8 @@ else{
 <head>
   <meta charset="utf-8">
   <title>Forgot Password</title>
-  <link rel="stylesheet" href="style.css">
-  <script src="script.js"></script>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/script.js"></script>
 </head>
 
 

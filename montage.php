@@ -25,7 +25,7 @@
 <head>
 	<meta charset="utf-8">
 	<title>MONTAGE</title>
-	<link rel="stylesheet" href="montage.css" type="text/css" media="all">
+	<link rel="stylesheet" href="css/montage.css" type="text/css" media="all">
 </head>
 
 <body>
@@ -91,6 +91,6 @@
 		<footer>ABOUT AQUAN . SUPPORT . PRESS . API . PRIVACY . TERMS . DIRECTORY . PROFILES . HASHTAGS . LANGUAGE</footer>
 	</div>
 </body>
-<script async src="script.js"></script>
-<script src="importation.js"></script>
+<script async src="js/script.js"></script>
+<script src="js/importation.js"></script>
 </html>

@@ -39,7 +39,7 @@ if(!empty($_POST) && !empty($_POST['mail']))
   <meta charset="utf-8">
   <title>Forgot Password</title>
   <link rel="stylesheet" href="style.css">
-  <script src="script.js"></script>
+  <script src="js/script.js"></script>
 </head>
 
 

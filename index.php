@@ -80,7 +80,7 @@ if(!empty($_POST)){
 <head>
   <meta charset="utf-8">
   <title>Sign Up</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="css/style.css">
   <!-- <script src="script.js"></script> -->
 </head>
 <body>

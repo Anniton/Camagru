@@ -87,7 +87,7 @@ if ($_SESSION['auth']){
   <meta charset="utf-8">
   <title>Profile</title>
   <link rel="stylesheet" href="style.css">
-  <script src="script.js"></script>
+  <script src="js/script.js"></script>
 </head>
 <body>
  <div class="container">
@@ -182,7 +182,7 @@ if ($_SESSION['auth']){
 		</div>
 
 </body>
-<script async src="script.js"></script>
+<script async src="js/script.js"></script>
 </html>
 <?php
 }
