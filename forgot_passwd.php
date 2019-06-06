@@ -7,7 +7,7 @@ require 'config/setup.php';
 
 if(!empty($_POST) && !empty($_POST['mail']))
 {
-
+	$errors = array();
 	$email = htmlspecialchars($_POST['mail']);
 	$req = $bdd->prepare('SELECT * FROM membres WHERE mail = ? AND confirmed_at IS NOT NULL');
 	// $req->execute([$_POST['mail']]);
@@ -27,7 +27,8 @@ if(!empty($_POST) && !empty($_POST['mail']))
 		exit();
 	}
 	else{
-		$_SESSION['flash']['warning'] = 'aucun compte ne correspond a cette adresse';
+		// $_SESSION['flash']['warning'] = 'Aucun compte ne correspond à cette adresse';
+		$errors['mail'] = 'Aucun compte ne correspond à cette adresse.';
 	}
 }
 
@@ -59,6 +60,14 @@ if(!empty($_POST) && !empty($_POST['mail']))
 				 	  <input type="submit" value="Send Login Link">
 					</div>
 		</form>
+		<?php if (!empty($errors)): ?>
+				<?php foreach($errors as $error): ?>
+						<li class="error">
+							<?= $error; ?>
+						</li>
+				<?php endforeach; else : ?>
+					<div  class="error"></div>
+				<?php ; endif; ?>
 		<br>
 		<br>
 		<div class="txt"><a href ="index.php">Create New Account</a></div>

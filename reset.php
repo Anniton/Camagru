@@ -65,7 +65,7 @@ else{
             <div class="menu"></div>
             <div class="content">
 			<div class="title">Trouble Logging In?</div><br>
-    		<div class="text">Enter your email and we'll send you a link to get back into your account.</div>
+    		<div class="text">Please enter a new password.</div>
 
     		<form action="" method="post">
                      <div>
