@@ -23,7 +23,7 @@ if ($_SESSION['auth']){
 
 			$bdd->prepare('UPDATE membres SET username = ? WHERE id = ?')->execute([$newusername, $user_id]);
 			// $_SESSION['flash']['success'] = "Username update";
-			$errors_name['name'] = "Username update";
+			$errors_name['name'] = "Le nom d'utilisateur a bien été modifié.";
 		}
 	}
 
@@ -49,7 +49,7 @@ if ($_SESSION['auth']){
 	if(!empty($_POST)){
 		if (empty($_POST['mail']) || ($_POST['mail'] != $_POST['mail_confirm'])){
 			// echo "Mail are differents";
-			$errors_mail['mail_cg'] = "Les email sont differents.";
+			$errors_mail['mail_cg'] = "Les email sont différents.";
 		}
 		else {
 			$user_id = $_SESSION['auth']->id;
@@ -178,7 +178,7 @@ if ($_SESSION['auth']){
 </div>
 <!-- <div class="article" class="text">Don't have an account?<b>  <a href="index.php">&nbsp;Sign up</a></b></div> -->
 
-			<div class="footer">ABOUT US . SUPPORT . PRESS . API . JOBS . PRIVACY . TERMS . DIRECTORY . PROFILES . HASHTAGS . LANGUAGE</div>
+			<div class="footer">ABOUT AQUAN . SUPPORT . PRESS . API . JOBS . PRIVACY . TERMS . DIRECTORY . PROFILES . HASHTAGS . LANGUAGE</div>
 		</div>
 
 </body>

@@ -162,6 +162,7 @@ a, a:hover, a:visited, a:active
  background-color: #ffcc5c;
   text-align: center;
   font-size: 1em;
+  background-image: radial-gradient(circle at top left, rgba(249,229,78,1),  rgba(220,83,216,1));
   font-family: Avantgarde, TeX Gyre Adventor, URW Gothic L, sans-serif;
   color: grey;
   display:inline-flex;}
@@ -205,7 +206,10 @@ a, a:hover, a:visited, a:active
 	min-width: 450px;
     font-family: Avantgarde, TeX Gyre Adventor, URW Gothic L, sans-serif;
   }
-
+.delete_preview{
+	position: relative;
+    top: 12.4px;
+}
 
 .nop{
     width: 480px;

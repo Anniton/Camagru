@@ -8,7 +8,7 @@ if(session_status() == PHP_SESSION_NONE){
         <div><a href="gallery.php"><img src="logo_hdr/logo_camagru_color.png" alt="Home" max-width=100% height=45;></a>
         <?php if (!$_SESSION) { ?></div>
 
-        <div style="position:absolute; right:20;"><a href="login.php"><img src="logo_hdr/login.png" alt="Sign In" max-width=100% height=30;></a><?php } ?>
+        <div style="position:absolute; right:20; top:25;"><a href="login.php"><img src="logo_hdr/login.png" alt="Sign In" max-width=100% height=30;></a><?php } ?>
         <?php if (!$_SESSION) { ?></div>
 
         <div><a href="index.php"><img src="logo_hdr/signup.png" alt="Sign Up" max-width=100% height=45;></a><?php } ?>

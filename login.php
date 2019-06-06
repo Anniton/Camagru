@@ -78,7 +78,7 @@ if(!empty($_POST) && !empty($_POST['username']) && !empty($_POST['passwd']))
 </div>
 <div class="article" class="text">Don't have an account?<b>  <a href="index.php">&nbsp;Sign up</a></b></div>
 
-            <div class="footer">ABOUT US . SUPPORT . PRESS . API . JOBS . PRIVACY . TERMS . DIRECTORY . PROFILES . HASHTAGS . LANGUAGE</div>
+            <div class="footer">ABOUT AQUAN . SUPPORT . PRESS . API . JOBS . PRIVACY . TERMS . DIRECTORY . PROFILES . HASHTAGS . LANGUAGE</div>
         </div>
 
 </body>

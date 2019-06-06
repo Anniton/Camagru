@@ -136,11 +136,11 @@ a, a:hover, a:visited, a:active
   color: grey;}
 
 .footer {grid-area: f;
- background-color: #ffcc5c;
-  text-align: center;
-  font-size: 1em;
-  font-family: Avantgarde, TeX Gyre Adventor, URW Gothic L, sans-serif;
-  color: grey;}
+	background-image: radial-gradient(circle at top left, rgba(249,229,78,1),  rgba(220,83,216,1));
+	text-align: center;
+	font-size: 1em;
+	font-family: Avantgarde, TeX Gyre Adventor, URW Gothic L, sans-serif;
+	color: grey;}
 
 .title{
   font-weight: 900;

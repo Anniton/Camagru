@@ -37,7 +37,7 @@
 				<p id="message" class="message"></p>
 				<div><canvas class="vidpic" id="canvas" width='400' height='300' style='display:inline-block'></canvas></div>
 
-				<div id="buttons" class='fuckCss'>
+				<div id="buttons" class='fucss'>
 					<button class="btn" onclick="open_cam()"><img src="logo_gal/open_cam.svg" alt="open_cam" max-width=100% height=45;></button>
 					<button class="btn" onclick="close_cam()"><img src="logo_gal/close_cam.svg" alt="close_cam" max-width=100% height=45;></button>
 					<br>
@@ -60,7 +60,7 @@
 					 * @titre le titre de l'image,
 					 * @image le lien
 					 */
-					$tableau=array("stickers/1.png","stickers/2.png","stickers/3.png","stickers/4.png");
+					$tableau=array("stickers/1.png","stickers/2.png","stickers/3.png","stickers/4.png","stickers/5.png","stickers/6.png","stickers/7.png","stickers/8.png","stickers/9.png","stickers/10.png","stickers/11.png");
 					for($i=0;$i<count($tableau);$i++){
 				?>
 					<div id="bouton<?php echo $i; ?>" onclick="setImage('bouton<?php echo $i; ?>','image<?php echo $i; ?>','<?php echo $tableau[$i]; ?>','<?php echo $tableau[$i]; ?>');">
@@ -88,7 +88,7 @@
 
 		</section>
 
-		<footer>ABOUT US . SUPPORT . PRESS . API . JOBS . PRIVACY . TERMS . DIRECTORY . PROFILES . HASHTAGS . LANGUAGE</div>
+		<footer>ABOUT AQUAN . SUPPORT . PRESS . API . PRIVACY . TERMS . DIRECTORY . PROFILES . HASHTAGS . LANGUAGE</footer>
 	</div>
 </body>
 <script async src="script.js"></script>
