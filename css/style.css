@@ -145,7 +145,8 @@ a, a:hover, a:visited, a:active
 .title{
   font-weight: 900;
   color: lightgrey;
-  font-size: 2em;}
+  font-size: 2em;
+	margin-bottom: 20px; }
 
 .text{
   width: 400px;

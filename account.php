@@ -85,7 +85,7 @@ if ($_SESSION['auth']){
 <html lang="fr">
 <head>
   <meta charset="utf-8">
-  <title>Profile</title>
+  <title>ACCOUNT</title>
   <link rel="stylesheet" href="css/style.css">
   <script src="js/script.js"></script>
 </head>

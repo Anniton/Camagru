@@ -36,7 +36,7 @@ if(!empty($_POST) && !empty($_POST['username']) && !empty($_POST['passwd']))
 <html lang="fr">
 <head>
   <meta charset="utf-8">
-  <title>login</title>
+  <title>LOGIN</title>
   <link rel="stylesheet" href="css/style.css">
   <script src="js/script.js"></script>
 </head>

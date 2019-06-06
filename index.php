@@ -79,7 +79,7 @@ if(!empty($_POST)){
 <html lang="fr">
 <head>
   <meta charset="utf-8">
-  <title>Sign Up</title>
+  <title>INDEX</title>
   <link rel="stylesheet" href="css/style.css">
   <!-- <script src="script.js"></script> -->
 </head>

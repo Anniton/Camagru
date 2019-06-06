@@ -60,7 +60,7 @@ include_once("navigation.php");
 <html lang="fr">
 <head>
   <meta charset="utf-8">
-  <title>Gallery</title>
+  <title>GALLERY</title>
   <link rel="stylesheet" href="css/gallery.css">
   <script src="js/script.js"></script>
 </head>
