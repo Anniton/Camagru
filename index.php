@@ -88,7 +88,7 @@ if(!empty($_POST)){
             <div class="header"></div>
             <div class="menu"></div>
             <div class="content">
-			<!-- <div class="title">CAMAGRU</div><br> -->
+			<div class="title">CAMAGRU</div><br>
     		<div class="text">Sign up to see photos and videos from your friends.</div>
 
 						<form action="" method="post">
