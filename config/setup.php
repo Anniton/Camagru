@@ -1,8 +1,8 @@
 <?php
 	require 'database.php';
 
+	// Connexion a MYSQL
     try {
-		// $pdo = new PDO("mysql:host=localhost;port:8080", $DB_USER, $DB_PASSWORD);
 		$bdd = new PDO("mysql:host=localhost;port=8080", $DB_USER, $DB_PASSWORD);
 		$bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     } catch(PDOException $ex) { exit($ex); };
@@ -14,18 +14,15 @@
 		$bdd->prepare($sql)->execute();
 	} catch(PDOException $ex) { exit($ex); };
 
-	$pdo = null; // Deconnexion au serveur de BDD
+	// Deconnexion au serveur de BDD
+	$pdo = null;
 
-  // Connexion a la BDD
-  try {
-	$bdd = new PDO($DB_DSN, $DB_USER, $DB_PASSWORD);
-	$bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-	$bdd->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_OBJ);
-	} catch(PDOException $ex) { exit($ex); };
-
-
-
-
+	// Connexion a la BDD
+	try {
+		$bdd = new PDO($DB_DSN, $DB_USER, $DB_PASSWORD);
+		$bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		$bdd->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_OBJ);
+		} catch(PDOException $ex) { exit($ex); };
 
     // Creation de la table users
     try {
