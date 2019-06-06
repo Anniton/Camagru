@@ -31,7 +31,7 @@
 			reset_token VARCHAR(60) NULL,
 			reset_at DATETIME NULL,
 			remember_token VARCHAR(250),
-			mail_active TINYINT(1)
+			mail_active TINYINT(1) DEFAULT 1
         );";
         $bdd->prepare($sql)->execute();
 	} catch(PDOException $ex) { exit($ex); };
