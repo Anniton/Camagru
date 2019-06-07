@@ -78,8 +78,6 @@ if ($_SESSION['auth']){
 	$res1 = $bdd->prepare('SELECT mail_active FROM membres WHERE id = ?');
 	$res1->execute([$_SESSION['auth']->id]);
 	$res11 = (int)$res1->fetchAll()[0]->mail_active;
-		// $res2 = $bdd->prepare('SELECT mail_active FROM membres WHERE id = ?')->execute([$mail_unactive, $user_id]);
-
 ?>
 
 <!doctype html>
