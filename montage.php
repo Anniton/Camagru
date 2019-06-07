@@ -52,14 +52,14 @@
 
 				<div class="img_stickers">
 				<?php
-					/**
-					 * setImage Function:
-					 *
-					 * @bouton est l'id du bouton,
-					 * @id l'id de l'emplacement de l'image,
-					 * @titre le titre de l'image,
-					 * @image le lien
-					 */
+	/**
+	* setImage Function:
+	*
+	* @bouton est l'id du bouton,
+	* @id l'id de l'emplacement de l'image,
+	* @titre le titre de l'image,
+	* @image le lien
+	*/
 					$tableau=array("stickers/1.png","stickers/2.png","stickers/3.png","stickers/4.png","stickers/5.png","stickers/6.png","stickers/7.png","stickers/8.png","stickers/9.png","stickers/10.png","stickers/11.png");
 					for($i=0;$i<count($tableau);$i++){
 				?>

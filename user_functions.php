@@ -21,5 +21,4 @@ function logged_only(){
         exit();
     }
 }
-
 ?>

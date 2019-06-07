@@ -192,20 +192,31 @@ a, a:hover, a:visited, a:active
     text-align: left;
     min-width: 475px;
 	background-color: white;
-    height:400px;
+    height:450px;
     border: none;
     /* font-size:0.9em; */
     font-family: Avantgarde, TeX Gyre Adventor, URW Gothic L, sans-serif;
     display: block;
   }
 
+
   .comments p{
     padding: 0px 10px 10px 10px;
     margin: none;
-	/* font-size:1em; */
 	min-width: 450px;
-    font-family: Avantgarde, TeX Gyre Adventor, URW Gothic L, sans-serif;
+	color:black;
+	font-family: Avantgarde, TeX Gyre Adventor, URW Gothic L, sans-serif;
   }
+
+.commentaire {
+
+}
+.photo_id {
+	font-family: Avantgarde, TeX Gyre Adventor, URW Gothic L, sans-serif;
+    font-weight: bold;
+	color: black;
+	text-align: left;
+}
 .delete_preview{
 	position: relative;
     top: 12.4px;
@@ -250,6 +261,7 @@ a, a:hover, a:visited, a:active
 	font-size: large;
     cursor:pointer;
   }
+
 
 button {
 	background-color: white;

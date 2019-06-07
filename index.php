@@ -66,11 +66,9 @@ if(!empty($_POST)){
 
 		header('Location: login.php');
 		exit();
-
 		// $errors['success'] = "Votre compte a bien été crée !";
-		// var_dump($_POST);
+
 	}
-	// debug($errors);
 }
 ?>
 

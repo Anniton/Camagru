@@ -65,19 +65,24 @@ if ($_SESSION['auth']){
 		if (!empty($_POST['validated_mail'])){
 			$mail_active = $_POST['validated_mail'];
 			$mail_unactive = $_POST['unvalidated_mail'];
-		// var_dump($mail_active);
 		if ($_POST['validated_mail'] === '1'){
 			$bdd->prepare('UPDATE membres SET mail_active = ? WHERE id = ?')->execute([$mail_active, $user_id]);
-			// var_dump($mail_active);
 			$errors_sendmail['mail_cg'] = "Vous avez activé les emails";
+			// var_dump($res1);
 		}
 		else if ($_POST['validated_mail'] === '2'){
 			$bdd->prepare('UPDATE membres SET mail_active = ? WHERE id = ?')->execute([$mail_unactive, $user_id]);
-			// var_dump($mail_unactive);
 			$errors_sendmail['mail_cg'] = "Vous avez desactivé les emails";
+			var_dump($res2);
+				}
+			}
 		}
-	}
-}
+		// $user_mail = $_POST['validated_mail'];
+		// $res1 = $bdd->prepare('SELECT mail_active FROM membres WHERE id = ?');
+		// $res1->execute([$user_mail]);
+		// $res11 = $res1->fetch();
+		// var_dump($res11);
+		// $res2 = $bdd->prepare('SELECT mail_active FROM membres WHERE id = ?')->execute([$mail_unactive, $user_id]);
 
 ?>
 
@@ -162,6 +167,7 @@ if ($_SESSION['auth']){
 			<?php endif; ?>
 
 			<form id="active_mail"  action="account.php" method="post">
+				<?php if ($res1 == 1) { ?>}
 					<input type="radio" name="validated_mail" value="1"/>Enable email
 					<input type="radio" name="validated_mail" value="2"/>Disable email
 					<div><input type="submit" value="Submit"></div>
