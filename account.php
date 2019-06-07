@@ -64,20 +64,20 @@ if ($_SESSION['auth']){
 		if (!empty($_POST['validated_mail'])){
 			$mail_active = $_POST['validated_mail'];
 			$mail_unactive = $_POST['unvalidated_mail'];
-		if ($_POST['validated_mail'] === '1'){
-			$bdd->prepare('UPDATE membres SET mail_active = ? WHERE id = ?')->execute([$mail_active, $user_id]);
-			$errors_sendmail['mail_cg'] = "Vous avez activé les emails";
-		}
-		else if ($_POST['validated_mail'] === '2'){
-			$bdd->prepare('UPDATE membres SET mail_active = ? WHERE id = ?')->execute([$mail_unactive, $user_id]);
-			$errors_sendmail['mail_cg'] = "Vous avez desactivé les emails";
-				}
+			if ($_POST['validated_mail'] === '1'){
+				$bdd->prepare('UPDATE membres SET mail_active = ? WHERE id = ?')->execute([$mail_active, $user_id]);
+				$errors_sendmail['mail_cg'] = "Vous avez activé les emails";
+			}
+			else if ($_POST['validated_mail'] === '2'){
+				$bdd->prepare('UPDATE membres SET mail_active = ? WHERE id = ?')->execute([$mail_unactive, $user_id]);
+				$errors_sendmail['mail_cg'] = "Vous avez desactivé les emails";
 			}
 		}
-		$user_mail = $_POST['validated_mail'];
-		$res1 = $bdd->prepare('SELECT mail_active FROM membres WHERE id = ?');
-		$res1->execute([$user_mail]);
-		$res11 = (int)$res1->fetchAll()[0];
+		header("Location: account.php");
+	}
+	$res1 = $bdd->prepare('SELECT mail_active FROM membres WHERE id = ?');
+	$res1->execute([$_SESSION['auth']->id]);
+	$res11 = (int)$res1->fetchAll()[0]->mail_active;
 		// $res2 = $bdd->prepare('SELECT mail_active FROM membres WHERE id = ?')->execute([$mail_unactive, $user_id]);
 
 ?>
@@ -165,12 +165,10 @@ if ($_SESSION['auth']){
 			<form id="active_mail"  action="account.php" method="post">
 			 <?php if($res11 == 1) { ?>
 					<input type="radio" name="validated_mail" value="1" checked="checked"/>Enable email
+					<input type="radio" name="validated_mail" value="2"/>Disable email
 			 <?php  } else { ?>
-			 <input type="radio" name="validated_mail" value="1"/>Enable email
-			<?php  } if($res11 != 1) { ?>
-			<input type="radio" name="validated_mail" value="2" checked="checked"/>Disable email
-			<?php  } else { ?>
-			<input type="radio" name="validated_mail" value="2"/>Disable email
+					<input type="radio" name="validated_mail" value="1"/>Enable email
+					<input type="radio" name="validated_mail" value="2" checked="checked"/>Disable email
 			<?php  }  ?>
 			<div><input type="submit" value="Submit"></div>
 			</form>
