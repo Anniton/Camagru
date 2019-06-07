@@ -1,30 +1,37 @@
 <?php
 	require 'database.php';
-
-	// Connexion a MYSQL
+/**
+ * Connexion to MYSQL
+ **/
     try {
 		$bdd = new PDO("mysql:host=localhost;port=8080", $DB_USER, $DB_PASSWORD);
 		$bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     } catch(PDOException $ex) { exit($ex); };
 
-
-	// Creation de la BDD
+/**
+ * Create DB
+ **/
 	try {
 		$sql = "CREATE DATABASE IF NOT EXISTS $db;";
 		$bdd->prepare($sql)->execute();
 	} catch(PDOException $ex) { exit($ex); };
 
-	// Deconnexion au serveur de BDD
+/**
+ * Deonnexion to MYSQL
+ **/
 	$pdo = null;
 
-	// Connexion a la BDD
+/**
+ * Connexion to DB
+ **/
 	try {
 		$bdd = new PDO($DB_DSN, $DB_USER, $DB_PASSWORD);
 		$bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		$bdd->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_OBJ);
 		} catch(PDOException $ex) { exit($ex); };
-
-    // Creation de la table users
+/**
+ * Create table membres
+ **/
     try {
         $sql = "CREATE TABLE IF NOT EXISTS espace_membre.membres
         (
@@ -42,6 +49,10 @@
         $bdd->prepare($sql)->execute();
 	} catch(PDOException $ex) { exit($ex); };
 
+/**
+ * Create table photos
+ **/
+
     try {
         $sql = "CREATE TABLE IF NOT EXISTS espace_membre.photos
         (
@@ -54,6 +65,9 @@
         $bdd->prepare($sql)->execute();
 	} catch(PDOException $ex) { exit($ex); };
 
+/**
+ * Create table comments
+ **/
 	try {
         $sql = "CREATE TABLE IF NOT EXISTS espace_membre.comments
         (

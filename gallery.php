@@ -17,6 +17,10 @@ if ($_SESSION['auth']){
 		$res_uid->execute([$pic_id]);
 		$uid = $res_uid->fetchAll(PDO::FETCH_COLUMN, 'author_id')[0];
 
+		$myuname = $bdd->prepare("SELECT username FROM membres WHERE id=?");
+		$myuname->execute([$_SESSION['auth']->id]);
+		$user_name = $myuname->fetchAll()[0];
+
 		$res_mail = $bdd->prepare('SELECT mail, mail_active FROM membres WHERE id=?');
 		$res_mail->execute([$uid]);
 		$email = $res_mail->fetchAll()[0];
@@ -25,6 +29,9 @@ if ($_SESSION['auth']){
 			$msg = $_SESSION['auth']->username." vient de commenter ta photo. Reviens vite lui répondre!";
 			mail($email->mail, "Quelqu'un a commenté ta photo sur CamagrAnne!", $msg);
 		}
+		$data['uname'] = $user_name->username;
+		echo json_encode($data);
+		exit();
 	}
 	if (!empty($_POST['pic_like_id'])) {
 		$id = (int)$_POST['pic_like_id'];
@@ -81,19 +88,13 @@ include_once("navigation.php");
 
 			foreach($pic as $data) {
 
-				$reponse = $bdd->prepare('SELECT comment FROM comments INNER JOIN photos ON comments.photo_id = photos.id WHERE photos.id = ? ORDER BY comments.date DESC');
+				$reponse = $bdd->prepare('SELECT comments.comment, comments.id FROM comments INNER JOIN photos ON comments.photo_id = photos.id WHERE photos.id = ? ORDER BY comments.date DESC');
 				$reponse->execute([$data->id]);
-				$donnees = $reponse->fetchAll(PDO::FETCH_COLUMN, 'comments');
+				$donnees = $reponse->fetchAll();//PDO::FETCH_COLUMN, 'comments');
 
 				$usern = $bdd->prepare('SELECT username FROM membres INNER JOIN photos ON photos.author_id = membres.id WHERE photos.id = ?');
 				$usern->execute([$data->id]);
 				$donnees_name = $usern->fetchAll(PDO::FETCH_COLUMN, 'membres');
-
-
-				// $usercomment = $bdd->prepare('SELECT username FROM membres INNER JOIN comments ON comments.uid = membres.id WHERE comments.id = ?');
-				// $usercomment->execute([$data->id]);
-				// $comment_name = $usercomment->fetchAll(PDO::FETCH_COLUMN, 'membres');
-
 
 				echo "<div id='$data->id' class='gallery'>";
 
@@ -127,10 +128,10 @@ include_once("navigation.php");
 
 
 				foreach($donnees as $commentaire) {
-					// foreach($comment_name as $commname) {
-						// echo "<p class='comment'><b>$commname</b> $commentaire</p>";
-						echo "<p class='comment'> $commentaire</p>";
-					// }
+					$usercomment = $bdd->prepare('SELECT username FROM membres INNER JOIN comments ON comments.uid = membres.id WHERE comments.id = ?');
+					$usercomment->execute([$commentaire->id]);
+					$comment_name = $usercomment->fetchAll(PDO::FETCH_COLUMN, 'membres');
+					echo "<p class='comment'><b>$comment_name[0]</b> $commentaire->comment</p>";
 				}
 				echo "</div>";
 				echo "</div>";

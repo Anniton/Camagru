@@ -19,9 +19,15 @@ foreach($pic as $data) {
 	$reponse = $bdd->prepare('SELECT comment FROM comments INNER JOIN photos ON comments.photo_id = photos.id WHERE photos.id = ? ORDER BY comments.date DESC');
 	$reponse->execute([$data->id]);
 	$donnees = $reponse->fetchAll(PDO::FETCH_COLUMN, 'comments');
-
+	$usern = $bdd->prepare('SELECT username FROM membres INNER JOIN photos ON photos.author_id = membres.id WHERE photos.id = ?');
+	$usern->execute([$data->id]);
+	$donnees_name = $usern->fetchAll(PDO::FETCH_COLUMN, 'membres');
 	echo "<div id='$data->id' class='gallery'>";
-	echo "<img src='data:image/jpg;base64, $data->photo' width=500 height=400;/>";
+	echo "<div class='id_photo'>";
+	foreach($donnees_name as $name_id) {
+	echo "<p class='photo_id'><img style='margin-right:7px' src='logo_hdr/login2.png'  max-width=100%; height=25;>$name_id</p>";}
+	echo "<img class='test_img' src='data:image/jpg;base64, $data->photo' width=500 height=400;/>";
+	echo "</div>";
 	echo "<div class='comments'>";
 	if (!($_SESSION['auth'])) {
 		echo "<div class='nop'><a href='login.php'>Log in to like or comment</a></div>";
@@ -42,9 +48,10 @@ foreach($pic as $data) {
 	}
 	echo "<p id='like_$data->id' style='color:black;font-weight:bold;'> $data->nb_like Likes</p>";
 	echo "<div id='comments_$data->id' class='text'>";
-	foreach($donnees as $commentaire) {
-		echo "<p class='comment'>$commentaire</p>";
 
+
+	foreach($donnees as $commentaire) {
+		echo "<p class='comment'> $commentaire</p>";
 	}
 	echo "</div>";
 	echo "</div>";

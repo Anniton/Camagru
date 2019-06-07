@@ -131,7 +131,5 @@ if(!empty($_POST)){
 		<div class="article" class="text">Have an account ? <b>  <a href="login.php">&nbsp;Log in</a></b></div>
 		<div class="footer">ABOUT US . SUPPORT . PRESS . API . JOBS . PRIVACY . TERMS . DIRECTORY . PROFILES . HASHTAGS . LANGUAGE</div>
 </div>
-
-
 </body>
 </html>

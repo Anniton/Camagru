@@ -31,7 +31,6 @@ if(!empty($_POST) && !empty($_POST['mail']))
 		$errors['mail'] = 'Aucun compte ne correspond à cette adresse.';
 	}
 }
-
 ?>
 
 <!doctype html>
@@ -42,7 +41,6 @@ if(!empty($_POST) && !empty($_POST['mail']))
   <link rel="stylesheet" href="css/style.css">
   <script src="js/script.js"></script>
 </head>
-
 
 <body>
  <div class="container">
@@ -76,6 +74,5 @@ if(!empty($_POST) && !empty($_POST['mail']))
 
             <div class="footer">ABOUT AQUAN . SUPPORT . PRESS . API . JOBS . PRIVACY . TERMS . DIRECTORY . PROFILES . HASHTAGS . LANGUAGE</div>
         </div>
-
 </body>
 </html>
