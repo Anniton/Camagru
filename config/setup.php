@@ -36,7 +36,7 @@
         $sql = "CREATE TABLE IF NOT EXISTS espace_membre.membres
         (
             id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-            username VARCHAR(255) NOT NULL,
+            username VARCHAR(255) NOT NULL UNIQUE,
             mail VARCHAR(255) NOT NULL,
             password TEXT NOT NULL,
             confirmation_token VARCHAR(60) NULL,

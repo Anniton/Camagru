@@ -17,13 +17,19 @@ if ($_SESSION['auth']){
 		if (empty($_POST['new_username']) || !preg_match('/^[a-zA-Z]+$/',$_POST['new_username'])){
 			$errors_name['name']= "Votre pseudo n'est pas valide (alphanumérique uniquement).";
 		}
-		// else (!empty($_POST['new_username'])){
-			else {
-			$user_id = $_SESSION['auth']->id;
+		else {
+			$req = $bdd->prepare("SELECT username FROM membres WHERE username=?");
+			$req->execute([$newusername]);
+			$is_ex_uname = $req->fetchAll();
+			if (empty($is_ex_uname)) {
+				$user_id = $_SESSION['auth']->id;
 
-			$bdd->prepare('UPDATE membres SET username = ? WHERE id = ?')->execute([$newusername, $user_id]);
-			// $_SESSION['flash']['success'] = "Username update";
-			$errors_name['name'] = "Le nom d'utilisateur a bien été modifié.";
+				$bdd->prepare('UPDATE membres SET username = ? WHERE id = ?')->execute([$newusername, $user_id]);
+				$errors_name['name'] = "Le nom d'utilisateur a bien été modifié.";
+			}
+			else {
+				$errors_name['name'] = "Votre pseudo est déjà utilisé.";
+			}
 		}
 	}
 
