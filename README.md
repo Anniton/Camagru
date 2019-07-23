@@ -20,8 +20,7 @@ server-side
  ```
 
 ## Objectives
-```ruby ### User features
-```
+### User features
 * Allow a user to sign up by asking a email, username, password
 * Send a confirm mail
 
